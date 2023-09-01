@@ -26,7 +26,9 @@ let targets: [Target] = [
         sources: ["Sources/**"],
         resources: ["Resources/**"],
         scripts: scripts,
-        dependencies: [],
+        dependencies: [
+            .feature(target: .SigninFeature)
+        ],
         settings: .settings(base: env.baseSetting)
     )
 ]
