@@ -9,4 +9,3 @@ public final class SigninComponent: Component<SigninDependency>, SigninFactory {
         SigninView(viewModel: .init())
     }
 }
-
