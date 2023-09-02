@@ -3,17 +3,16 @@ import BaseFeature
 import JwtStoreInterface
 import JwtStore
 import NeedleFoundation
-import Inject
 
 @main
-struct JOBISApp: App {
+struct ORIIApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject var appState = AppState(sceneFlow: .splash, authority: .student)
+    @StateObject var appState = AppState(sceneFlow: .splash)
 
     private let keychain: any Keychain
 
     init() {
-        registerProviderFactories()
+//        registerProviderFactories()
         self.keychain = KeychainImpl()
         appDelegate.keychain = keychain
     }

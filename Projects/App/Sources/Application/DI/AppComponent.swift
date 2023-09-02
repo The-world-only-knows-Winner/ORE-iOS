@@ -5,8 +5,12 @@ import RootFeature
 import RootFeatureInterface
 import SigninFeature
 import SigninFeatureInterface
+import SignupFeature
+import SignupFeatureInterface
+import SplashFeature
+import SplashFeatureInterface
+import OnboardingFeature
 import OnboardingFeatureInterface
-import onboarding
 
 public final class AppComponent: BootstrapComponent {
     private let _keychain: any Keychain
@@ -34,58 +38,13 @@ public extension AppComponent {
     var signinFactory: any SigninFactory {
         SigninComponent(parent: self)
     }
-    var authenticationEmailFactory: any AuthenticationEmailFactory {
-        AuthenticationEmailComponent(parent: self)
-    }
-    var renewalPasswordFactory: any RenewalPasswordFactory {
-        RenewalPasswordComponent(parent: self)
-    }
     var signupFactory: any SignupFactory {
         SignupComponent(parent: self)
     }
     var splashFactory: any SplashFactory {
         SplashComponent(parent: self)
     }
-    var mainTabFactory: any MainTabFactory {
-        MainTabComponent(parent: self)
-    }
-    var recruitmentFactory: any RecruitmentFactory {
-        RecruitmentComponent(parent: self)
-    }
-    var recruitmentDetailFactory: any RecruitmentDetailFactory {
-        RecruitmentDetailComponent(parent: self)
-    }
-    var findCompanyFactory: any FindCompanyFactory {
-        FindCompanyComponent(parent: self)
-    }
-    var findCompanyDetailFactory: any FindCompanyDetailFactory {
-        FindCompanyDetailComponent(parent: self)
-    }
-    var bookmarkListFactory: any BookmarkListFactory {
-        BookmarkListComponent(parent: self)
-    }
-    var homeFactory: any HomeFactory {
-        HomeComponent(parent: self)
-    }
-    var myPageFactory: any MyPageFactory {
-        MyPageComponent(parent: self)
-    }
-    var reportFactory: any ReportFactory {
-        ReportComponent(parent: self)
-    }
-    var bugListFactory: any BugListFactory {
-        BugListComponent(parent: self)
-    }
-    var checkPasswordFactory: any CheckPasswordFactory {
-        CheckPasswordComponent(parent: self)
-    }
-    var modifyPasswordFactory: any ModifyPasswordFactory {
-        ModifyPasswordComponent(parent: self)
-    }
-    var postReviewFactory: any PostReviewFactory {
-        PostReviewComponent(parent: self)
-    }
-    var menuFactory: any MenuFactory {
-        MenuComponent(parent: self)
+    var onboardingFactory: any OnboardingFactory {
+        OnboardingComponent(parent: self)
     }
 }
