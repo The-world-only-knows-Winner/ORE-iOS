@@ -27,7 +27,12 @@ let targets: [Target] = [
         resources: ["Resources/**"],
         scripts: scripts,
         dependencies: [
-            .feature(target: .SigninFeature)
+            .core(target: .JwtStore),
+            .feature(target: .RootFeature),
+            .feature(target: .OnboardingFeature),
+            .feature(target: .SigninFeature),
+            .feature(target: .SignupFeature),
+            .feature(target: .SplashFeature)
         ],
         settings: .settings(base: env.baseSetting)
     )

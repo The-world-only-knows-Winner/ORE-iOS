@@ -24,7 +24,11 @@ extension ModulePaths: MicroTargetPathConvertable {
 
 public extension ModulePaths {
     enum Feature: String, MicroTargetPathConvertable {
+        case OnboardingFeature
+        case SplashFeature
+        case RootFeature
         case SigninFeature
+        case SignupFeature
         case BaseFeature
     }
 }
@@ -37,12 +41,14 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Core: String, MicroTargetPathConvertable {
+        case JwtStore
         case CoreKit
     }
 }
 
 public extension ModulePaths {
     enum Shared: String, MicroTargetPathConvertable {
+        case UtilityModule
         case GlobalThirdPartyLibrary
     }
 }
