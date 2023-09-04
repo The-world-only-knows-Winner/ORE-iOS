@@ -15,9 +15,9 @@ public extension GenerateEnvironment {
     var scripts: [TargetScript] {
         switch self {
         case .ci, .cd:
-            return [.needle]
+            return []
 
-        case .dev:
+        default:
             return [.swiftLint, .needle]
         }
     }
