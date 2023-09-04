@@ -32,7 +32,8 @@ let targets: [Target] = [
             .feature(target: .OnboardingFeature),
             .feature(target: .SigninFeature),
             .feature(target: .SignupFeature),
-            .feature(target: .SplashFeature)
+            .feature(target: .SplashFeature),
+            .domain(target: .AuthDomain)
         ],
         settings: .settings(base: env.baseSetting)
     )
