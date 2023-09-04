@@ -1,5 +1,5 @@
 included:
-  - "JOBIS-DSM-iOS"
+  - "ORI-iOS"
 
 excluded:
   - "**/*/NeedleGenerated.swift"

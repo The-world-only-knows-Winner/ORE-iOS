@@ -12,8 +12,6 @@ public extension TargetDependency.SPM {
     static let Moya = TargetDependency.external(name: "Moya")
     static let CombineMoya = TargetDependency.external(name: "CombineMoya")
     static let Kingfisher = TargetDependency.external(name: "Kingfisher")
-    static let FlowLayout = TargetDependency.external(name: "SwiftUIFlowLayout")
-    static let Injection = TargetDependency.external(name: "Inject")
 }
 
 public extension Package {

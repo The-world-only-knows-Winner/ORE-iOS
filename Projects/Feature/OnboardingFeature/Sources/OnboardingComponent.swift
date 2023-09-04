@@ -1,15 +1,16 @@
 import SwiftUI
 import UsersDomainInterface
 import NeedleFoundation
+import OnboardingFeatureInterface
 import SigninFeatureInterface
 import SignupFeatureInterface
 
-public protocol SigninDependency: Dependency {
+public protocol OnboardingDependency: Dependency {
 }
 
-public final class SigninComponent: Component<SigninDependency>, SigninFactory {
+public final class OnboardingComponent: Component<OnboardingDependency>, OnboardingFactory {
     public func makeView() -> some View {
-        SigninView(
+        OnboardingView(
             viewModel: .init()
         )
     }

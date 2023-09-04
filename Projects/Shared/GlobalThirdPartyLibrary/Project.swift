@@ -7,8 +7,6 @@ let project = Project.makeModule(
     product: .framework,
     targets: [],
     internalDependencies: [
-        .SPM.Needle,
-        .SPM.Kingfisher,
-        .SPM.FlowLayout
+        .SPM.Needle
     ]
 )

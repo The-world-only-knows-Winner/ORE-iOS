@@ -2,5 +2,5 @@ import Foundation
 import BaseFeature
 import Combine
 
-final class SigninViewModel: BaseViewModel {
+final class OnboardingViewModel: BaseViewModel {
 }

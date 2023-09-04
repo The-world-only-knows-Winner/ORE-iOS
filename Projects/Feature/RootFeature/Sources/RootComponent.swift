@@ -1,22 +1,22 @@
 import RootFeatureInterface
 import NeedleFoundation
 import SwiftUI
-import SigninFeatureInterface
-import MainTabFeatureInterface
+import OnboardingFeatureInterface
 import SplashFeatureInterface
+import HomeFeatureInterface
 
 public protocol RootDependency: Dependency {
-    var signinFactory: any SigninFactory { get }
-    var mainTabFactory: any MainTabFactory { get }
+    var onboardingFactory: any OnboardingFactory { get }
+    var homeFactory: any HomeFactory { get }
     var splashFactory: any SplashFactory { get }
 }
 
 public final class RootComponent: Component<RootDependency>, RootFactory {
     public func makeView() -> some View {
         RootView(
-            signinFactory: self.dependency.signinFactory,
-            mainTabFactory: self.dependency.mainTabFactory,
-            splashFactory: self.dependency.splashFactory
+            onboardingFactory: dependency.onboardingFactory,
+            homeFactory: dependency.homeFactory,
+            splashFactory: dependency.splashFactory
         )
     }
 }

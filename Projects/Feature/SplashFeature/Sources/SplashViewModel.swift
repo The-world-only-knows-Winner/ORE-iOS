@@ -13,15 +13,13 @@ final class SplashViewModel: BaseViewModel {
     }
 
     func onAppear(
-        onSuccess: @escaping (AuthorityType) -> Void,
+        onSuccess: @escaping () -> Void,
         onError: @escaping (Error) -> Void
     ) {
-        addCancellable(reissueTokenUseCase.execute()) { authority in
-            if authority {
-                onSuccess(.developer)
-            } else {
-                onSuccess(.student)
-            }
+        addCancellable(
+            reissueTokenUseCase.execute()
+        ) { _ in
+            onSuccess()
         } onReceiveError: { error in
             onError(error)
         }

@@ -19,11 +19,10 @@ struct SplashView: View {
                 .frame(width: 200, height: 200)
         }
         .onAppear {
-            viewModel.onAppear { authority in
-                appState.authority = authority
-                appState.sceneFlow = .main
+            viewModel.onAppear {
+                appState.sceneFlow = .home
             } onError: { _ in
-                appState.sceneFlow = .auth
+                appState.sceneFlow = .onboarding
             }
         }
     }

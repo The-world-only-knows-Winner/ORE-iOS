@@ -2,17 +2,17 @@ import DesignSystem
 import SwiftUI
 import BaseFeature
 
-struct SigninView: View {
+struct OnboardingView: View {
     @EnvironmentObject var appState: AppState
-    @StateObject var viewModel: SigninViewModel
+    @StateObject var viewModel: OnboardingViewModel
 
     init(
-        viewModel: SigninViewModel
+        viewModel: OnboardingViewModel
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
     var body: some View {
-        Text("Signin View")
+        Text("Onboarding View")
     }
 }

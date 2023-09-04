@@ -10,17 +10,10 @@ public enum ModulePaths {
 
 public extension ModulePaths {
     enum Feature: String {
-        case PostReviewFeature
-        case BugFeature
-        case RenewalPasswordFeature
-        case BookmarkListFeature
-        case RecruitmentFeature
-        case FindCompanyFeature
+        case OnboardingFeature
         case MyPageFeature
         case HomeFeature
-        case MenuFeature
         case BaseFeature
-        case MainTabFeature
         case RootFeature
         case SplashFeature
         case SignupFeature
@@ -34,15 +27,6 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Domain: String {
-        case BugsDomain
-        case FilesDomain
-        case ReviewsDomain
-        case BookmarksDomain
-        case ApplicationsDomain
-        case CodesDomain
-        case StudentsDomain
-        case CompaniesDomain
-        case RecruitmentsDomain
         case UsersDomain
         case BaseDomain
         case AuthDomain
