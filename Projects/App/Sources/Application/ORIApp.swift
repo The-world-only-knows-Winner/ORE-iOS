@@ -7,7 +7,7 @@ import NeedleFoundation
 @main
 struct JOBISAPP: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject var appState = AppState(sceneFlow: .splash, authority: .student)
+    @StateObject var appState = AppState(sceneFlow: .splash)
 
     private let keychain: any Keychain
 
