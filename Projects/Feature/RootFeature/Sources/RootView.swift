@@ -1,30 +1,35 @@
 import BaseFeature
 import SwiftUI
+import MainTabFeatureInterface
 import SplashFeatureInterface
-import OnboardingFeatureInterface
+import SigninFeatureInterface
 
 struct RootView: View {
     @EnvironmentObject var appState: AppState
-    private let onboardingFactory: any OnboardingFactory
+    private let signinFactory: any SigninFactory
+    private let mainTabFactory: any MainTabFactory
     private let splashFactory: any SplashFactory
 
     public init(
-        onboardingFactory: any OnboardingFactory,
+        signinFactory: any SigninFactory,
+        mainTabFactory: any MainTabFactory,
         splashFactory: any SplashFactory
     ) {
-        self.onboardingFactory = onboardingFactory
+        self.signinFactory = signinFactory
+        self.mainTabFactory = mainTabFactory
         self.splashFactory = splashFactory
     }
 
     var body: some View {
         ZStack {
             switch appState.sceneFlow {
-            case .onboarding:
-                onboardingFactory.makeView().eraseToAnyView()
+            case .auth:
+                signinFactory.makeView().eraseToAnyView()
                     .environmentObject(appState)
 
             case .main:
-                Text("molla")
+                mainTabFactory.makeView().eraseToAnyView()
+                    .environmentObject(appState)
 
             case .splash:
                 splashFactory.makeView().eraseToAnyView()

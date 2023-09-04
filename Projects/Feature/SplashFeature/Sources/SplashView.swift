@@ -1,8 +1,10 @@
 import DesignSystem
 import SwiftUI
+import BaseFeature
 
 struct SplashView: View {
     @StateObject var viewModel: SplashViewModel
+    @EnvironmentObject var appState: AppState
 
     init(
         viewModel: SplashViewModel
@@ -11,6 +13,18 @@ struct SplashView: View {
     }
 
     var body: some View {
-        Text("Text")
+        ZStack {
+            DesignSystemAsset.Image.splashLogo.swiftUIImage
+                .resizable()
+                .frame(width: 200, height: 200)
+        }
+        .onAppear {
+            viewModel.onAppear { authority in
+                appState.authority = authority
+                appState.sceneFlow = .main
+            } onError: { _ in
+                appState.sceneFlow = .auth
+            }
+        }
     }
 }

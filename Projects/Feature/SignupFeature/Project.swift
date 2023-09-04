@@ -1,17 +1,14 @@
-import DependencyPlugin
 import ProjectDescription
 import ProjectDescriptionHelpers
+import DependencyPlugin
 
-let project = Project.module(
+let project = Project.makeModule(
     name: ModulePaths.Feature.SignupFeature.rawValue,
-    targets: [
-        .interface(module: .feature(.SignupFeature)),
-        .implements(module: .feature(.SignupFeature), dependencies: [
-            .feature(target: .BaseFeature),
-            .feature(target: .SignupFeature, type: .interface)
-        ]),
-        .tests(module: .feature(.SignupFeature), dependencies: [
-            .feature(target: .SignupFeature)
-        ])
+    product: .staticLibrary,
+    targets: [.interface, .unitTest],
+    internalDependencies: [
+        .Feature.BaseFeature,
+        .Domain.AuthDomain,
+        .Domain.StudentsDomain
     ]
 )

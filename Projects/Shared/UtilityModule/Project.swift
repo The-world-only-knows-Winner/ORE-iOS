@@ -1,15 +1,12 @@
-import DependencyPlugin
 import ProjectDescription
 import ProjectDescriptionHelpers
+import DependencyPlugin
 
-let project = Project.module(
+let project = Project.makeModule(
     name: ModulePaths.Shared.UtilityModule.rawValue,
-    targets: [
-        .implements(module: .shared(.UtilityModule), dependencies: [
-            .shared(target: .GlobalThirdPartyLibrary)
-        ]),
-        .tests(module: .shared(.UtilityModule), dependencies: [
-            .shared(target: .UtilityModule)
-        ])
+    product: .staticFramework,
+    targets: [.unitTest],
+    internalDependencies: [
+        .Shared.GlobalThirdPartyLibrary
     ]
 )

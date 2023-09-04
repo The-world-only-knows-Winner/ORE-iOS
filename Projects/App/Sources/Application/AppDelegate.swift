@@ -18,7 +18,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
             session.activate()
         }
 
-//        DesignSystemFontFamily.registerAllCustomFonts()
+        DesignSystemFontFamily.registerAllCustomFonts()
         return true
     }
 }

@@ -1,10 +1,14 @@
-import DependencyPlugin
 import ProjectDescription
 import ProjectDescriptionHelpers
+import DependencyPlugin
 
-let project = Project.module(
+let project = Project.makeModule(
     name: ModulePaths.Shared.GlobalThirdPartyLibrary.rawValue,
-    targets: [
-        .implements(module: .shared(.GlobalThirdPartyLibrary), product: .framework, dependencies: [.SPM.Needle])
+    product: .framework,
+    targets: [],
+    internalDependencies: [
+        .SPM.Needle,
+        .SPM.Kingfisher,
+        .SPM.FlowLayout
     ]
 )

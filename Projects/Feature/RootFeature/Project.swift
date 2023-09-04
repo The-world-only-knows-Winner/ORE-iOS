@@ -1,17 +1,15 @@
-import DependencyPlugin
 import ProjectDescription
 import ProjectDescriptionHelpers
+import DependencyPlugin
 
-let project = Project.module(
+let project = Project.makeModule(
     name: ModulePaths.Feature.RootFeature.rawValue,
-    targets: [
-        .interface(module: .feature(.RootFeature)),
-        .implements(module: .feature(.RootFeature), dependencies: [
-            .feature(target: .BaseFeature),
-            .feature(target: .RootFeature, type: .interface)
-        ]),
-        .tests(module: .feature(.RootFeature), dependencies: [
-            .feature(target: .RootFeature)
-        ])
+    product: .staticLibrary,
+    targets: [.interface, .unitTest],
+    internalDependencies: [
+        .Feature.BaseFeature,
+        .Feature.SplashFeatureInterface,
+        .Feature.MainTabFeatureInterface,
+        .Feature.SigninFeatureInterface
     ]
 )

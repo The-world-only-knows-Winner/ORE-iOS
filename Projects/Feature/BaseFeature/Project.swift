@@ -1,17 +1,14 @@
-import DependencyPlugin
 import ProjectDescription
 import ProjectDescriptionHelpers
+import DependencyPlugin
 
-let project = Project.module(
+let project = Project.makeModule(
     name: ModulePaths.Feature.BaseFeature.rawValue,
-    targets: [
-        .implements(module: .feature(.BaseFeature), dependencies: [
-            .userInterface(target: .DesignSystem),
-            .shared(target: .GlobalThirdPartyLibrary),
-            .shared(target: .UtilityModule)
-        ]),
-        .tests(module: .feature(.BaseFeature), dependencies: [
-            .feature(target: .BaseFeature)
-        ])
+    product: .staticLibrary,
+    targets: [.unitTest],
+    internalDependencies: [
+        .Core.DesignSystem,
+        .Shared.GlobalThirdPartyLibrary,
+        .Shared.UtilityModule
     ]
 )

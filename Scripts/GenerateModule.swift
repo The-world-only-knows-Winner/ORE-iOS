@@ -1,18 +1,11 @@
 #!/usr/bin/swift
 import Foundation
 
-func handleSIGINT(_ signal: Int32) {
-    exit(0)
-}
-
-signal(SIGINT, handleSIGINT)
-
 enum LayerType: String {
     case feature = "Feature"
     case domain = "Domain"
     case core = "Core"
     case shared = "Shared"
-    case userInterface = "UserInterface"
 }
 
 enum MicroTargetType: String {
@@ -32,57 +25,60 @@ func registerModuleDependency() {
     registerModulePaths()
     makeProjectDirectory()
     registerXCConfig()
-
-    let layerPrefix = layer.rawValue.lowercased()
-    let moduleEnum = ".\(layerPrefix)(.\(moduleName))"
-    var targetString = "[\n"
+    registerMicroTarget(target: .sources)
+    var targetString = "["
     if hasInterface {
+        registerMicroTarget(target: .interface)
         makeScaffold(target: .interface)
-        targetString += "\(tab(2)).interface(module: \(moduleEnum)),\n"
-    }
-    targetString += "\(tab(2)).implements(module: \(moduleEnum)"
-    if hasInterface {
-        targetString += ", dependencies: [\n\(tab(3)).\(layerPrefix)(target: .\(moduleName), type: .interface)\n\(tab(2))])"
-    } else {
-        targetString += ")"
+        targetString += ".\(MicroTargetType.interface), "
     }
     if hasTesting {
+        registerMicroTarget(target: .testing)
         makeScaffold(target: .testing)
-        let interfaceDependency = ".\(layerPrefix)(target: .\(moduleName), type: .interface)"
-        targetString += ",\n\(tab(2)).testing(module: \(moduleEnum), dependencies: [\n\(tab(3))\(interfaceDependency)\n\(tab(2))])"
+        targetString += ".\(MicroTargetType.testing), "
     }
     if hasUnitTests {
         makeScaffold(target: .unitTest)
-        targetString += ",\n\(tab(2)).tests(module: \(moduleEnum), dependencies: [\n\(tab(3)).\(layerPrefix)(target: .\(moduleName))\n\(tab(2))])"
+        targetString += ".\(MicroTargetType.unitTest), "
     }
     if hasUITests {
         makeScaffold(target: .uiTest)
-        // TODO: - ui test 타겟 설정 로직 추가
+        targetString += ".\(MicroTargetType.uiTest), "
     }
     if hasDemo {
         makeScaffold(target: .demo)
-        targetString += ",\n\(tab(2)).demo(module: \(moduleEnum), dependencies: [\n\(tab(3)).\(layerPrefix)(target: .\(moduleName))\n\(tab(2))])"
+        targetString += ".\(MicroTargetType.demo), "
     }
-    targetString += "\n\(tab(1))]"
+    if targetString.hasSuffix(", ") {
+        targetString.removeLast(2)
+    }
+    targetString += "]"
     makeProjectSwift(targetString: targetString)
-    makeSourceScaffold()
-}
-
-func tab(_ count: Int) -> String {
-    var tabString = ""
-    for _ in 0..<count {
-        tabString += "    "
-    }
-    return tabString
+    makeProjectScaffold(targetString: targetString)
 }
 
 func registerModulePaths() {
     updateFileContent(
         filePath: currentPath + "Plugin/DependencyPlugin/ProjectDescriptionHelpers/ModulePaths.swift",
-        finding: "enum \(layer.rawValue): String, MicroTargetPathConvertable {\n",
+        finding: "enum \(layer.rawValue): String {\n",
         inserting: "        case \(moduleName)\n"
     )
     print("Register \(moduleName) to ModulePaths.swift")
+}
+
+func registerMicroTarget(target: MicroTargetType) {
+    let targetString = """
+    static let \(moduleName)\(target.rawValue) = TargetDependency.project(
+        target: ModulePaths.\(layer.rawValue).\(moduleName).targetName(type: .\(target)),
+        path: .relativeTo\(layer.rawValue)(ModulePaths.\(layer.rawValue).\(moduleName).rawValue)
+    )\n
+"""
+    updateFileContent(
+        filePath: currentPath + "Plugin/DependencyPlugin/ProjectDescriptionHelpers/Dependency+Target.swift",
+        finding: "public extension TargetDependency.\(layer.rawValue) {\n",
+        inserting: targetString
+    )
+    print("Register \(moduleName) \(target.rawValue) target to Dependency+Target.swift")
 }
 
 func registerXCConfig() {
@@ -110,18 +106,19 @@ func makeDirectories(_ paths: [String]) {
 
 func makeProjectSwift(targetString: String) {
     let projectSwift = """
-import DependencyPlugin
 import ProjectDescription
 import ProjectDescriptionHelpers
+import DependencyPlugin
 
-let project = Project.module(
+let project = Project.makeModule(
     name: ModulePaths.\(layer.rawValue).\(moduleName).rawValue,
+    product: .staticFramework,
     targets: \(targetString)
 )
 
 """
     writeContentInFile(
-        path: currentPath + "Projects/\(layer.rawValue)/\(moduleName)/Project.swift",
+        path: currentPath + "Projects/\(layer.rawValue)/\(moduleName)/Project.swift", 
         content: projectSwift
     )
 }
@@ -130,22 +127,22 @@ func makeProjectDirectory() {
     makeDirectory(path: currentPath + "Projects/\(layer.rawValue)/\(moduleName)")
 }
 
-func makeSourceScaffold() {
+func makeProjectScaffold(targetString: String) {
     _ = try? bash.run(
-        commandName: "tuist",
-        arguments: ["scaffold", "Sources", "--name", "\(moduleName)", "--layer", "\(layer.rawValue)"]
+        commandName: "tuist", 
+        arguments: ["scaffold", "Module", "--name", "\(moduleName)", "--layer", "\(layer.rawValue)", "--target", "\(targetString)"]
     )
 }
 
 func makeScaffold(target: MicroTargetType) {
     _ = try? bash.run(
-        commandName: "tuist",
+        commandName: "tuist", 
         arguments: ["scaffold", "\(target.rawValue)", "--name", "\(moduleName)", "--layer", "\(layer.rawValue)"]
     )
 }
 
 func writeContentInFile(path: String, content: String) {
-    let fileURL = URL(fileURLWithPath: path)
+    let fileURL = URL(filePath: path)
     let data = Data(content.utf8)
     try? data.write(to: fileURL)
 }
@@ -155,11 +152,11 @@ func updateFileContent(
     finding findingString: String,
     inserting insertString: String
 ) {
-    let fileURL = URL(fileURLWithPath: filePath)
+    let fileURL = URL(filePath: filePath)
     guard let readHandle = try? FileHandle(forReadingFrom: fileURL) else {
         fatalError("❌ Failed to find \(filePath)")
     }
-    guard let readData = try? readHandle.readToEnd() else {
+    guard let readData = try? readHandle.readToEnd() else { 
         fatalError("❌ Failed to find \(filePath)")
     }
     try? readHandle.close()
@@ -175,13 +172,14 @@ func updateFileContent(
     try? writeHandle.close()
 }
 
+
 // MARK: - Starting point
 
-print("Enter layer name\n(Feature | Domain | Core | Shared | UserInterface)", terminator: " : ")
+print("Enter layer name\n(Feature | Domain | Core | Shared)", terminator: " : ")
 let layerInput = readLine()
-guard
-    let layerInput,
-    !layerInput.isEmpty,
+guard 
+    let layerInput, 
+    !layerInput.isEmpty ,
     let layerUnwrapping = LayerType(rawValue: layerInput)
 else {
     print("Layer is empty or invalid")
@@ -226,6 +224,7 @@ print("interface: \(hasInterface), testing: \(hasTesting), unitTests: \(hasUnitT
 print("------------------------------------------------------------------------------------------------------------------------")
 print("✅ Module is created successfully!")
 
+
 // MARK: - Bash
 protocol CommandExecuting {
     func run(commandName: String, arguments: [String]) throws -> String
@@ -241,7 +240,7 @@ struct Bash: CommandExecuting {
     }
 
     private func resolve(_ command: String) throws -> String {
-        guard var bashCommand = try? run("/bin/bash", with: ["-l", "-c", "which \(command)"]) else {
+        guard var bashCommand = try? run("/bin/bash" , with: ["-l", "-c", "which \(command)"]) else {
             throw BashError.commandNotFound(name: command)
         }
         bashCommand = bashCommand.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
@@ -260,3 +259,4 @@ struct Bash: CommandExecuting {
         return output
     }
 }
+

@@ -1,17 +1,13 @@
-import DependencyPlugin
 import ProjectDescription
 import ProjectDescriptionHelpers
+import DependencyPlugin
 
-let project = Project.module(
+let project = Project.makeModule(
     name: ModulePaths.Feature.SplashFeature.rawValue,
-    targets: [
-        .interface(module: .feature(.SplashFeature)),
-        .implements(module: .feature(.SplashFeature), dependencies: [
-            .feature(target: .BaseFeature),
-            .feature(target: .SplashFeature, type: .interface)
-        ]),
-        .tests(module: .feature(.SplashFeature), dependencies: [
-            .feature(target: .SplashFeature)
-        ])
+    product: .staticLibrary,
+    targets: [.interface, .unitTest],
+    internalDependencies: [
+        .Feature.BaseFeature,
+        .Domain.AuthDomainInterface
     ]
 )

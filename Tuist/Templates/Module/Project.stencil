@@ -1,8 +1,10 @@
-import DependencyPlugin
 import ProjectDescription
 import ProjectDescriptionHelpers
+import DependencyPlugin
 
-let project = Project.module(
+let project = Project.makeModule(
     name: ModulePaths.{{ layer }}.{{ name }}.rawValue,
-    targets: {{ target }}
+    product: .staticLibrary,
+    targets: {{ target }},
+    internalDependencies: []
 )

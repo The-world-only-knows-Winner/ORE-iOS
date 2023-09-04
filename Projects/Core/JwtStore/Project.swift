@@ -2,16 +2,11 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 import DependencyPlugin
 
-let project = Project.module(
+let project = Project.makeModule(
     name: ModulePaths.Core.JwtStore.rawValue,
-    targets: [
-        .interface(module: .core(.JwtStore)),
-        .implements(module: .core(.JwtStore), dependencies: [
-            .core(target: .JwtStore, type: .interface),
-            .SPM.Moya
-        ]),
-        .tests(module: .core(.JwtStore), dependencies: [
-            .core(target: .JwtStore)
-        ])
+    product: .staticLibrary,
+    targets: [.interface, .testing, .unitTest],
+    externalDependencies: [
+        .SPM.Moya
     ]
 )

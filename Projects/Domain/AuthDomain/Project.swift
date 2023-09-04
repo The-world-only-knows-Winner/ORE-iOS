@@ -1,20 +1,12 @@
-import DependencyPlugin
 import ProjectDescription
 import ProjectDescriptionHelpers
+import DependencyPlugin
 
-let project = Project.module(
+let project = Project.makeModule(
     name: ModulePaths.Domain.AuthDomain.rawValue,
-    targets: [
-        .interface(module: .domain(.AuthDomain)),
-        .implements(module: .domain(.AuthDomain), dependencies: [
-            .domain(target: .BaseDomain),
-            .domain(target: .AuthDomain, type: .interface)
-        ]),
-        .testing(module: .domain(.AuthDomain), dependencies: [
-            .domain(target: .AuthDomain, type: .interface)
-        ]),
-        .tests(module: .domain(.AuthDomain), dependencies: [
-            .domain(target: .AuthDomain)
-        ])
+    product: .staticLibrary,
+    targets: [.interface, .testing, .unitTest],
+    internalDependencies: [
+        .Domain.BaseDomain
     ]
 )

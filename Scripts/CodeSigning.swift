@@ -2,16 +2,10 @@
 import Foundation
 
 func writeContentInFile(path: String, content: String) {
-    let fileURL = URL(fileURLWithPath: path)
+    let fileURL = URL(filePath: path)
     let data = Data(content.utf8)
     try? data.write(to: fileURL)
 }
-
-func handleSIGINT(_ signal: Int32) -> Void {
-    exit(0)
-}
-
-signal(SIGINT, handleSIGINT)
 
 print("Enter your Apple Developer ID Code Signing Identity: ", terminator: "")
 guard let codeSigningIdentity = readLine() else {
@@ -29,7 +23,7 @@ public extension SettingsDictionary {
 
 """
 
-writeContentInFile(path: "Tuist/ProjectDescriptionHelpers/SettingsDictionary/CodeSign.swift", content: codeSignContent)
+writeContentInFile(path: "Tuist/ProjectDescriptionHelpers/CodeSign.swift", content: codeSignContent)
 
 print("✅ Code Sign extension generated successfully!")
 

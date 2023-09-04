@@ -1,12 +1,6 @@
 #!/usr/bin/swift
  import Foundation
 
-func handleSIGINT(_ signal: Int32) {
-    exit(0)
-}
-
-signal(SIGINT, handleSIGINT)
-
  let currentPath = "./"
 
  func updateFileContent(
@@ -14,11 +8,11 @@ signal(SIGINT, handleSIGINT)
      finding findingString: String,
      inserting insertString: String
  ) {
-     let fileURL = URL(fileURLWithPath: filePath)
+     let fileURL = URL(filePath: filePath)
      guard let readHandle = try? FileHandle(forReadingFrom: fileURL) else {
          fatalError("❌ Failed to find \(filePath)")
      }
-     guard let readData = try? readHandle.readToEnd() else {
+     guard let readData = try? readHandle.readToEnd() else { 
          fatalError("❌ Failed to find \(filePath)")
      }
      try? readHandle.close()
@@ -74,6 +68,4 @@ signal(SIGINT, handleSIGINT)
  }
 
  registerDependency(name: dependencyName, package: packageName, url: dependencyURL, version: dependencyVersion)
- 
- print("")
- print("✅ New Dependency is registered successfully!")
+

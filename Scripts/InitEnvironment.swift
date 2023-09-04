@@ -1,16 +1,10 @@
 #!/usr/bin/swift
 import Foundation
 
-func handleSIGINT(_ signal: Int32) {
-    exit(0)
-}
-
-signal(SIGINT, handleSIGINT)
-
 let currentPath = "./"
 
 func writeCodeInFile(filePath: String, codes: String) {
-    let fileURL = URL(fileURLWithPath: filePath)
+    let fileURL = URL(filePath: filePath)
     guard let writeHandle = try? FileHandle(forWritingTo: fileURL) else {
         fatalError("\(filePath)을 찾을 수 없습니다")
     }
