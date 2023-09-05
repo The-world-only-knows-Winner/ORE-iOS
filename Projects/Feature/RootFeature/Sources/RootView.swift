@@ -24,7 +24,9 @@ struct RootView: View {
         ZStack {
             switch appState.sceneFlow {
             case .onboarding:
-                onboardingFactory.makeView().eraseToAnyView()
+//                onboardingFactory.makeView().eraseToAnyView()
+//                    .environmentObject(appState)
+                homeFactory.makeView().eraseToAnyView()
                     .environmentObject(appState)
 
             case .home:
