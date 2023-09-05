@@ -11,7 +11,7 @@ struct BackgroundModifier: ViewModifier {
 }
 
 public extension View {
-    func jobisBackground() -> some View {
+    func oriBackground() -> some View {
         modifier(BackgroundModifier())
     }
 }

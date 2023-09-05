@@ -8,6 +8,7 @@ public struct ORIFont: ViewModifier {
         case let .heading(font, weight):
             return content
                 .font(.custom("SUIT-\(weight)", size: font.size))
+
         case let .body(font, weight):
             return content
                 .font(.custom("SUIT-\(weight)", size: font.size))
