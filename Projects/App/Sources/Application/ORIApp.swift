@@ -20,7 +20,6 @@ struct ORIAPP: App {
     var body: some Scene {
         WindowGroup {
             AppComponent(keychain: keychain).makeRootView()
-                .preferredColorScheme(.light)
                 .environmentObject(appState)
         }
     }
