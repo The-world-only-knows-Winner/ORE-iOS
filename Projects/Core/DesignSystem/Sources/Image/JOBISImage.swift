@@ -1,15 +1,8 @@
 import SwiftUI
 
-public struct JOBISImage: View {
+public struct ORIImage: View {
     public enum Image {
-        case recruitmentImage
-        case findCompanyImage
-        case bookmarkList
-        case fetchRecruitment
-        case findCompany
-        case profile
-        case key
-        case vertification
+        case oriIcon
     }
 
     private var image: Image
@@ -31,29 +24,8 @@ public struct JOBISImage: View {
 
     private func jobisToImage() -> SwiftUI.Image {
         switch image {
-        case .findCompanyImage:
-            return DesignSystemAsset.Image.findCompanyImage.swiftUIImage
-
-        case .recruitmentImage:
-            return DesignSystemAsset.Image.recruitmentImage.swiftUIImage
-
-        case .bookmarkList:
-            return DesignSystemAsset.Icons.bookmarkList.swiftUIImage
-
-        case .fetchRecruitment:
-            return DesignSystemAsset.Icons.fetchRecruitment.swiftUIImage
-
-        case .findCompany:
-            return DesignSystemAsset.Icons.findCompany.swiftUIImage
-
-        case .profile:
-            return DesignSystemAsset.Icons.profile.swiftUIImage
-
-        case .key:
-            return DesignSystemAsset.Image.keyImage.swiftUIImage
-
-        case .vertification:
-            return DesignSystemAsset.Image.verificationImage.swiftUIImage
+        case .oriIcon:
+            return DesignSystemAsset.Image.oriIcon.swiftUIImage
         }
     }
 }

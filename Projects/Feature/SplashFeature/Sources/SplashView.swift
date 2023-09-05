@@ -14,7 +14,7 @@ struct SplashView: View {
 
     var body: some View {
         ZStack {
-            DesignSystemAsset.Image.splashLogo.swiftUIImage
+            DesignSystemAsset.Image.oriIcon.swiftUIImage
                 .resizable()
                 .frame(width: 200, height: 200)
         }

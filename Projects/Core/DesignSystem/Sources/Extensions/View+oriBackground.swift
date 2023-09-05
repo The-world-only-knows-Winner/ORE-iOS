@@ -4,7 +4,7 @@ struct BackgroundModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .background {
-                Color.Sub.gray10
+                Color.GrayScale.gray100
                     .ignoresSafeArea()
             }
     }

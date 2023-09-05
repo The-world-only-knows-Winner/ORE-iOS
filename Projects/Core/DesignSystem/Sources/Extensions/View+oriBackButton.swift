@@ -1,15 +1,12 @@
 import SwiftUI
 
-struct JobisBackButtonModifier: ViewModifier {
+struct ORIBackButtonModifier: ViewModifier {
     let willDismiss: () -> Void
-    let title: String
 
     public init(
-        willDismiss: @escaping () -> Void,
-        title: String = ""
+        willDismiss: @escaping () -> Void
     ) {
         self.willDismiss = willDismiss
-        self.title = title
     }
 
     func body(content: Content) -> some View {
@@ -19,13 +16,7 @@ struct JobisBackButtonModifier: ViewModifier {
                     Button {
                         willDismiss()
                     } label: {
-                        HStack {
-                            Image(systemName: "arrow.left")
-                                .imageScale(.small)
-                                .JOBISFont(.body(.body1), color: .Sub.gray70)
-                            Text(title)
-                                .JOBISFont(.body(.body1), color: .Sub.gray70)
-                        }
+                        ORIIcon(.arrowBack)
                     }
                 }
             }
@@ -33,11 +24,10 @@ struct JobisBackButtonModifier: ViewModifier {
     }
 }
 public extension View {
-    func jobisBackButton(
-        title: String = "",
+    func oriBackButton(
         willDismiss: @escaping () -> Void
     ) -> some View {
-        modifier(JobisBackButtonModifier(willDismiss: willDismiss, title: title))
+        modifier(ORIBackButtonModifier(willDismiss: willDismiss))
     }
 }
 
