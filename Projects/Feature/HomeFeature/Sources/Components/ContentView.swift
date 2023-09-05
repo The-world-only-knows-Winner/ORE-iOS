@@ -11,8 +11,14 @@ struct ContentView: View {
     @StateObject var manager = LocationManager()
 
     var empireStateBuilding = [
-    Place(name: "도마초등학교", coordinate: CLLocationCoordinate2D(latitude: 36.324615450518415, longitude: 127.37165514871339)),
-    Place(name: "도마중학교", coordinate: CLLocationCoordinate2D(latitude: 36.31892915270602, longitude: 127.37233249567345))
+        Place(
+            name: "도마초등학교",
+            coordinate: CLLocationCoordinate2D(latitude: 36.324615450518415, longitude: 127.37165514871339)
+        ),
+        Place(
+            name: "도마중학교",
+            coordinate: CLLocationCoordinate2D(latitude: 36.31892915270602, longitude: 127.37233249567345)
+        )
     ]
 
     var body: some View {

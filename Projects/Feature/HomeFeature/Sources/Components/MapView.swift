@@ -13,7 +13,7 @@ struct MapView: View {
                 .padding()
                 .background(.green)
                 .onTapGesture {
-                    locationManager.requestLocation()
+                    locationManager.configureLocationManager()
                 }
         }
     }

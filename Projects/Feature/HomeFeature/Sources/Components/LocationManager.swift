@@ -24,7 +24,9 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         if status == .notDetermined {
             manager.requestAlwaysAuthorization()
         } else if status == .authorizedAlways || status == .authorizedWhenInUse {
-            requestLocation()
+            withAnimation {
+                self.mapViewFocusChange()
+            }
         }
     }
 
@@ -77,10 +79,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
 
     // MARK: - 사용자의 위치가 변경되면 호출되는 메서드
-    /// startUpdatingLocation 메서드 또는 requestLocation 메서드를 호출했을 때에만 이 메서드가 호출
-    func requestLocation() {
-        manager.requestLocation()
-    }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.currentGeoPoint = locations.first?.coordinate
@@ -90,7 +88,6 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print(error)
     }
-
     // MARK: - location을 도로명 주소로 변환해주는 메서드
     func convertLocationToAddress(location: CLLocation) {
         let geocoder = CLGeocoder()
