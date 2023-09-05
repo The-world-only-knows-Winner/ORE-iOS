@@ -12,6 +12,12 @@ struct HomeView: View {
     }
 
     var body: some View {
-        Text("Home View")
+        NavigationView {
+            VStack {
+                Text("Home View")
+
+                MapView(locationManager: .init())
+            }
+        }
     }
 }
