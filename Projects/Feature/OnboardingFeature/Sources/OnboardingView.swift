@@ -44,7 +44,6 @@ struct OnboardingView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             .indexViewStyle(.page(backgroundDisplayMode: .never))
             .frame(maxHeight: viewModel.imageHeight)
-            .padding(.top, 44)
 
             HStack(spacing: 8) {
                 ForEach(0..<viewModel.onboardings.count, id: \.self) { index in
@@ -95,7 +94,9 @@ struct OnboardingView: View {
                 }
             }
         }
-        .oriBackground()
+        .oriNavigationBar(
+            headerTitle: ""
+        )
         .navigate(to: signinFactory.makeView().eraseToAnyView(), when: $viewModel.isNavigatedToSignin)
         .navigate(to: signupFactory.makeView().eraseToAnyView(), when: $viewModel.isNavigatedToSignup)
     }
