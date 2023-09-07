@@ -11,6 +11,8 @@ public struct ORIIcon: View {
         case visibilityOff
         case visibility
         case xmark
+        case check
+        case error
     }
 
     private var image: Image
@@ -34,38 +36,46 @@ public struct ORIIcon: View {
         case .accountCircle:
             DesignSystemAsset.Icons.accountCircle.swiftUIImage
                 .imageColorSet(color: .GrayScale.gray400)
-            
+
         case .arrowBack:
             DesignSystemAsset.Icons.arrowBack.swiftUIImage
                 .imageColorSet(color: .GrayScale.gray400)
-            
+
         case .expandMore:
             DesignSystemAsset.Icons.expandMore.swiftUIImage
                 .imageColorSet(color: .GrayScale.gray700)
-            
+
         case .notificationsActive:
             DesignSystemAsset.Icons.notificationsActive.swiftUIImage
                 .imageColorSet(color: .Primary.primary300)
-            
+
         case .notificationsOff:
             DesignSystemAsset.Icons.notificationsOff.swiftUIImage
                 .imageColorSet(color: .GrayScale.gray400)
-            
+
         case .search:
             DesignSystemAsset.Icons.search.swiftUIImage
                 .imageColorSet(color: .GrayScale.gray400)
-            
+
         case .visibilityOff:
             DesignSystemAsset.Icons.visibilityOff.swiftUIImage
                 .imageColorSet(color: .GrayScale.gray700)
-            
+
         case .visibility:
             DesignSystemAsset.Icons.visibility.swiftUIImage
                 .imageColorSet(color: .GrayScale.gray700)
-            
+
         case .xmark:
             DesignSystemAsset.Icons.xmark.swiftUIImage
                 .imageColorSet(color: .GrayScale.gray700)
+
+        case .check:
+            DesignSystemAsset.Icons.check.swiftUIImage
+                .imageColorSet(color: .State.green)
+
+        case .error:
+            DesignSystemAsset.Icons.error.swiftUIImage
+                .imageColorSet(color: .State.red)
         }
     }
 }
