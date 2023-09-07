@@ -26,38 +26,56 @@ public struct ORIIcon: View {
 
     public var body: some View {
         oriIconToImage()
-            .resizable()
-            .renderingMode(renderingMode)
     }
 
-    public func oriIconToImage() -> SwiftUI.Image {
+    @ViewBuilder
+    public func oriIconToImage() -> some View {
         switch image {
         case .accountCircle:
-            return DesignSystemAsset.Icons.accountCircle.swiftUIImage
-
+            DesignSystemAsset.Icons.accountCircle.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray400)
+            
         case .arrowBack:
-            return DesignSystemAsset.Icons.arrowBack.swiftUIImage
-
+            DesignSystemAsset.Icons.arrowBack.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray400)
+            
         case .expandMore:
-            return DesignSystemAsset.Icons.expandMore.swiftUIImage
-
+            DesignSystemAsset.Icons.expandMore.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray700)
+            
         case .notificationsActive:
-            return DesignSystemAsset.Icons.notificationsActive.swiftUIImage
-
+            DesignSystemAsset.Icons.notificationsActive.swiftUIImage
+                .imageColorSet(color: .Primary.primary300)
+            
         case .notificationsOff:
-            return DesignSystemAsset.Icons.notificationsOff.swiftUIImage
-
+            DesignSystemAsset.Icons.notificationsOff.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray400)
+            
         case .search:
-            return DesignSystemAsset.Icons.search.swiftUIImage
-
+            DesignSystemAsset.Icons.search.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray400)
+            
         case .visibilityOff:
-            return DesignSystemAsset.Icons.visibilityOff.swiftUIImage
-
+            DesignSystemAsset.Icons.visibilityOff.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray700)
+            
         case .visibility:
-            return DesignSystemAsset.Icons.visibility.swiftUIImage
-
+            DesignSystemAsset.Icons.visibility.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray700)
+            
         case .xmark:
-            return DesignSystemAsset.Icons.xmark.swiftUIImage
+            DesignSystemAsset.Icons.xmark.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray700)
         }
+    }
+}
+
+private extension SwiftUI.Image {
+    @ViewBuilder
+    func imageColorSet(color: Color) -> some View {
+        self
+            .resizable()
+            .renderingMode(.template)
+            .foregroundColor(color)
     }
 }
