@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Component 7-1.svg",
+      "filename" : "Property 1=visibility_off.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -17,5 +17,8 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }
