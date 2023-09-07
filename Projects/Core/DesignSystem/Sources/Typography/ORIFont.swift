@@ -7,11 +7,13 @@ public struct ORIFont: ViewModifier {
         switch style {
         case let .heading(font):
             return content
-                .font(.custom("SUIT-\(font.weight)", size: font.size))
+                .font(.custom("SUIT-\(font.weight)", size: font.size.fontSize))
+                .frame(height: font.size.fontHeight)
 
         case let .body(font):
             return content
-                .font(.custom("SUIT-\(font.weight)", size: font.size))
+                .font(.custom("SUIT-\(font.weight)", size: font.size.fontSize))
+                .frame(height: font.size.fontHeight)
         }
     }
 }

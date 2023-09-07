@@ -14,9 +14,6 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             VStack {
-                Text("Home View")
-
-                MapView(locationManager: .init())
             }
         }
     }

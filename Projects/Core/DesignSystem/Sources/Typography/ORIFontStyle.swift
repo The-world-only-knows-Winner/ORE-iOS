@@ -1,8 +1,13 @@
 import SwiftUI
 
 protocol ORIFontable {
-    var size: CGFloat { get }
+    var size: Size { get }
     var weight: ORIFontWeight { get }
+}
+
+public struct Size {
+    var fontSize: CGFloat
+    var fontHeight: CGFloat
 }
 
 public enum ORIFontWeight: String {
@@ -19,22 +24,27 @@ public enum ORIFontStyle: Hashable {
         case heading1
         case heading2
         case heading3
-        var size: CGFloat {
+        var size: Size {
             switch self {
-            case .heading1: return 22
-            case .heading2, .heading3: return 18
+            case .heading1:
+                return .init(fontSize: 22, fontHeight: 32)
+            case .heading2, .heading3:
+                return .init(fontSize: 18, fontHeight: 28)
             }
         }
     }
+
     public enum Body: CGFloat, ORIFontable {
         case body1
         case body2
         case body3
         case body4
-        var size: CGFloat {
+        var size: Size {
             switch self {
-            case .body1, .body2: return 16
-            case .body3, .body4: return 14
+            case .body1, .body2:
+                return .init(fontSize: 16, fontHeight: 24)
+            case .body3, .body4:
+                return .init(fontSize: 14, fontHeight: 20)
             }
         }
     }
