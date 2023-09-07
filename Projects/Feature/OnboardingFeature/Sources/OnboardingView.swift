@@ -82,11 +82,11 @@ struct OnboardingView: View {
 
             VStack(spacing: 0) {
                 ORIButton(text: "새 계정으로 시작하기", style: .default) {
-                    viewModel.isNavigatedToSignin.toggle()
+                    viewModel.isNavigatedToSignup.toggle()
                 }
 
                 Button {
-                    viewModel.isNavigatedToSignup.toggle()
+                    viewModel.isNavigatedToSignin.toggle()
                 } label: {
                     Text("기존 계정으로 계속하기")
                         .oriFont(.body(.body3), color: .GrayScale.gray500)
