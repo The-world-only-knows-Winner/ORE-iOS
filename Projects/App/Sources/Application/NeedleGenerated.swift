@@ -50,15 +50,20 @@ private func factoryace9f05f51d68f4c0677f47b58f8f304c97af4d5(_ component: Needle
     return SplashDependencye0cb7136f2ec3edfd60aProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class OnboardingDependencyf77d0055983a00cf8835Provider: OnboardingDependency {
-
-
-    init() {
-
+    var signinFactory: any SigninFactory {
+        return appComponent.signinFactory
+    }
+    var signupFactory: any SignupFactory {
+        return appComponent.signupFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->OnboardingComponent
-private func factory88dc13cc29c5719e2b01e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return OnboardingDependencyf77d0055983a00cf8835Provider()
+private func factory88dc13cc29c5719e2b01f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return OnboardingDependencyf77d0055983a00cf8835Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class SignupDependency1ff7d1355204bb65e850Provider: SignupDependency {
 
@@ -154,7 +159,8 @@ extension SplashComponent: Registration {
 }
 extension OnboardingComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\OnboardingDependency.signinFactory] = "signinFactory-any SigninFactory"
+        keyPathToName[\OnboardingDependency.signupFactory] = "signupFactory-any SignupFactory"
     }
 }
 extension SignupComponent: Registration {
@@ -202,7 +208,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
 @inline(never) private func register1() {
     registerProviderFactory("^->AppComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->AppComponent->SplashComponent", factoryace9f05f51d68f4c0677f47b58f8f304c97af4d5)
-    registerProviderFactory("^->AppComponent->OnboardingComponent", factory88dc13cc29c5719e2b01e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->OnboardingComponent", factory88dc13cc29c5719e2b01f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->SignupComponent", factory86602ff0d0dbaf2cb017e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->MyPageComponent", factory0f6f456ebf157d02dfb3e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5)
