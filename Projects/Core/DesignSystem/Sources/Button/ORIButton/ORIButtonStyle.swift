@@ -1,7 +1,7 @@
 import SwiftUI
 
 public struct ORIButtonStyle: ButtonStyle {
-    var style: ButtonType
+    var style: ORIButtonType
 
     public func makeBody(configuration: Configuration) -> some View {
         switch style {
@@ -15,7 +15,7 @@ public struct ORIButtonStyle: ButtonStyle {
 
 // MARK: - Usage
 extension Button {
-    func oriButtonStyle(_ style: ButtonType) -> some View {
+    func oriButtonStyle(_ style: ORIButtonType) -> some View {
         self.buttonStyle(ORIButtonStyle(style: style))
     }
 }
@@ -30,7 +30,7 @@ extension ORIButtonStyle {
         var body: some View {
             configuration.label
                 .oriFont(
-                    .body(.body1, weight: .semiBold),
+                    .body(.body1),
                     color: isLightModel ?
                         .GrayScale.gray100 :
                             .GrayScale.gray700
@@ -44,7 +44,6 @@ extension ORIButtonStyle {
                             .Primary.primary300 :
                             .GrayScale.gray400
                 )
-                .cornerRadius(12)
         }
     }
 }
@@ -59,7 +58,7 @@ extension ORIButtonStyle {
         var body: some View {
             configuration.label
                 .oriFont(
-                    .body(.body1, weight: .semiBold),
+                    .body(.body1),
                     color: isEnabled ?
                         .Primary.primary300 :
                         isLightModel ?

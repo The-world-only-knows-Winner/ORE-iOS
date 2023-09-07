@@ -1,13 +1,13 @@
 import SwiftUI
 
-public struct ORIButton: View {
+public struct InputButton: View {
     var text: String
-    var style: ButtonType
+    var style: InputButtonType
     var action: () -> Void
 
     public init(
         text: String,
-        style: ButtonType,
+        style: InputButtonType,
         action: @escaping () -> Void
     ) {
         self.text = text
@@ -17,6 +17,6 @@ public struct ORIButton: View {
 
     public var body: some View {
         Button(text, action: action)
-            .buttonStyle(ORIButtonStyle(style: style))
+            .buttonStyle(InputButtonStyle(style: style))
     }
 }

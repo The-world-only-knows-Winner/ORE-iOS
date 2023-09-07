@@ -1,6 +1,6 @@
 import Foundation
 
-public enum ButtonType {
+public enum ORIButtonType {
     case `default`
     case sub
 }
