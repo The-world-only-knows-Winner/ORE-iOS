@@ -5,13 +5,13 @@ public struct ORIFont: ViewModifier {
 
     public func body(content: Content) -> some View {
         switch style {
-        case let .heading(font, weight):
+        case let .heading(font):
             return content
-                .font(.custom("SUIT-\(weight)", size: font.size))
+                .font(.custom("SUIT-\(font.weight)", size: font.size))
 
-        case let .body(font, weight):
+        case let .body(font):
             return content
-                .font(.custom("SUIT-\(weight)", size: font.size))
+                .font(.custom("SUIT-\(font.weight)", size: font.size))
         }
     }
 }

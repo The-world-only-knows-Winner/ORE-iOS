@@ -2,6 +2,7 @@ import SwiftUI
 
 protocol ORIFontable {
     var size: CGFloat { get }
+    var weight: ORIFontWeight { get }
 }
 
 public enum ORIFontWeight: String {
@@ -11,26 +12,29 @@ public enum ORIFontWeight: String {
 }
 
 public enum ORIFontStyle: Hashable {
-    case heading(ORIFontStyle.Heading, weight: ORIFontWeight)
-    case body(ORIFontStyle.Body, weight: ORIFontWeight)
+    case heading(ORIFontStyle.Heading)
+    case body(ORIFontStyle.Body)
 
     public enum Heading: CGFloat, ORIFontable {
         case heading1
         case heading2
+        case heading3
         var size: CGFloat {
             switch self {
             case .heading1: return 22
-            case .heading2: return 18
+            case .heading2, .heading3: return 18
             }
         }
     }
     public enum Body: CGFloat, ORIFontable {
         case body1
         case body2
+        case body3
+        case body4
         var size: CGFloat {
             switch self {
-            case .body1: return 16
-            case .body2: return 14
+            case .body1, .body2: return 16
+            case .body3, .body4: return 14
             }
         }
     }
@@ -40,5 +44,25 @@ public enum ORIFontStyle: Hashable {
 extension ORIFontable where Self: RawRepresentable, Self.RawValue == CGFloat {
     var size: CGFloat {
         self.rawValue
+    }
+}
+
+// MARK: - Header
+public extension ORIFontStyle.Heading {
+    var weight: ORIFontWeight {
+        switch self {
+        case .heading1, .heading2: return .bold
+        case .heading3: return .semiBold
+        }
+    }
+}
+
+// MARK: - Body
+public extension ORIFontStyle.Body {
+    var weight: ORIFontWeight {
+        switch self {
+        case .body1, .body3: return .semiBold
+        case .body2, .body4: return .medium
+        }
     }
 }
