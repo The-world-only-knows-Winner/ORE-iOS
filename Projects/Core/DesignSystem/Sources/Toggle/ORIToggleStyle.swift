@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct ORIToggleBtnStyle: ToggleStyle {
+public struct ORIToggleStyle: ToggleStyle {
 //    @Environment(\.isEnabled) var isEnabled: Bool
     public func makeBody(configuration: Configuration) -> some View {
         HStack {
