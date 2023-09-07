@@ -14,11 +14,11 @@ public struct ORIToggleStyle: ToggleStyle {
                     .frame(width: 20, height: 20)
                     .padding(4)
                     .foregroundColor(configuration.isOn ? .Primary.primary300 : .GrayScale.gray300)
-                    .onTapGesture {
-                        withAnimation {
-                            configuration.$isOn.wrappedValue.toggle()
-                        }
-                    }
+            }
+            .onTapGesture {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 1)) {
+                    configuration.$isOn.wrappedValue.toggle()
+                }
             }
         }
     }
