@@ -1,15 +1,16 @@
 import SwiftUI
 
-struct ORITextField: View {
+public struct ORITextField: View {
     @Binding var text: String
     @FocusState var isFocused: Bool
+    @State private var isSecure: Bool = true
     let placehoder: String
     let title: String
     let type: InputBoxType?
     let description: DescriptionType?
     let onCommit: () -> Void
 
-    init(
+    public init(
         text: Binding<String>,
         placehoder: String,
         title: String,
@@ -25,17 +26,24 @@ struct ORITextField: View {
         self.onCommit = onCommit
     }
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title)
                 .oriFont(.body(.body4), color: .GrayScale.gray500)
 
             HStack(spacing: 12) {
                 ZStack(alignment: .leading) {
-                    TextField("", text: $text)
-                        .oriFont(.body(.body1), color: .GrayScale.gray700)
-                        .focused($isFocused)
-                        .onSubmit(onCommit)
+                    Group {
+                        if isSecure && type == .secure {
+                            SecureField("", text: $text)
+                        } else {
+                            TextField("", text: $text)
+                        }
+
+                    }
+                    .oriFont(.body(.body1), color: .GrayScale.gray700)
+                    .focused($isFocused)
+                    .onSubmit(onCommit)
 
                     Text(placehoder)
                         .oriFont(.body(.body1), color: .GrayScale.gray400)
@@ -63,6 +71,13 @@ struct ORITextField: View {
                             text: "인증하기",
                             style: type,
                             action: onCommit)
+
+                    case .secure:
+                        ORIIcon(isSecure ? .visibilityOff : .visibility)
+                            .frame(width: 24, height: 24)
+                            .onTapGesture {
+                                isSecure.toggle()
+                            }
                     }
                 }
             }
@@ -98,15 +113,4 @@ struct ORITextField_Previews: PreviewProvider {
             title: "title"
         )
     }
-}
-
-enum InputBoxType {
-    case button(InputButtonType)
-    case icon(ORIIcon.Image)
-}
-
-enum DescriptionType: String {
-    case success = "인증 메일이 발송되었어요."
-    case fail = "이미 가입되있는 이메일이에요."
-    case isEmpty = "내용을 입력해주세요."
 }
