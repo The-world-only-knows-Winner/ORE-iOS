@@ -5,7 +5,7 @@ import JwtStore
 import NeedleFoundation
 
 @main
-struct JOBISAPP: App {
+struct ORIAPP: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject var appState = AppState(sceneFlow: .splash)
 
@@ -20,7 +20,6 @@ struct JOBISAPP: App {
     var body: some Scene {
         WindowGroup {
             AppComponent(keychain: keychain).makeRootView()
-                .preferredColorScheme(.light)
                 .environmentObject(appState)
         }
     }
