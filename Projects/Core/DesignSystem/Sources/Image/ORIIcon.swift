@@ -30,6 +30,7 @@ public struct ORIIcon: View {
         oriIconToImage()
     }
 
+    // swiftlint: disable all
     @ViewBuilder
     public func oriIconToImage() -> some View {
         switch image {
