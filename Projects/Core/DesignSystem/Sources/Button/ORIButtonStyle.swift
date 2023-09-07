@@ -1,9 +1,81 @@
-//
-//  ORIButtonStyle.swift
-//  DesignSystem
-//
-//  Created by 홍승재 on 2023/09/07.
-//  Copyright © 2023 com.onlywin. All rights reserved.
-//
+import SwiftUI
 
-import Foundation
+public struct ORIButtonStyle: ButtonStyle {
+    var style: ButtonType
+
+    public func makeBody(configuration: Configuration) -> some View {
+        switch style {
+        case .default:
+            DefaultButton(configuration: configuration)
+        case .sub:
+            SubButton(configuration: configuration)
+        }
+    }
+}
+
+// MARK: - Usage
+extension Button {
+    func oriButtonStyle(_ style: ButtonType) -> some View {
+        self.buttonStyle(ORIButtonStyle(style: style))
+    }
+}
+
+// MARK: - Default
+extension ORIButtonStyle {
+    struct DefaultButton: View {
+        let configuration: ButtonStyle.Configuration
+        @Environment(\.isEnabled) private var isEnabled: Bool
+        @Environment(\.colorScheme) private var scheme
+        var isLightModel: Bool { scheme == .light }
+        var body: some View {
+            configuration.label
+                .oriFont(
+                    .body(.body1, weight: .semiBold),
+                    color: isLightModel ?
+                        .GrayScale.gray100 :
+                            .GrayScale.gray700
+                )
+                .padding(.vertical, 12)
+                .frame(maxWidth: .infinity)
+                .background(
+                    isEnabled ?
+                    configuration.isPressed ?
+                    Color.Primary.primary400 :
+                            .Primary.primary300 :
+                            .GrayScale.gray400
+                )
+                .cornerRadius(12)
+        }
+    }
+}
+
+// MARK: - Sub
+extension ORIButtonStyle {
+    struct SubButton: View {
+        let configuration: ButtonStyle.Configuration
+        @Environment(\.isEnabled) private var isEnabled: Bool
+        @Environment(\.colorScheme) private var scheme
+        var isLightModel: Bool { scheme == .light }
+        var body: some View {
+            configuration.label
+                .oriFont(
+                    .body(.body1, weight: .semiBold),
+                    color: isEnabled ?
+                        .Primary.primary300 :
+                        isLightModel ?
+                        .GrayScale.gray100 :
+                            .GrayScale.gray700
+                )
+                .padding(.vertical, 12)
+                .frame(maxWidth: .infinity)
+                .background(
+                    isEnabled ?
+                    configuration.isPressed ?
+                    Color.Primary.primary200 :
+                            .Primary.primary100 :
+                            .GrayScale.gray400
+                )
+                .cornerRadius(12)
+        }
+    }
+}

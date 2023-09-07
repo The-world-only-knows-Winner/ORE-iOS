@@ -22,7 +22,7 @@ public extension View {
             .modifier(DesignSystem.ORIFont(style: style))
     }
 
-    func oriSFont(_ style: ORIFontStyle, color: Color) -> some View {
+    func oriFont(_ style: ORIFontStyle, color: Color) -> some View {
         self
             .oriFont(style)
             .foregroundColor(color)

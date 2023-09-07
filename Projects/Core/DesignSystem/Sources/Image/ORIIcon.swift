@@ -2,15 +2,15 @@ import SwiftUI
 
 public struct ORIIcon: View {
     public enum Image {
-        case annotation
+        case accountCircle
         case arrowBack
-        case bellOff
-        case bellOn
-        case busIcon
-        case eyeClose
-        case eyeOpen
-        case magnifyingglass
-        case personCircle
+        case expandMore
+        case notificationsActive
+        case notificationsOff
+        case search
+        case visibilityOff
+        case visibility
+        case xmark
     }
 
     private var image: Image
@@ -32,32 +32,32 @@ public struct ORIIcon: View {
 
     public func oriIconToImage() -> SwiftUI.Image {
         switch image {
-        case .annotation:
-            return DesignSystemAsset.Icons.annotation.swiftUIImage
+        case .accountCircle:
+            return DesignSystemAsset.Icons.accountCircle.swiftUIImage
 
         case .arrowBack:
             return DesignSystemAsset.Icons.arrowBack.swiftUIImage
 
-        case .bellOff:
-            return DesignSystemAsset.Icons.bellOff.swiftUIImage
+        case .expandMore:
+            return DesignSystemAsset.Icons.expandMore.swiftUIImage
 
-        case .bellOn:
-            return DesignSystemAsset.Icons.bellOn.swiftUIImage
+        case .notificationsActive:
+            return DesignSystemAsset.Icons.notificationsActive.swiftUIImage
 
-        case .busIcon:
-            return DesignSystemAsset.Icons.busIcon.swiftUIImage
+        case .notificationsOff:
+            return DesignSystemAsset.Icons.notificationsOff.swiftUIImage
 
-        case .eyeClose:
-            return DesignSystemAsset.Icons.eyeClose.swiftUIImage
+        case .search:
+            return DesignSystemAsset.Icons.search.swiftUIImage
 
-        case .eyeOpen:
-            return DesignSystemAsset.Icons.eyeOpen.swiftUIImage
+        case .visibilityOff:
+            return DesignSystemAsset.Icons.visibilityOff.swiftUIImage
 
-        case .magnifyingglass:
-            return DesignSystemAsset.Icons.magnifyingglass.swiftUIImage
+        case .visibility:
+            return DesignSystemAsset.Icons.visibility.swiftUIImage
 
-        case .personCircle:
-            return DesignSystemAsset.Icons.personCircle.swiftUIImage
+        case .xmark:
+            return DesignSystemAsset.Icons.xmark.swiftUIImage
         }
     }
 }
