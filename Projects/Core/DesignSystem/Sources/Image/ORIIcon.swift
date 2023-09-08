@@ -72,7 +72,8 @@ public struct ORIIcon: View {
 
         case .check:
             DesignSystemAsset.Icons.check.swiftUIImage
-                .imageColorSet(color: .State.green)
+                .resizable()
+                .renderingMode(renderingMode)
 
         case .error:
             DesignSystemAsset.Icons.error.swiftUIImage
