@@ -16,4 +16,11 @@ public extension Date {
         lastFormatter.locale = Locale(identifier: "ko_kr")
         return lastFormatter.string(from: self)
     }
+
+    func toHyphenStrng() -> String {
+        let lastFormatter = DateFormatter()
+        lastFormatter.dateFormat = "yyyy - MM - dd"
+        lastFormatter.locale = Locale(identifier: "ko_kr")
+        return lastFormatter.string(from: self)
+    }
 }
