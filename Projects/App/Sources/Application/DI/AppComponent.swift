@@ -42,8 +42,11 @@ public extension AppComponent {
     var signinFactory: any SigninFactory {
         SigninComponent(parent: self)
     }
-    var signupFactory: any SignupFactory {
-        SignupComponent(parent: self)
+    var authSignupFactory: any AuthSignupFactory {
+        AuthSignupComponent(parent: self)
+    }
+    var userInfoSignupFactory: any UserInfoSignupFactory {
+        UserInfoSignupComponent(parent: self)
     }
     var onboardingFactory: any OnboardingFactory {
         OnboardingComponent(parent: self)
