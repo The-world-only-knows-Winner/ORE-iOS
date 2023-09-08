@@ -6,20 +6,19 @@ import SignupFeatureInterface
 
 struct OnboardingView: View {
     @Environment(\.colorScheme) var scheme
-    @EnvironmentObject var appState: AppState
     @StateObject var viewModel: OnboardingViewModel
 
     private let signinFactory: any SigninFactory
-    private let signupFactory: any SignupFactory
+    private let signupFactory: any AuthSignupFactory
 
     init(
         viewModel: OnboardingViewModel,
         signinFactory: any SigninFactory,
-        signupFactory: any SignupFactory
+        authSignupFactory: any AuthSignupFactory
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.signinFactory = signinFactory
-        self.signupFactory = signupFactory
+        self.signupFactory = authSignupFactory
     }
 
     var body: some View {
