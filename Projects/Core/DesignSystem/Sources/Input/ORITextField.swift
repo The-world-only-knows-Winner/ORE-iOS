@@ -84,16 +84,8 @@ public struct ORITextField: View {
 
             if let description {
                 HStack(spacing: 4) {
-                    Group {
-                        switch description {
-                        case .success:
-                            ORIIcon(.check)
-
-                        case .fail, .isEmpty:
-                            ORIIcon(.error)
-                        }
-                    }
-                    .frame(width: 20, height: 20)
+                    description.descriptionIcon()
+                        .frame(width: 20, height: 20)
 
                     Text(description.rawValue)
                         .oriFont(.body(.body3), color: .GrayScale.gray700)
