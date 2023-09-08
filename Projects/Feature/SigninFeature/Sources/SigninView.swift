@@ -22,7 +22,7 @@ struct SigninView: View {
         VStack(alignment: .leading, spacing: 0) {
             ORITextField(
                 text: $viewModel.email,
-                placehoder: "이메일을 입력해주세요",
+                placehoder: "example@ex.com",
                 title: "이메일",
                 description: viewModel.emailDescription
             ) {
