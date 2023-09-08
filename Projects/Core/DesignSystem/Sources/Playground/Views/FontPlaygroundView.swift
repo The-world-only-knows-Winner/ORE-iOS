@@ -5,13 +5,13 @@ struct FontPlaygroundView: View {
         ("Heading", [
             .heading(.heading1),
             .heading(.heading2),
-            .heading(.heading3),
+            .heading(.heading3)
         ]),
         ("Body", [
             .body(.body1),
             .body(.body2),
             .body(.body3),
-            .body(.body4),
+            .body(.body4)
         ])
     ]
     var body: some View {

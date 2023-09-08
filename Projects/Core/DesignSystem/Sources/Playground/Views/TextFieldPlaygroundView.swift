@@ -22,14 +22,14 @@ struct TextFieldPlaygroundView: View {
                     placehoder: "플레이스홀더",
                     title: "타이틀",
                     type: .icon(.visibility),
-                    description: .success
+                    description: .successToSendEmail
                 ) { }
                 ORITextField(
                     text: $text3,
                     placehoder: "플레이스홀더",
                     title: "타이틀",
                     type: .icon(.visibilityOff),
-                    description: .fail
+                    description: .wrongPassword
                 ) { }
 
                 ORITextField(
