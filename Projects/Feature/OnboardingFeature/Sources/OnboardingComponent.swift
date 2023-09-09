@@ -1,5 +1,4 @@
 import SwiftUI
-import UsersDomainInterface
 import NeedleFoundation
 import OnboardingFeatureInterface
 import SigninFeatureInterface
@@ -7,7 +6,7 @@ import SignupFeatureInterface
 
 public protocol OnboardingDependency: Dependency {
     var signinFactory: any SigninFactory { get }
-    var signupFactory: any SignupFactory { get }
+    var authSignupFactory: any AuthSignupFactory { get }
 }
 
 public final class OnboardingComponent: Component<OnboardingDependency>, OnboardingFactory {
@@ -16,7 +15,7 @@ public final class OnboardingComponent: Component<OnboardingDependency>, Onboard
             OnboardingView(
                 viewModel: .init(),
                 signinFactory: dependency.signinFactory,
-                signupFactory: dependency.signupFactory
+                authSignupFactory: dependency.authSignupFactory
             )
         }
     }

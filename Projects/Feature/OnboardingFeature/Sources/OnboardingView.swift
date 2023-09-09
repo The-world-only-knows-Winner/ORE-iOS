@@ -6,20 +6,19 @@ import SignupFeatureInterface
 
 struct OnboardingView: View {
     @Environment(\.colorScheme) var scheme
-    @EnvironmentObject var appState: AppState
     @StateObject var viewModel: OnboardingViewModel
 
     private let signinFactory: any SigninFactory
-    private let signupFactory: any SignupFactory
+    private let signupFactory: any AuthSignupFactory
 
     init(
         viewModel: OnboardingViewModel,
         signinFactory: any SigninFactory,
-        signupFactory: any SignupFactory
+        authSignupFactory: any AuthSignupFactory
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.signinFactory = signinFactory
-        self.signupFactory = signupFactory
+        self.signupFactory = authSignupFactory
     }
 
     var body: some View {
@@ -44,7 +43,6 @@ struct OnboardingView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             .indexViewStyle(.page(backgroundDisplayMode: .never))
             .frame(maxHeight: viewModel.imageHeight)
-            .padding(.top, 44)
 
             HStack(spacing: 8) {
                 ForEach(0..<viewModel.onboardings.count, id: \.self) { index in
@@ -82,11 +80,11 @@ struct OnboardingView: View {
 
             VStack(spacing: 0) {
                 ORIButton(text: "새 계정으로 시작하기", style: .default) {
-                    viewModel.isNavigatedToSignin.toggle()
+                    viewModel.isNavigatedToSignup.toggle()
                 }
 
                 Button {
-                    viewModel.isNavigatedToSignup.toggle()
+                    viewModel.isNavigatedToSignin.toggle()
                 } label: {
                     Text("기존 계정으로 계속하기")
                         .oriFont(.body(.body3), color: .GrayScale.gray500)
@@ -95,7 +93,9 @@ struct OnboardingView: View {
                 }
             }
         }
-        .oriBackground()
+        .oriNavigationBar(
+            headerTitle: ""
+        )
         .navigate(to: signinFactory.makeView().eraseToAnyView(), when: $viewModel.isNavigatedToSignin)
         .navigate(to: signupFactory.makeView().eraseToAnyView(), when: $viewModel.isNavigatedToSignup)
     }

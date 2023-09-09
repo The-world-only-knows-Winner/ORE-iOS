@@ -53,8 +53,8 @@ private class OnboardingDependencyf77d0055983a00cf8835Provider: OnboardingDepend
     var signinFactory: any SigninFactory {
         return appComponent.signinFactory
     }
-    var signupFactory: any SignupFactory {
-        return appComponent.signupFactory
+    var authSignupFactory: any AuthSignupFactory {
+        return appComponent.authSignupFactory
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -65,16 +65,29 @@ private class OnboardingDependencyf77d0055983a00cf8835Provider: OnboardingDepend
 private func factory88dc13cc29c5719e2b01f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return OnboardingDependencyf77d0055983a00cf8835Provider(appComponent: parent1(component) as! AppComponent)
 }
-private class SignupDependency1ff7d1355204bb65e850Provider: SignupDependency {
+private class UserInfoSignupDependency5d825eaf14e0992a73dfProvider: UserInfoSignupDependency {
 
 
     init() {
 
     }
 }
-/// ^->AppComponent->SignupComponent
-private func factory86602ff0d0dbaf2cb017e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return SignupDependency1ff7d1355204bb65e850Provider()
+/// ^->AppComponent->UserInfoSignupComponent
+private func factoryfbb3c0678df14d66f7f1e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return UserInfoSignupDependency5d825eaf14e0992a73dfProvider()
+}
+private class AuthSignupDependencyd54db33cc08328be1537Provider: AuthSignupDependency {
+    var userInfoSignupFactory: any UserInfoSignupFactory {
+        return appComponent.userInfoSignupFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->AuthSignupComponent
+private func factoryc404adb4985b32c75154f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return AuthSignupDependencyd54db33cc08328be1537Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class MyPageDependency48d84b530313b3ee40feProvider: MyPageDependency {
 
@@ -142,7 +155,8 @@ extension AppComponent: Registration {
         localTable["reissueTokenUseCase-any ReissueTokenUseCase"] = { [unowned self] in self.reissueTokenUseCase as Any }
         localTable["logoutUseCase-any LogoutUseCase"] = { [unowned self] in self.logoutUseCase as Any }
         localTable["signinFactory-any SigninFactory"] = { [unowned self] in self.signinFactory as Any }
-        localTable["signupFactory-any SignupFactory"] = { [unowned self] in self.signupFactory as Any }
+        localTable["authSignupFactory-any AuthSignupFactory"] = { [unowned self] in self.authSignupFactory as Any }
+        localTable["userInfoSignupFactory-any UserInfoSignupFactory"] = { [unowned self] in self.userInfoSignupFactory as Any }
         localTable["onboardingFactory-any OnboardingFactory"] = { [unowned self] in self.onboardingFactory as Any }
         localTable["homeFactory-any HomeFactory"] = { [unowned self] in self.homeFactory as Any }
         localTable["splashFactory-any SplashFactory"] = { [unowned self] in self.splashFactory as Any }
@@ -160,12 +174,17 @@ extension SplashComponent: Registration {
 extension OnboardingComponent: Registration {
     public func registerItems() {
         keyPathToName[\OnboardingDependency.signinFactory] = "signinFactory-any SigninFactory"
-        keyPathToName[\OnboardingDependency.signupFactory] = "signupFactory-any SignupFactory"
+        keyPathToName[\OnboardingDependency.authSignupFactory] = "authSignupFactory-any AuthSignupFactory"
     }
 }
-extension SignupComponent: Registration {
+extension UserInfoSignupComponent: Registration {
     public func registerItems() {
 
+    }
+}
+extension AuthSignupComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\AuthSignupDependency.userInfoSignupFactory] = "userInfoSignupFactory-any UserInfoSignupFactory"
     }
 }
 extension MyPageComponent: Registration {
@@ -209,7 +228,8 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent", factoryEmptyDependencyProvider)
     registerProviderFactory("^->AppComponent->SplashComponent", factoryace9f05f51d68f4c0677f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->OnboardingComponent", factory88dc13cc29c5719e2b01f47b58f8f304c97af4d5)
-    registerProviderFactory("^->AppComponent->SignupComponent", factory86602ff0d0dbaf2cb017e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->UserInfoSignupComponent", factoryfbb3c0678df14d66f7f1e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->AuthSignupComponent", factoryc404adb4985b32c75154f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->MyPageComponent", factory0f6f456ebf157d02dfb3e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->SigninComponent", factory2882a056d84a613debcce3b0c44298fc1c149afb)

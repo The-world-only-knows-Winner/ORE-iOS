@@ -30,6 +30,7 @@ public struct ORIIcon: View {
         oriIconToImage()
     }
 
+    // swiftlint: disable all
     @ViewBuilder
     public func oriIconToImage() -> some View {
         switch image {
@@ -71,7 +72,8 @@ public struct ORIIcon: View {
 
         case .check:
             DesignSystemAsset.Icons.check.swiftUIImage
-                .imageColorSet(color: .State.green)
+                .resizable()
+                .renderingMode(renderingMode)
 
         case .error:
             DesignSystemAsset.Icons.error.swiftUIImage

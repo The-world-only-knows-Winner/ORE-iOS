@@ -8,7 +8,7 @@ public struct ORIButton: View {
 
     public init(
         text: String,
-        style: ORIButtonType,
+        style: ORIButtonType = .default,
         isFocused: Bool = false,
         action: @escaping () -> Void
     ) {
@@ -24,6 +24,6 @@ public struct ORIButton: View {
             .cornerRadius(isFocused ? 0 : 12)
             .padding(.vertical, isFocused ? 0 : 8)
             .padding(.horizontal, isFocused ? 0 : 20)
-            .animation(.spring(), value: isFocused)
+            .animation(.default, value: isFocused)
     }
 }
