@@ -30,7 +30,7 @@ struct UserInfoSignupView: View {
 
             ORITextField(
                 text: $viewModel.name,
-                placehoder: "이름을 입력해주세요.",
+                placehoder: "홍길동",
                 title: "이름"
             ) {
                 focusField = .dateBirth
