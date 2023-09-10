@@ -40,7 +40,7 @@ struct AuthSignupView: View {
             if viewModel.signupStep.rawValue >= 1 {
                 ORITextField(
                     text: $viewModel.authCode,
-                    placehoder: "인증코드를 입력해주세요",
+                    placehoder: "XXXXXX",
                     title: "인증 코드"
                 ) {
                     focusField = .password
