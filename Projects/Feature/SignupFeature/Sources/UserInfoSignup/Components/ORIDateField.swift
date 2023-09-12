@@ -8,18 +8,16 @@ struct ORIDateField: View {
     @Binding var isShowDatePicker: Bool
     @FocusState var isFocused: Bool
     let title: String
-    let onCommit: () -> Void
+
 
     public init(
         date: Binding<Date>,
         isShowDatePicker: Binding<Bool>,
-        title: String,
-        onCommit: @escaping () -> Void = {}
+        title: String
     ) {
         _date = date
         _isShowDatePicker = isShowDatePicker
         self.title = title
-        self.onCommit = onCommit
     }
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -56,6 +54,5 @@ struct ORIDateField: View {
         }
         .padding(.vertical, 16)
         .padding(.horizontal, 20)
-        .onChange(of: date) { _ in onCommit() }
     }
 }

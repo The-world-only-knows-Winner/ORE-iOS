@@ -19,7 +19,9 @@ final class UserInfoSignupViewModel: BaseViewModel {
     @Published var signupStep: SignupStep = .inputName
 
     @Published var name: String = ""
-    @Published var dateBirth: Date = .now
+    @Published var dateBirth: Date = Calendar
+        .current
+        .date(from: DateComponents(year: 2000, month: 1, day: 1)) ?? .now
 
     @Published var isNavigatedToUserInfoSignup: Bool = false
     @Published var isSuccessSignup: Bool = false

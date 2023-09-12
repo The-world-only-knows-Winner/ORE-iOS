@@ -23,16 +23,14 @@ struct UserInfoSignupView: View {
                 ORIDateField(
                     date: $viewModel.dateBirth,
                     isShowDatePicker: $viewModel.isShowDatePicker,
-                    title: "생년월일을 입력해주세요"
-                ) {
-                    viewModel.nextButtonDidTapped()
-                }
+                    title: "생년월일"
+                )
                 .focused($focusField, equals: .dateBirth)
             }
 
             ORITextField(
                 text: $viewModel.name,
-                placehoder: "이름을 입력해주세요.",
+                placehoder: "홍길동",
                 title: "이름"
             ) {
                 focusField = .dateBirth
