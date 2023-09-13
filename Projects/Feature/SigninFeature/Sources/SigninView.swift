@@ -37,7 +37,7 @@ struct SigninView: View {
                 title: "비밀번호",
                 type: .secure
             ) {
-                // login!
+                viewModel.isSuccessSignin.toggle()
             }
             .textContentType(.password)
             .focused($focusField, equals: .password)
@@ -45,8 +45,11 @@ struct SigninView: View {
             Spacer()
 
             ORIButton(text: "시작하기", isFocused: focusField != .none) {
-                // login
+                viewModel.isSuccessSignin.toggle()
             }
+        }
+        .onChange(of: viewModel.isSuccessSignin) { _ in
+            self.appState.sceneFlow = .home
         }
         .onAppear {
             focusField = .email
