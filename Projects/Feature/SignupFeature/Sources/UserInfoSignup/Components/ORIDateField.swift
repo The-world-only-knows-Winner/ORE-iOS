@@ -9,7 +9,6 @@ struct ORIDateField: View {
     @FocusState var isFocused: Bool
     let title: String
 
-
     public init(
         date: Binding<Date>,
         isShowDatePicker: Binding<Bool>,
@@ -19,6 +18,7 @@ struct ORIDateField: View {
         _isShowDatePicker = isShowDatePicker
         self.title = title
     }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title)
