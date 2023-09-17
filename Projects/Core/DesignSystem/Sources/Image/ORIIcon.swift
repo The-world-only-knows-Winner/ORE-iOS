@@ -13,6 +13,9 @@ public struct ORIIcon: View {
         case xmark
         case check
         case error
+        case receiptLong
+        case lock
+        case logout
     }
 
     private var image: Image
@@ -78,6 +81,18 @@ public struct ORIIcon: View {
         case .error:
             DesignSystemAsset.Icons.error.swiftUIImage
                 .imageColorSet(color: .State.red)
+
+        case .receiptLong:
+            DesignSystemAsset.Icons.receiptLong.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray700)
+
+        case .lock:
+            DesignSystemAsset.Icons.lock.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray700)
+
+        case .logout:
+            DesignSystemAsset.Icons.logout.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray700)
         }
     }
 }
