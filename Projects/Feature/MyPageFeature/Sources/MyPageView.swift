@@ -125,7 +125,7 @@ struct MyPageView: View {
             viewModel.isNavigatedToLogout.toggle()
         }
         .oriNavigationBar(
-            leadingItem: .init(image: .init(.arrowBack)) { dismiss() },
+            leadingItem: NavigationItem(image: ORIIcon(.arrowBack)) { dismiss() },
             pageTitle: "마이페이지"
         )
     }

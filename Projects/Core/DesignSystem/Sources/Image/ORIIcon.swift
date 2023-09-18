@@ -24,6 +24,7 @@ public struct ORIIcon: View {
         case arrowForward
         case myLocation
         case location
+        case pinLocation
     }
 
     private var image: Image
@@ -132,6 +133,11 @@ public struct ORIIcon: View {
 
         case .location:
             DesignSystemAsset.Icons.location.swiftUIImage
+                .resizable()
+                .renderingMode(renderingMode)
+
+        case .pinLocation:
+            DesignSystemAsset.Icons.pinLocation.swiftUIImage
                 .resizable()
                 .renderingMode(renderingMode)
         }
