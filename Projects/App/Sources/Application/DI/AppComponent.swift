@@ -11,6 +11,8 @@ import SignupFeature
 import SignupFeatureInterface
 import HomeFeature
 import HomeFeatureInterface
+import RouteFeature
+import RouteFeatureInterface
 import MyPageFeature
 import MyPageFeatureInterface
 import RenewalPasswordFeature
@@ -69,5 +71,8 @@ public extension AppComponent {
     }
     var changeProfileFactory: any ChangeProfileFactory {
         ChangeProfileComponent(parent: self)
+    }
+    var routeFactory: any RouteFactory {
+        RouteComponent(parent: self)
     }
 }
