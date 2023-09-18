@@ -10,7 +10,8 @@ public enum ModulePaths {
 
 public extension ModulePaths {
     enum Feature: String {
-        case RenewalPassword
+        case ChangeProfileFeature
+        case RenewalPasswordFeature
         case OnboardingFeature
         case MyPageFeature
         case HomeFeature

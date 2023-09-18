@@ -2,6 +2,8 @@
 
 import AuthDomain
 import AuthDomainInterface
+import ChangeProfileFeature
+import ChangeProfileFeatureInterface
 import DesignSystem
 import HomeFeature
 import HomeFeatureInterface
@@ -11,8 +13,8 @@ import MyPageFeatureInterface
 import NeedleFoundation
 import OnboardingFeature
 import OnboardingFeatureInterface
-import RenewalPassword
-import RenewalPasswordInterface
+import RenewalPasswordFeature
+import RenewalPasswordFeatureInterface
 import RootFeature
 import RootFeatureInterface
 import SigninFeature
@@ -95,6 +97,9 @@ private class MyPageDependency48d84b530313b3ee40feProvider: MyPageDependency {
     var renewalPasswordFactory: any RenewalPasswordFactory {
         return appComponent.renewalPasswordFactory
     }
+    var changeProfileFactory: any ChangeProfileFactory {
+        return appComponent.changeProfileFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -147,6 +152,17 @@ private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
 private func factory67229cdf0f755562b2b1f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return HomeDependency443c4e1871277bd8432aProvider(appComponent: parent1(component) as! AppComponent)
 }
+private class ChangeProfileDependency18055275199967076a28Provider: ChangeProfileDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->ChangeProfileComponent
+private func factory239204ef0c47c0c68c97e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return ChangeProfileDependency18055275199967076a28Provider()
+}
 private class RenewalPasswordDependencya722dc02d5f3ad3403cfProvider: RenewalPasswordDependency {
 
 
@@ -179,6 +195,7 @@ extension AppComponent: Registration {
         localTable["splashFactory-any SplashFactory"] = { [unowned self] in self.splashFactory as Any }
         localTable["myPageFactory-any MyPageFactory"] = { [unowned self] in self.myPageFactory as Any }
         localTable["renewalPasswordFactory-any RenewalPasswordFactory"] = { [unowned self] in self.renewalPasswordFactory as Any }
+        localTable["changeProfileFactory-any ChangeProfileFactory"] = { [unowned self] in self.changeProfileFactory as Any }
         localTable["remoteUsersDataSource-any RemoteUsersDataSource"] = { [unowned self] in self.remoteUsersDataSource as Any }
         localTable["usersRepository-any UsersRepository"] = { [unowned self] in self.usersRepository as Any }
         localTable["signinUseCase-any SigninUseCase"] = { [unowned self] in self.signinUseCase as Any }
@@ -208,6 +225,7 @@ extension AuthSignupComponent: Registration {
 extension MyPageComponent: Registration {
     public func registerItems() {
         keyPathToName[\MyPageDependency.renewalPasswordFactory] = "renewalPasswordFactory-any RenewalPasswordFactory"
+        keyPathToName[\MyPageDependency.changeProfileFactory] = "changeProfileFactory-any ChangeProfileFactory"
     }
 }
 extension RootComponent: Registration {
@@ -225,6 +243,11 @@ extension SigninComponent: Registration {
 extension HomeComponent: Registration {
     public func registerItems() {
         keyPathToName[\HomeDependency.myPageFactory] = "myPageFactory-any MyPageFactory"
+    }
+}
+extension ChangeProfileComponent: Registration {
+    public func registerItems() {
+
     }
 }
 extension RenewalPasswordComponent: Registration {
@@ -257,6 +280,7 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->SigninComponent", factory2882a056d84a613debcce3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->ChangeProfileComponent", factory239204ef0c47c0c68c97e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->RenewalPasswordComponent", factory236a429a80d834e1f370e3b0c44298fc1c149afb)
 }
 #endif

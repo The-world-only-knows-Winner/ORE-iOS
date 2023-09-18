@@ -1,6 +1,6 @@
 import SwiftUI
 import NeedleFoundation
-import RenewalPasswordInterface
+import RenewalPasswordFeatureInterface
 
 public protocol RenewalPasswordDependency: Dependency {}
 

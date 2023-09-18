@@ -1,17 +1,18 @@
 import DesignSystem
 import SwiftUI
+import BaseFeature
 
-struct RenewalPasswordView: View {
+struct ChangeProfileView: View {
     private enum FocusField {
         case name
         case dateBirth
     }
     @FocusState private var focusField: FocusField?
     @Environment(\.dismiss) private var dismiss
-    @StateObject var viewModel: RenewalPasswordViewModel
+    @StateObject var viewModel: ChangeProfileViewModel
 
     init(
-        viewModel: RenewalPasswordViewModel
+        viewModel: ChangeProfileViewModel
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }

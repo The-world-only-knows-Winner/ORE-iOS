@@ -3,12 +3,10 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let project = Project.makeModule(
-    name: ModulePaths.Feature.MyPageFeature.rawValue,
+    name: ModulePaths.Feature.RenewalPasswordFeature.rawValue,
     product: .staticLibrary,
     targets: [.interface, .unitTest],
     internalDependencies: [
-        .Feature.BaseFeature,
-        .Feature.RenewalPasswordFeatureInterface,
-        .Feature.ChangeProfileFeatureInterface
+        .Feature.BaseFeature
     ]
 )
