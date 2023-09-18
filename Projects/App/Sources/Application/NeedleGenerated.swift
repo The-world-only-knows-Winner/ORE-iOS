@@ -11,6 +11,8 @@ import MyPageFeatureInterface
 import NeedleFoundation
 import OnboardingFeature
 import OnboardingFeatureInterface
+import RenewalPassword
+import RenewalPasswordInterface
 import RootFeature
 import RootFeatureInterface
 import SigninFeature
@@ -90,15 +92,17 @@ private func factoryc404adb4985b32c75154f47b58f8f304c97af4d5(_ component: Needle
     return AuthSignupDependencyd54db33cc08328be1537Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class MyPageDependency48d84b530313b3ee40feProvider: MyPageDependency {
-
-
-    init() {
-
+    var renewalPasswordFactory: any RenewalPasswordFactory {
+        return appComponent.renewalPasswordFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->MyPageComponent
-private func factory0f6f456ebf157d02dfb3e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return MyPageDependency48d84b530313b3ee40feProvider()
+private func factory0f6f456ebf157d02dfb3f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return MyPageDependency48d84b530313b3ee40feProvider(appComponent: parent1(component) as! AppComponent)
 }
 private class RootDependency3944cc797a4a88956fb5Provider: RootDependency {
     var onboardingFactory: any OnboardingFactory {
@@ -143,6 +147,17 @@ private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
 private func factory67229cdf0f755562b2b1f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return HomeDependency443c4e1871277bd8432aProvider(appComponent: parent1(component) as! AppComponent)
 }
+private class RenewalPasswordDependencya722dc02d5f3ad3403cfProvider: RenewalPasswordDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->RenewalPasswordComponent
+private func factory236a429a80d834e1f370e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return RenewalPasswordDependencya722dc02d5f3ad3403cfProvider()
+}
 
 #else
 extension AppComponent: Registration {
@@ -163,6 +178,7 @@ extension AppComponent: Registration {
         localTable["homeFactory-any HomeFactory"] = { [unowned self] in self.homeFactory as Any }
         localTable["splashFactory-any SplashFactory"] = { [unowned self] in self.splashFactory as Any }
         localTable["myPageFactory-any MyPageFactory"] = { [unowned self] in self.myPageFactory as Any }
+        localTable["renewalPasswordFactory-any RenewalPasswordFactory"] = { [unowned self] in self.renewalPasswordFactory as Any }
         localTable["remoteUsersDataSource-any RemoteUsersDataSource"] = { [unowned self] in self.remoteUsersDataSource as Any }
         localTable["usersRepository-any UsersRepository"] = { [unowned self] in self.usersRepository as Any }
         localTable["signinUseCase-any SigninUseCase"] = { [unowned self] in self.signinUseCase as Any }
@@ -191,7 +207,7 @@ extension AuthSignupComponent: Registration {
 }
 extension MyPageComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\MyPageDependency.renewalPasswordFactory] = "renewalPasswordFactory-any RenewalPasswordFactory"
     }
 }
 extension RootComponent: Registration {
@@ -209,6 +225,11 @@ extension SigninComponent: Registration {
 extension HomeComponent: Registration {
     public func registerItems() {
         keyPathToName[\HomeDependency.myPageFactory] = "myPageFactory-any MyPageFactory"
+    }
+}
+extension RenewalPasswordComponent: Registration {
+    public func registerItems() {
+
     }
 }
 
@@ -232,10 +253,11 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->OnboardingComponent", factory88dc13cc29c5719e2b01f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->UserInfoSignupComponent", factoryfbb3c0678df14d66f7f1e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->AuthSignupComponent", factoryc404adb4985b32c75154f47b58f8f304c97af4d5)
-    registerProviderFactory("^->AppComponent->MyPageComponent", factory0f6f456ebf157d02dfb3e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->MyPageComponent", factory0f6f456ebf157d02dfb3f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->SigninComponent", factory2882a056d84a613debcce3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->RenewalPasswordComponent", factory236a429a80d834e1f370e3b0c44298fc1c149afb)
 }
 #endif
 

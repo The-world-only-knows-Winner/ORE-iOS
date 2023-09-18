@@ -13,6 +13,8 @@ import HomeFeature
 import HomeFeatureInterface
 import MyPageFeature
 import MyPageFeatureInterface
+import RenewalPassword
+import RenewalPasswordInterface
 import SplashFeature
 import SplashFeatureInterface
 
@@ -59,5 +61,8 @@ public extension AppComponent {
     }
     var myPageFactory: any MyPageFactory {
         MyPageComponent(parent: self)
+    }
+    var renewalPasswordFactory: any RenewalPasswordFactory {
+        RenewalPasswordComponent(parent: self)
     }
 }

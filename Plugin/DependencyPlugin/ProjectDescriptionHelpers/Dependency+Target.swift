@@ -9,6 +9,14 @@ public extension TargetDependency {
 }
 
 public extension TargetDependency.Feature {
+    static let RenewalPasswordInterface = TargetDependency.project(
+        target: ModulePaths.Feature.RenewalPassword.targetName(type: .interface),
+        path: .relativeToFeature(ModulePaths.Feature.RenewalPassword.rawValue)
+    )
+    static let RenewalPassword = TargetDependency.project(
+        target: ModulePaths.Feature.RenewalPassword.targetName(type: .sources),
+        path: .relativeToFeature(ModulePaths.Feature.RenewalPassword.rawValue)
+    )
     static let OnboardingFeatureInterface = TargetDependency.project(
         target: ModulePaths.Feature.OnboardingFeature.targetName(type: .interface),
         path: .relativeToFeature(ModulePaths.Feature.OnboardingFeature.rawValue)
