@@ -9,13 +9,21 @@ public extension TargetDependency {
 }
 
 public extension TargetDependency.Feature {
-    static let RenewalPasswordInterface = TargetDependency.project(
-        target: ModulePaths.Feature.RenewalPassword.targetName(type: .interface),
-        path: .relativeToFeature(ModulePaths.Feature.RenewalPassword.rawValue)
+    static let ChangeProfileFeatureInterface = TargetDependency.project(
+        target: ModulePaths.Feature.ChangeProfileFeature.targetName(type: .interface),
+        path: .relativeToFeature(ModulePaths.Feature.ChangeProfileFeature.rawValue)
     )
-    static let RenewalPassword = TargetDependency.project(
-        target: ModulePaths.Feature.RenewalPassword.targetName(type: .sources),
-        path: .relativeToFeature(ModulePaths.Feature.RenewalPassword.rawValue)
+    static let ChangeProfileFeature = TargetDependency.project(
+        target: ModulePaths.Feature.ChangeProfileFeature.targetName(type: .sources),
+        path: .relativeToFeature(ModulePaths.Feature.ChangeProfileFeature.rawValue)
+    )
+    static let RenewalPasswordFeatureInterface = TargetDependency.project(
+        target: ModulePaths.Feature.RenewalPasswordFeature.targetName(type: .interface),
+        path: .relativeToFeature(ModulePaths.Feature.RenewalPasswordFeature.rawValue)
+    )
+    static let RenewalPasswordFeature = TargetDependency.project(
+        target: ModulePaths.Feature.RenewalPasswordFeature.targetName(type: .sources),
+        path: .relativeToFeature(ModulePaths.Feature.RenewalPasswordFeature.rawValue)
     )
     static let OnboardingFeatureInterface = TargetDependency.project(
         target: ModulePaths.Feature.OnboardingFeature.targetName(type: .interface),
