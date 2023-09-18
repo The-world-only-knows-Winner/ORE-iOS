@@ -1,18 +1,22 @@
 import DesignSystem
 import MyPageFeatureInterface
+import RouteFeatureInterface
 import SwiftUI
 import UtilityModule
 
 struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
     private let myPageFactory: any MyPageFactory
+    private let routeFactory: any RouteFactory
 
     init(
         viewModel: HomeViewModel,
-        myPageFactory: any MyPageFactory
+        myPageFactory: any MyPageFactory,
+        routeFactory: any RouteFactory
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.myPageFactory = myPageFactory
+        self.routeFactory = routeFactory
     }
 
     var body: some View {
@@ -48,8 +52,12 @@ struct HomeView: View {
             to: myPageFactory.makeView().eraseToAnyView(),
             when: $viewModel.isNavigatedToMyPage
         )
+        .navigate(
+            to: routeFactory.makeView().eraseToAnyView(),
+            when: $viewModel.isNavigatedToRoute
+        )
         .oriNavigationBar(
-            trailingItem: .init(image: .init(.accountCircle)) {
+            trailingItem: NavigationItem(image: ORIIcon(.accountCircle)) {
                 self.viewModel.isNavigatedToMyPage.toggle()
             }
         )
