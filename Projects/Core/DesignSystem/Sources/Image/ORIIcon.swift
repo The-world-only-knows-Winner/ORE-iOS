@@ -21,6 +21,9 @@ public struct ORIIcon: View {
         case distance
         case directionsBus
         case add
+        case arrowForward
+        case myLocation
+        case location
     }
 
     private var image: Image
@@ -118,6 +121,19 @@ public struct ORIIcon: View {
         case .add:
             DesignSystemAsset.Icons.add.swiftUIImage
                 .imageColorSet(color: .white)
+
+        case .arrowForward:
+            DesignSystemAsset.Icons.arrowForward.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray500)
+
+        case .myLocation:
+            DesignSystemAsset.Icons.myLocation.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray700)
+
+        case .location:
+            DesignSystemAsset.Icons.location.swiftUIImage
+                .resizable()
+                .renderingMode(renderingMode)
         }
     }
 }

@@ -19,13 +19,11 @@ struct HomeView: View {
         let views: [any View] = [
             AllRoutedListView(list: viewModel.allRouteList)
                 .addRouteButton {
-                    viewModel.allRouteList.append((viewModel.allRouteList.last ?? 0) + 1)
-                    print(viewModel.allRouteList)
+                    viewModel.isNavigatedToRoute.toggle()
                 },
             StarRouteListView(list: viewModel.starRouteList)
                 .addRouteButton {
-                    viewModel.starRouteList.append((viewModel.starRouteList.last ?? 0) + 1)
-                    print(viewModel.starRouteList)
+                    viewModel.isNavigatedToRoute.toggle()
                 }
         ]
 
