@@ -7,5 +7,6 @@ let project = Project.makeModule(
     product: .framework,
     targets: [.demo],
     externalDependencies: [.SPM.Kingfisher],
+    internalDependencies: [.Shared.UtilityModule],
     resources: ["Resources/**"]
 )
