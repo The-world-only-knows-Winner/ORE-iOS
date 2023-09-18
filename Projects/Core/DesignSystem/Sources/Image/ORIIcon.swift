@@ -16,6 +16,11 @@ public struct ORIIcon: View {
         case receiptLong
         case lock
         case logout
+        case star
+        case starOff
+        case distance
+        case directionsBus
+        case add
     }
 
     private var image: Image
@@ -93,6 +98,26 @@ public struct ORIIcon: View {
         case .logout:
             DesignSystemAsset.Icons.logout.swiftUIImage
                 .imageColorSet(color: .GrayScale.gray700)
+
+        case .star:
+            DesignSystemAsset.Icons.star.swiftUIImage
+                .imageColorSet(color: .Primary.primary300)
+
+        case .starOff:
+            DesignSystemAsset.Icons.starOff.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray400)
+
+        case .distance:
+            DesignSystemAsset.Icons.distance.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray700)
+
+        case .directionsBus:
+            DesignSystemAsset.Icons.directionsBus.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray600)
+
+        case .add:
+            DesignSystemAsset.Icons.add.swiftUIImage
+                .imageColorSet(color: .white)
         }
     }
 }
