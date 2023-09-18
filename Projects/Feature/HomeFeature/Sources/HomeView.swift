@@ -5,7 +5,6 @@ import UtilityModule
 
 struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
-
     private let myPageFactory: any MyPageFactory
 
     init(
@@ -17,19 +16,63 @@ struct HomeView: View {
     }
 
     var body: some View {
-        NavigationView {
-            VStack {
-                Text("home view")
-            }
-            .navigate(
-                to: myPageFactory.makeView().eraseToAnyView(),
-                when: $viewModel.isNavigatedToMyPage
-            )
-            .oriNavigationBar(
-                trailingItem: .init(image: .init(.accountCircle)) {
-                    self.viewModel.isNavigatedToMyPage.toggle()
+        let views: [any View] = [
+            AllRoutedListView(list: viewModel.allRouteList)
+                .addRouteButton {
+                    viewModel.allRouteList.append((viewModel.allRouteList.last ?? 0) + 1)
+                    print(viewModel.allRouteList)
+                },
+            StarRouteListView(list: viewModel.starRouteList)
+                .addRouteButton {
+                    viewModel.starRouteList.append((viewModel.starRouteList.last ?? 0) + 1)
+                    print(viewModel.starRouteList)
                 }
+        ]
+
+        VStack(spacing: 0) {
+            SegmentPageView(
+                items: ["전체", "즐겨찾기"],
+                selection: $viewModel.segmentSelection
             )
+
+            TabView(selection: $viewModel.segmentSelection) {
+                ForEach(0..<views.count, id: \.self) { index in
+                    views[index].eraseToAnyView()
+                        .tag(index)
+                }
+            }
+            .tabViewStyle(.page(indexDisplayMode: .never))
+
+            Spacer()
+        }
+        .ignoresSafeArea(edges: .bottom)
+        .navigate(
+            to: myPageFactory.makeView().eraseToAnyView(),
+            when: $viewModel.isNavigatedToMyPage
+        )
+        .oriNavigationBar(
+            trailingItem: .init(image: .init(.accountCircle)) {
+                self.viewModel.isNavigatedToMyPage.toggle()
+            }
+        )
+    }
+}
+
+extension View {
+    func addRouteButton(action: @escaping () -> Void) -> some View {
+        ZStack(alignment: .bottomTrailing) {
+            self
+
+            Button(action: action) {
+                ORIIcon(.add)
+                    .frame(width: 36, height: 36)
+                    .padding(8)
+                    .background(Color.Primary.primary300)
+                    .clipShape(Circle())
+                    .shadow(color: .black, opacity: 0.1, blur: 16)
+                    .padding(.trailing, 20)
+                    .padding(.bottom, 24)
+            }
         }
     }
 }
