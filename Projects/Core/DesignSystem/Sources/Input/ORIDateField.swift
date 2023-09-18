@@ -1,9 +1,8 @@
 import SwiftUI
-import DesignSystem
 import UtilityModule
 import UIKit
 
-struct ORIDateField: View {
+public struct ORIDateField: View {
     @Binding var date: Date
     @Binding var isShowDatePicker: Bool
     @FocusState var isFocused: Bool
@@ -19,7 +18,7 @@ struct ORIDateField: View {
         self.title = title
     }
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title)
                 .oriFont(.body(.body4), color: .GrayScale.gray500)
