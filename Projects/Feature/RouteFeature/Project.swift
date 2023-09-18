@@ -3,12 +3,10 @@ import ProjectDescriptionHelpers
 import DependencyPlugin
 
 let project = Project.makeModule(
-    name: ModulePaths.Feature.HomeFeature.rawValue,
+    name: ModulePaths.Feature.RouteFeature.rawValue,
     product: .staticLibrary,
     targets: [.interface, .unitTest],
     internalDependencies: [
-        .Feature.BaseFeature,
-        .Feature.MyPageFeatureInterface,
-        .Feature.RouteFeatureInterface
+        .Feature.BaseFeature
     ]
 )

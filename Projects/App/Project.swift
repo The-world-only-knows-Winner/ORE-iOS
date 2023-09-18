@@ -38,6 +38,7 @@ let targets: [Target] = [
             .Feature.SigninFeature,
             .Feature.SignupFeature,
             .Feature.HomeFeature,
+            .Feature.RouteFeature,
             .Feature.MyPageFeature,
             .Feature.RenewalPasswordFeature,
             .Feature.ChangeProfileFeature,
