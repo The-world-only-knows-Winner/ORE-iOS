@@ -1,6 +1,7 @@
 import DesignSystem
 import MyPageFeatureInterface
-import RenewalPasswordInterface
+import RenewalPasswordFeatureInterface
+import ChangeProfileFeatureInterface
 import SwiftUI
 import UtilityModule
 import BaseFeature
@@ -11,13 +12,16 @@ struct MyPageView: View {
     @Environment(\.dismiss) var dismiss
 
     private let renewalPasswordFactory: any RenewalPasswordFactory
+    private let changeProfileFactory: any ChangeProfileFactory
 
     init(
         viewModel: MyPageViewModel,
-        renewalPasswordFactory: any RenewalPasswordFactory
+        renewalPasswordFactory: any RenewalPasswordFactory,
+        changeProfileFactory: any ChangeProfileFactory
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.renewalPasswordFactory = renewalPasswordFactory
+        self.changeProfileFactory = changeProfileFactory
     }
 
     var body: some View {
@@ -59,7 +63,7 @@ struct MyPageView: View {
                         ) {
                             viewModel.isNotificationsActive.toggle()
                         }
- 
+
                         ORIToggle(isOn: $viewModel.isNotificationsActive)
                     }
 
@@ -106,6 +110,10 @@ struct MyPageView: View {
             Spacer()
         }
         .navigate(to: SuccessLogoutView(), when: $viewModel.isNavigatedToLogout)
+        .navigate(
+            to: changeProfileFactory.makeView().eraseToAnyView(),
+            when: $viewModel.isNavigatedToChangeProfile
+        )
         .navigate(
             to: renewalPasswordFactory.makeView().eraseToAnyView(),
             when: $viewModel.isNavigatedToRenewalPassword

@@ -1,8 +1,8 @@
 import BaseFeature
-import Foundation
 import Combine
+import Foundation
 
-final class RenewalPasswordViewModel: BaseViewModel {
+final class ChangeProfileViewModel: BaseViewModel {
     @Published var name: String = ""
     @Published var dateBirth: Date = Calendar
         .current
