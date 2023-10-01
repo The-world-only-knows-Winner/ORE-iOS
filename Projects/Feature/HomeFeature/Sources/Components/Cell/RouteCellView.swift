@@ -38,25 +38,16 @@ struct RouteCellView: View {
                 ORIIcon(isBooked ? .star : .starOff)
                     .frame(width: 24, height: 24)
                     .onTapGesture {
-                        isBooked.toggle()
+                        withAnimation {
+                            isBooked.toggle()
+                        }
                     }
 
                 ORIIcon(isOnNotification ? .notificationsActive : .notificationsOff)
                     .frame(width: 24, height: 24)
                     .onTapGesture {
-                        isOnNotification.toggle()
-                    }
-
-                ORIIcon(.expandMore)
-                    .frame(width: 24, height: 24)
-                    .rotationEffect(
-                        isShowingDetail
-                        ? Angle.degrees(180)
-                        : .degrees(0)
-                    )
-                    .onTapGesture {
                         withAnimation {
-                            isShowingDetail.toggle()
+                            isOnNotification.toggle()
                         }
                     }
             }
@@ -80,5 +71,10 @@ struct RouteCellView: View {
             }
         }
         .oriBackground()
+        .onTapGesture {
+            withAnimation {
+                isShowingDetail.toggle()
+            }
+        }
     }
 }
