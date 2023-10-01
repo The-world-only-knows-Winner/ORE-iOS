@@ -1,5 +1,6 @@
-import Foundation
 import MapKit
+import RouteFeatureInterface
+import DesignSystem
 
 class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocationManagerDelegate {
     @Published var mapView: MKMapView = .init()
@@ -104,21 +105,78 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
 
             self.title = placemark.name ?? ""
 
-            let subTitle = placemark.description
-                .components(separatedBy: ", ")
-                .filter { $0.contains("대한민국") }
-                .joined(separator: " ")
-                .components(separatedBy: " ")
-
-            var writeable: Bool = true
-            self.subTitle = subTitle[1..<subTitle.count].map {
-                if $0 == "@" { writeable = false }
-                if writeable {
-                    return $0
-                } else {
-                    return ""
-                }
-            }.joined(separator: " ")
+            self.subTitle = ""
+            let locality = placemark.locality
+            let subLocality = placemark.administrativeArea
+            let thoroughfare = placemark.subThoroughfare
+            self.subTitle = [locality, subLocality, thoroughfare].map { $0 ?? "" }.joined(separator: " ")
         }
+    }
+}
+
+extension LocationManager {
+    func addPin(type: LocationType) {
+        removePin(type: type)
+        let pin = ORIAnnotation(type: type, coordinate: mapView.centerCoordinate )
+        mapView.addAnnotation(pin)
+    }
+
+    func removePin(type: LocationType) {
+        mapView.annotations.filter { ($0 as? ORIAnnotation)?.type == type }.forEach {
+            mapView.removeAnnotation($0)
+        }
+    }
+
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+
+        guard let annotation = annotation as? ORIAnnotation else { return nil }
+
+        var annotationView = self.mapView.dequeueReusableAnnotationView(
+            withIdentifier: "oriMapID!"
+        )
+
+        if annotationView == nil {
+            annotationView = MKAnnotationView(
+                annotation: annotation,
+                reuseIdentifier: "oriMapID!"
+            )
+            annotationView?.canShowCallout = false
+            annotationView?.contentMode = .scaleAspectFit
+
+        } else {
+            annotationView?.annotation = annotation
+        }
+
+        let image: UIImage!
+        let size = CGSize(width: 32, height: 48)
+        UIGraphicsBeginImageContext(size)
+
+        switch annotation.type {
+        case .start:
+            image = DesignSystemAsset.Icons.startPin.image
+        case .end:
+            image = DesignSystemAsset.Icons.endPin.image
+        }
+
+        image.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        annotationView?.image = resizedImage
+
+        return annotationView
+    }
+}
+
+class ORIAnnotation: NSObject, MKAnnotation {
+    let type: LocationType
+    let coordinate: CLLocationCoordinate2D
+
+    init(
+        type: LocationType,
+        coordinate: CLLocationCoordinate2D
+    ) {
+        self.type = type
+        self.coordinate = coordinate
+
+        super.init()
     }
 }

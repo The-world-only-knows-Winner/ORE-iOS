@@ -1,4 +1,5 @@
 import DesignSystem
+import RouteFeatureInterface
 import SwiftUI
 
 struct RouteView: View {
@@ -19,12 +20,12 @@ struct RouteView: View {
 
             VStack(alignment: .trailing, spacing: 20) {
                 HStack(spacing: 16) {
-                    location(viewModel.startPoint)
+                    location(viewModel.startPoint, type: .start)
 
                     ORIIcon(.arrowForward)
                         .frame(width: 24, height: 24)
 
-                    location(viewModel.endPoint)
+                    location(viewModel.endPoint, type: .end)
                 }
                 .padding(.vertical, 12)
                 .padding(.horizontal, 20)
@@ -46,39 +47,60 @@ struct RouteView: View {
                         .padding(.trailing, 20)
                 }
 
-                if viewModel.startPoint == nil || viewModel.endPoint == nil {
-                    VStack(alignment: .leading, spacing: 0) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text(manager.title)
-                                .oriFont(.heading(.heading2), color: .GrayScale.gray700)
+                VStack(alignment: .leading, spacing: 0) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(manager.title)
+                            .oriFont(.heading(.heading2), color: .GrayScale.gray700)
 
-                            Text(manager.subTitle)
-                                .oriFont(.body(.body1), color: .GrayScale.gray700)
-                        }
-                        .padding(.vertical, 16)
+                        Text(manager.subTitle)
+                            .oriFont(.body(.body1), color: .GrayScale.gray700)
+                    }
+                    .padding(.vertical, 16)
 
-                        HStack(spacing: 10) {
-                            ORIButton(text: "출발지로 지정", style: .default, isSmall: true) {
+                    switch viewModel.buttonType {
+                    case .start:
+                        ORIButton(text: "출발지로 지정", style: .default, isPadding: false) {
+                            withAnimation {
                                 viewModel.startPoint = manager.title
+                                viewModel.nextButtonDidTap()
+                                manager.addPin(type: .start)
+                            }
+                        }
+                    case .end:
+                        ORIButton(text: "도착지로 지정", style: .default, isPadding: false) {
+                            withAnimation {
+                                viewModel.endPoint = manager.title
+                                viewModel.nextButtonDidTap()
+                                manager.addPin(type: .end)
+                            }
+                        }
+                    case .none:
+                        HStack(spacing: 10) {
+                            ORIButton(text: "설정 완료", style: .default, isPadding: false) {
+                                withAnimation {
+                                    viewModel.nextButtonDidTap()
+                                }
                             }
 
-                            ORIButton(text: "도착지로 지정", style: .sub, isSmall: true) {
-                                viewModel.endPoint = manager.title
+                            smallButton(type: .start) {
+                                withAnimation {
+                                    viewModel.buttonType = .start
+                                }
+                            }
+
+                            smallButton(type: .end) {
+                                withAnimation {
+                                    viewModel.buttonType = .end
+                                }
                             }
                         }
                     }
-                    .padding(.horizontal, 20)
-                    .oriBackground()
-                } else {
-                    ORIButton(text: "설정완료") {
-                        // 설정완료
-                    }
-                    .padding(.vertical, 4)
-                    .oriBackground()
                 }
+                .padding(.horizontal, 20)
+                .oriBackground()
             }
 
-            ORIIcon(.pinLocation)
+            ORIIcon(.myPin)
                 .frame(width: 32, height: 48, alignment: .bottom)
                 .shadow(color: .black, opacity: 0.25, blur: 12)
         }
@@ -91,19 +113,37 @@ struct RouteView: View {
     }
 
     @ViewBuilder
-    func location(_ text: String?) -> some View {
-        let textIsNil = text == nil
-        HStack(spacing: 4) {
-            ZStack(alignment: .top) {
-                ORIIcon(.location, renderingMode: .template)
-                    .foregroundColor(textIsNil ? .GrayScale.gray400 : .Primary.primary300)
-                    .frame(width: 24, height: 24)
-
-                Circle()
-                    .fill(Color.GrayScale.gray100)
-                    .frame(width: 8, height: 8)
-                    .padding(.top, 5)
+    func smallButton(type: LocationType, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            Group {
+                switch type {
+                case .start:
+                    ORIIcon(.startPosition)
+                case .end:
+                    ORIIcon(.endPosition)
+                }
             }
+            .frame(width: 32, height: 32)
+            .padding(8)
+            .background(Color.Primary.primary100)
+            .cornerRadius(12)
+        }
+    }
+
+    @ViewBuilder
+    func location(_ text: String?, type: LocationType) -> some View {
+        let textIsNil = (text == nil)
+        var icon: ORIIcon.Image {
+            switch type {
+            case .start:
+                return textIsNil ? .startPositionOff : .startPosition
+            case .end:
+                return textIsNil ? .endPositionOff : .endPosition
+            }
+        }
+        HStack(spacing: 4) {
+            ORIIcon(icon)
+                .frame(width: 24, height: 24)
 
             Text(text ?? "출발지 미지정")
                 .oriFont(

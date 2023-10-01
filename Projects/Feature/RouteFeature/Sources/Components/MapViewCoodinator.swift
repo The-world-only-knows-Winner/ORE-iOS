@@ -1,4 +1,5 @@
 import SwiftUI
+import MapKit
 
 struct MapViewCoordinator: UIViewRepresentable {
     @ObservedObject var locationManager: LocationManager
