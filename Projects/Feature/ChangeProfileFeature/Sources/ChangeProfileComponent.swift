@@ -9,4 +9,3 @@ public final class ChangeProfileComponent: Component<ChangeProfileDependency>, C
         ChangeProfileView(viewModel: .init())
     }
 }
-
