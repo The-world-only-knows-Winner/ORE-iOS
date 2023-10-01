@@ -23,8 +23,13 @@ public struct ORIIcon: View {
         case add
         case arrowForward
         case myLocation
-        case location
-        case pinLocation
+        case startPositionOff
+        case startPosition
+        case endPositionOff
+        case endPosition
+        case startPin
+        case endPin
+        case myPin
     }
 
     private var image: Image
@@ -131,17 +136,39 @@ public struct ORIIcon: View {
             DesignSystemAsset.Icons.myLocation.swiftUIImage
                 .imageColorSet(color: .GrayScale.gray700)
 
-        case .location:
-            DesignSystemAsset.Icons.location.swiftUIImage
+        case .startPositionOff:
+            DesignSystemAsset.Icons.startPositionOff.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray400)
+
+        case .startPosition:
+            DesignSystemAsset.Icons.startPosition.swiftUIImage
+                .imageColorSet(color: .Primary.primary300)
+
+        case .endPositionOff:
+            DesignSystemAsset.Icons.endPositionOff.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray400)
+
+        case .endPosition:
+            DesignSystemAsset.Icons.endPosition.swiftUIImage
+                .imageColorSet(color: .Primary.primary300)
+
+        case .startPin:
+            DesignSystemAsset.Icons.startPin.swiftUIImage
                 .resizable()
                 .renderingMode(renderingMode)
 
-        case .pinLocation:
-            DesignSystemAsset.Icons.pinLocation.swiftUIImage
+        case .endPin:
+            DesignSystemAsset.Icons.endPin.swiftUIImage
+                .resizable()
+                .renderingMode(renderingMode)
+
+        case .myPin:
+            DesignSystemAsset.Icons.myPin.swiftUIImage
                 .resizable()
                 .renderingMode(renderingMode)
         }
     }
+    // swiftlint: enable all
 }
 
 private extension SwiftUI.Image {
