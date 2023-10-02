@@ -28,6 +28,7 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
             manager.requestAlwaysAuthorization()
         } else if status == .authorizedAlways || status == .authorizedWhenInUse {
             mapView.showsUserLocation = true // 사용자의 현재 위치를 확인할 수 있도록
+            self.locationManagerDidChangeAuthorization()
         }
     }
 
@@ -68,7 +69,7 @@ class LocationManager: NSObject, ObservableObject, MKMapViewDelegate, CLLocation
     }
 
     // MARK: - 사용자에게 위치 권한이 변경되면 호출되는 메서드 (LocationManager 인스턴스가 생성될 때도 호출)
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+    func locationManagerDidChangeAuthorization() {
         if manager.authorizationStatus == .authorizedAlways || manager.authorizationStatus == .authorizedWhenInUse {
             guard let location = manager.location else {
                 print("[ERROR] No Location")
