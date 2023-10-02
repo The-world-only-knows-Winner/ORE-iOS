@@ -14,28 +14,32 @@ struct RouteView: View {
     }
 
     var body: some View {
-        ZStack {
-            MapViewCoordinator(locationManager: manager)
-                .ignoresSafeArea(edges: .bottom)
+        VStack(alignment: .trailing, spacing: 0) {
+            HStack(spacing: 16) {
+                location(viewModel.startPoint, type: .start)
 
-            VStack(alignment: .trailing, spacing: 20) {
-                HStack(spacing: 16) {
-                    location(viewModel.startPoint, type: .start)
+                ORIIcon(.arrowForward)
+                    .frame(width: 24, height: 24)
 
-                    ORIIcon(.arrowForward)
-                        .frame(width: 24, height: 24)
+                location(viewModel.endPoint, type: .end)
+            }
+            .padding(.vertical, 12)
+            .padding(.horizontal, 20)
+            .oriBackground()
 
-                    location(viewModel.endPoint, type: .end)
+            ZStack(alignment: .bottomTrailing) {
+                ZStack {
+                    MapViewCoordinator(locationManager: manager)
+                        .ignoresSafeArea(edges: .bottom)
+
+                    ORIIcon(.myPin)
+                        .frame(width: 32, height: 48, alignment: .bottom)
+                        .shadow(color: .black, opacity: 0.25, blur: 12)
                 }
-                .padding(.vertical, 12)
-                .padding(.horizontal, 20)
-                .oriBackground()
-
-                Spacer()
 
                 Button {
                     withAnimation(.spring()) {
-                        manager.mapViewFocusChange()
+                        manager.locationManagerDidChangeAuthorization()
                     }
                 } label: {
                     ORIIcon(.myLocation)
@@ -44,65 +48,61 @@ struct RouteView: View {
                         .background(Color.GrayScale.gray100)
                         .clipShape(Circle())
                         .shadow(color: .black, opacity: 0.1, blur: 16)
-                        .padding(.trailing, 20)
+                        .padding(20)
                 }
-
-                VStack(alignment: .leading, spacing: 0) {
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(manager.title)
-                            .oriFont(.heading(.heading2), color: .GrayScale.gray700)
-
-                        Text(manager.subTitle)
-                            .oriFont(.body(.body1), color: .GrayScale.gray700)
-                    }
-                    .padding(.vertical, 16)
-
-                    switch viewModel.buttonType {
-                    case .start:
-                        ORIButton(text: "출발지로 지정", style: .default, isPadding: false) {
-                            withAnimation {
-                                viewModel.startPoint = manager.title
-                                viewModel.nextButtonDidTap()
-                                manager.addPin(type: .start)
-                            }
-                        }
-                    case .end:
-                        ORIButton(text: "도착지로 지정", style: .default, isPadding: false) {
-                            withAnimation {
-                                viewModel.endPoint = manager.title
-                                viewModel.nextButtonDidTap()
-                                manager.addPin(type: .end)
-                            }
-                        }
-                    case .none:
-                        HStack(spacing: 10) {
-                            ORIButton(text: "설정 완료", style: .default, isPadding: false) {
-                                withAnimation {
-                                    viewModel.nextButtonDidTap()
-                                }
-                            }
-
-                            smallButton(type: .start) {
-                                withAnimation {
-                                    viewModel.buttonType = .start
-                                }
-                            }
-
-                            smallButton(type: .end) {
-                                withAnimation {
-                                    viewModel.buttonType = .end
-                                }
-                            }
-                        }
-                    }
-                }
-                .padding(.horizontal, 20)
-                .oriBackground()
             }
 
-            ORIIcon(.myPin)
-                .frame(width: 32, height: 48, alignment: .bottom)
-                .shadow(color: .black, opacity: 0.25, blur: 12)
+            VStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(manager.title)
+                        .oriFont(.heading(.heading2), color: .GrayScale.gray700)
+
+                    Text(manager.subTitle)
+                        .oriFont(.body(.body1), color: .GrayScale.gray700)
+                }
+                .padding(.vertical, 16)
+
+                switch viewModel.buttonType {
+                case .start:
+                    ORIButton(text: "출발지로 지정", style: .default, isPadding: false) {
+                        withAnimation {
+                            viewModel.startPoint = manager.title
+                            viewModel.nextButtonDidTap()
+                            manager.addPin(type: .start)
+                        }
+                    }
+                case .end:
+                    ORIButton(text: "도착지로 지정", style: .default, isPadding: false) {
+                        withAnimation {
+                            viewModel.endPoint = manager.title
+                            viewModel.nextButtonDidTap()
+                            manager.addPin(type: .end)
+                        }
+                    }
+                case .none:
+                    HStack(spacing: 10) {
+                        ORIButton(text: "설정 완료", style: .default, isPadding: false) {
+                            withAnimation {
+                                viewModel.nextButtonDidTap()
+                            }
+                        }
+
+                        smallButton(type: .start) {
+                            withAnimation {
+                                viewModel.buttonType = .start
+                            }
+                        }
+
+                        smallButton(type: .end) {
+                            withAnimation {
+                                viewModel.buttonType = .end
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(.horizontal, 20)
+            .oriBackground()
         }
         .onAppear { manager.configureLocationManager() }
         .oriNavigationBar(
@@ -141,6 +141,7 @@ struct RouteView: View {
                 return textIsNil ? .endPositionOff : .endPosition
             }
         }
+
         HStack(spacing: 4) {
             ORIIcon(icon)
                 .frame(width: 24, height: 24)
