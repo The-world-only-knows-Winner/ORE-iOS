@@ -1,5 +1,6 @@
 import SwiftUI
 import DesignSystem
+import HomeFeatureInterface
 
 struct RouteTimelineCellView: View {
     let type: TimelineType

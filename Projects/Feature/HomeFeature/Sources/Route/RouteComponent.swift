@@ -1,6 +1,6 @@
 import SwiftUI
 import NeedleFoundation
-import RouteFeatureInterface
+import HomeFeatureInterface
 
 public protocol RouteDependency: Dependency {}
 

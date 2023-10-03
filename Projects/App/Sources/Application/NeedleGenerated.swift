@@ -17,8 +17,6 @@ import RenewalPasswordFeature
 import RenewalPasswordFeatureInterface
 import RootFeature
 import RootFeatureInterface
-import RouteFeature
-import RouteFeatureInterface
 import SigninFeature
 import SigninFeatureInterface
 import SignupFeature

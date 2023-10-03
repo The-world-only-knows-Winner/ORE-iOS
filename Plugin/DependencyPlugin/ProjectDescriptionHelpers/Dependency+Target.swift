@@ -9,14 +9,6 @@ public extension TargetDependency {
 }
 
 public extension TargetDependency.Feature {
-    static let RouteFeatureInterface = TargetDependency.project(
-        target: ModulePaths.Feature.RouteFeature.targetName(type: .interface),
-        path: .relativeToFeature(ModulePaths.Feature.RouteFeature.rawValue)
-    )
-    static let RouteFeature = TargetDependency.project(
-        target: ModulePaths.Feature.RouteFeature.targetName(type: .sources),
-        path: .relativeToFeature(ModulePaths.Feature.RouteFeature.rawValue)
-    )
     static let ChangeProfileFeatureInterface = TargetDependency.project(
         target: ModulePaths.Feature.ChangeProfileFeature.targetName(type: .interface),
         path: .relativeToFeature(ModulePaths.Feature.ChangeProfileFeature.rawValue)

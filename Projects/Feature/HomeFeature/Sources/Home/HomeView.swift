@@ -1,11 +1,12 @@
 import DesignSystem
 import MyPageFeatureInterface
-import RouteFeatureInterface
+import HomeFeatureInterface
 import SwiftUI
 import UtilityModule
 
 struct HomeView: View {
     @StateObject var viewModel: HomeViewModel
+    @Environment(\.rootPresentationMode) var rootPresentationMode
     private let myPageFactory: any MyPageFactory
     private let routeFactory: any RouteFactory
 

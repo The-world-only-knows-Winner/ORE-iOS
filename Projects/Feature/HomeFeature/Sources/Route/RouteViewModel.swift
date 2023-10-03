@@ -1,10 +1,11 @@
 import BaseFeature
-import RouteFeatureInterface
+import HomeFeatureInterface
 import CoreLocation
 
 final class RouteViewModel: BaseViewModel {
     @Published var startPoint: String?
     @Published var endPoint: String?
+    @Published var isSuccessRenewalPassword: Bool = false
 
     @Published var buttonType: LocationType? = .start
 

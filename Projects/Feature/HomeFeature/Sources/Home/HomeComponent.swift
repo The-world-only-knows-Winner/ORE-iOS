@@ -3,7 +3,6 @@ import HomeFeatureInterface
 import DesignSystem
 import NeedleFoundation
 import MyPageFeatureInterface
-import RouteFeatureInterface
 
 public protocol HomeDependency: Dependency {
     var myPageFactory: any MyPageFactory { get }
@@ -16,7 +15,7 @@ public final class HomeComponent: Component<HomeDependency>, HomeFactory {
             HomeView(
                 viewModel: .init(),
                 myPageFactory: dependency.myPageFactory,
-                routeFactory: dependency.routeFactory
+                routeFactory: dependency.routeFactory 
             )
         }
     }

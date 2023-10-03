@@ -1,11 +1,11 @@
 import SwiftUI
 
-enum TimelineType {
+public enum TimelineType {
     case head
     case body
     case tail
 
-    var topHeight: CGFloat {
+    public var topHeight: CGFloat {
         switch self {
         case .head: return 20
         case .body: return 34
@@ -13,7 +13,7 @@ enum TimelineType {
         }
     }
 
-    var bottomHeight: CGFloat {
+    public var bottomHeight: CGFloat {
         switch self {
         case .head: return 48
         case .body: return 34

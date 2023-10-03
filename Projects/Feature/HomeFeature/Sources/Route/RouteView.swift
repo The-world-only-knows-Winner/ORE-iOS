@@ -1,11 +1,11 @@
 import DesignSystem
-import RouteFeatureInterface
+import HomeFeatureInterface
 import SwiftUI
 
 struct RouteView: View {
     @StateObject var manager = LocationManager()
     @StateObject var viewModel: RouteViewModel
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.rootPresentationMode) var rootPresentationMode
 
     init(
         viewModel: RouteViewModel
@@ -106,10 +106,15 @@ struct RouteView: View {
         }
         .onAppear { manager.configureLocationManager() }
         .oriNavigationBar(
-            leadingItem: NavigationItem(image: ORIIcon(.arrowBack)) { dismiss() },
+            leadingItem: NavigationItem(image: ORIIcon(.arrowBack)) { viewModel.isSuccessRenewalPassword.toggle() },
             trailingItem: NavigationItem(image: ORIIcon(.search)) { print("검색으로 이동") },
             headerTitle: "장소지정"
         )
+        .onChange(of: viewModel.isSuccessRenewalPassword) { newValue in
+            if newValue {
+                rootPresentationMode.wrappedValue.dismiss()
+            }
+        }
     }
 
     @ViewBuilder

@@ -1,17 +1,12 @@
 import SwiftUI
 import DesignSystem
+import HomeFeatureInterface
 
 struct RouteCellView: View {
     @State private var isShowingDetail = false
     @State private var isBooked = false
     @State private var isOnNotification = false
-//    var qna: QnaEntity
-//
-//    public init(
-//        qna: QnaEntity
-//    ) {
-//        self.qna = qna
-//    }
+
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 12) {
