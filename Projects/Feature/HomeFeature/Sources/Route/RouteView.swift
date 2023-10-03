@@ -22,26 +22,26 @@ struct RouteView: View {
             VStack(alignment: .trailing, spacing: 0) {
                 HStack(spacing: 16) {
                     location(viewModel.startPoint, type: .start)
-                    
+
                     ORIIcon(.arrowForward)
                         .frame(width: 24, height: 24)
-                    
+
                     location(viewModel.endPoint, type: .end)
                 }
                 .padding(.vertical, 12)
                 .padding(.horizontal, 20)
                 .oriBackground()
-                
+
                 ZStack(alignment: .bottomTrailing) {
                     ZStack {
                         MapViewCoordinator(locationManager: manager)
                             .ignoresSafeArea(edges: .bottom)
-                        
+
                         ORIIcon(.myPin)
                             .frame(width: 32, height: 48, alignment: .bottom)
                             .shadow(color: .black, opacity: 0.25, blur: 12)
                     }
-                    
+
                     Button {
                         withAnimation(.spring()) {
                             manager.locationManagerDidChangeAuthorization()
@@ -56,17 +56,17 @@ struct RouteView: View {
                             .padding(20)
                     }
                 }
-                
+
                 VStack(alignment: .leading, spacing: 0) {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(manager.title)
                             .oriFont(.heading(.heading2), color: .GrayScale.gray700)
-                        
+
                         Text(manager.subTitle)
                             .oriFont(.body(.body1), color: .GrayScale.gray700)
                     }
                     .padding(.vertical, 16)
-                    
+
                     switch viewModel.buttonType {
                     case .start:
                         ORIButton(text: "출발지로 지정", style: .default, isPadding: false) {
@@ -91,13 +91,13 @@ struct RouteView: View {
                                     viewModel.nextButtonDidTap()
                                 }
                             }
-                            
+
                             smallButton(type: .start) {
                                 withAnimation {
                                     viewModel.buttonType = .start
                                 }
                             }
-                            
+
                             smallButton(type: .end) {
                                 withAnimation {
                                     viewModel.buttonType = .end

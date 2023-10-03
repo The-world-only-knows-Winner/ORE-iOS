@@ -36,13 +36,13 @@ struct HomeView: View {
                         viewModel.isNavigatedToRoute.toggle()
                     }
             ]
-            
+
             VStack(spacing: 0) {
                 SegmentPageView(
                     items: ["전체", "즐겨찾기"],
                     selection: $viewModel.segmentSelection
                 )
-                
+
                 TabView(selection: $viewModel.segmentSelection) {
                     ForEach(0..<views.count, id: \.self) { index in
                         views[index].eraseToAnyView()
@@ -50,7 +50,7 @@ struct HomeView: View {
                     }
                 }
                 .tabViewStyle(.page(indexDisplayMode: .never))
-                
+
                 Spacer()
             }
             .ignoresSafeArea(edges: .bottom)

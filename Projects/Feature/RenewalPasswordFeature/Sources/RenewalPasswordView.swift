@@ -33,7 +33,7 @@ struct RenewalPasswordView: View {
                 }
                 .textContentType(.password)
                 .focused($focusField, equals: .oldPassword)
-                
+
                 ORITextField(
                     text: $viewModel.newPassword,
                     placehoder: "********",
@@ -44,9 +44,9 @@ struct RenewalPasswordView: View {
                 }
                 .textContentType(.password)
                 .focused($focusField, equals: .newPassword)
-                
+
                 Spacer()
-                
+
                 ORIButton(text: "확인", isFocused: focusField != .none) {
                     viewModel.isPresentedAlert.toggle()
                     dismiss()

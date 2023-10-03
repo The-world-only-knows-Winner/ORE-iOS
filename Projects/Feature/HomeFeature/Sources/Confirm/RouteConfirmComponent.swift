@@ -9,4 +9,3 @@ public final class RouteConfirmComponent: Component<RouteConfirmDependency>, Rou
         RouteConfirmView(viewModel: .init())
     }
 }
-

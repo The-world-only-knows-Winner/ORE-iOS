@@ -31,7 +31,7 @@ struct UserInfoSignupView: View {
                     )
                     .focused($focusField, equals: .dateBirth)
                 }
-                
+
                 ORITextField(
                     text: $viewModel.name,
                     placehoder: "홍길동",
@@ -42,9 +42,9 @@ struct UserInfoSignupView: View {
                 }
                 .keyboardType(.namePhonePad)
                 .focused($focusField, equals: .name)
-                
+
                 Spacer()
-                
+
                 ORIButton(text: viewModel.signupButtonText, isFocused: focusField != .none) {
                     withAnimation {
                         viewModel.nextButtonDidTapped()

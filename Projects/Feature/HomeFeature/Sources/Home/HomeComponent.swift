@@ -15,7 +15,7 @@ public final class HomeComponent: Component<HomeDependency>, HomeFactory {
             HomeView(
                 viewModel: .init(),
                 myPageFactory: dependency.myPageFactory,
-                routeFactory: dependency.routeFactory 
+                routeFactory: dependency.routeFactory
             )
         }
     }

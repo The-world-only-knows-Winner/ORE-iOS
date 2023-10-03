@@ -33,16 +33,16 @@ struct ChangeProfileView: View {
                 }
                 .keyboardType(.namePhonePad)
                 .focused($focusField, equals: .name)
-                
+
                 ORIDateField(
                     date: $viewModel.dateBirth,
                     isShowDatePicker: $viewModel.isShowDatePicker,
                     title: "생년월일"
                 )
                 .focused($focusField, equals: .dateBirth)
-                
+
                 Spacer()
-                
+
                 ORIButton(text: "확인", isFocused: focusField != .none) {
                     withAnimation {
                         viewModel.nextButtonDidTapped()

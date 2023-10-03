@@ -89,7 +89,7 @@ public struct ORINavigationBar<Content>: View where Content: View {
                         .oriFont(.heading(.heading1), color: .GrayScale.gray700)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 24)
-                    
+
                     Spacer()
                 }
             }

@@ -40,7 +40,7 @@ struct AuthSignupView: View {
                     .textContentType(.password)
                     .focused($focusField, equals: .password)
                 }
-                
+
                 if viewModel.signupStep.rawValue >= 1 {
                     ORITextField(
                         text: $viewModel.authCode,
@@ -53,7 +53,7 @@ struct AuthSignupView: View {
                     .keyboardType(.numberPad)
                     .focused($focusField, equals: .authCode)
                 }
-                
+
                 ORITextField(
                     text: $viewModel.email,
                     placehoder: "example@ex.com",
@@ -66,9 +66,9 @@ struct AuthSignupView: View {
                 }
                 .keyboardType(.emailAddress)
                 .focused($focusField, equals: .email)
-                
+
                 Spacer()
-                
+
                 ORIButton(text: viewModel.signupButtonText, isFocused: focusField != .none) {
                     viewModel.nextButtonDidTapped()
                 }

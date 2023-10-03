@@ -29,7 +29,7 @@ struct OnboardingView: View {
                 TabView(selection: $viewModel.pageIndex) {
                     ForEach(0..<viewModel.onboardings.count, id: \.self) { index in
                         let image = viewModel.onboardings[index].image
-                        
+
                         ORIImage(image)
                             .aspectRatio(contentMode: .fit)
                             .frame(maxWidth: .infinity)
@@ -46,11 +46,11 @@ struct OnboardingView: View {
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .indexViewStyle(.page(backgroundDisplayMode: .never))
                 .frame(maxHeight: viewModel.imageHeight)
-                
+
                 HStack(spacing: 8) {
                     ForEach(0..<viewModel.onboardings.count, id: \.self) { index in
                         let isSameIndex: Bool = index == viewModel.pageIndex
-                        
+
                         Capsule()
                             .fill(isSameIndex ? Color.Primary.primary300 : .GrayScale.gray300)
                             .frame(width: isSameIndex ? 24 : 8, height: 8)
@@ -67,25 +67,25 @@ struct OnboardingView: View {
                             }
                     }
                 }
-                
+
                 VStack(spacing: 8) {
                     let onboardingText = viewModel.onboardings[viewModel.pageIndex]
-                    
+
                     Text(onboardingText.title)
                         .oriFont(.heading(.heading2), color: .GrayScale.gray700)
-                    
+
                     Text(onboardingText.content)
                         .oriFont(.body(.body3), color: .GrayScale.gray500)
                 }
                 .padding(.top, 12)
-                
+
                 Spacer()
-                
+
                 VStack(spacing: 0) {
                     ORIButton(text: "새 계정으로 시작하기", style: .default) {
                         viewModel.isNavigatedToSignup.toggle()
                     }
-                    
+
                     Button {
                         viewModel.isNavigatedToSignin.toggle()
                     } label: {
@@ -96,8 +96,13 @@ struct OnboardingView: View {
                     }
                 }
             }
-            .navigate(to: signinFactory.makeView().eraseToAnyView(), when: $viewModel.isNavigatedToSignin)
-            .navigate(to: signupFactory.makeView().eraseToAnyView(), when: $viewModel.isNavigatedToSignup)
-        } 
+            .navigate(
+                to: signinFactory.makeView().eraseToAnyView(), when: $viewModel.isNavigatedToSignin
+            )
+            .navigate(
+                to: signupFactory.makeView().eraseToAnyView(),
+                when: $viewModel.isNavigatedToSignup
+            )
+        }
     }
 }
