@@ -1,39 +1,37 @@
 import SwiftUI
 
-struct ORINavigationBarModifier: ViewModifier {
-    var leadingItem: NavigationItem?
-    var trailingItem: NavigationItem?
-    var headerTitle: String = ""
-    var pageTitle: String? = ""
+public struct ORINavigationBar<Content>: View where Content: View {
+    let leadingItem: NavigationItem?
+    let trailingItem: NavigationItem?
+    var headerTitle: String
+    var pageTitle: String?
+    var scrollable: Bool
+    let content: () -> Content
 
     public init(
-        leadingItem: NavigationItem?,
-        trailingItem: NavigationItem?,
-        headerTitle: String,
-        pageTitle: String?
+        leadingItem: NavigationItem? = nil,
+        trailingItem: NavigationItem? = nil,
+        headerTitle: String = "",
+        pageTitle: String? = nil,
+        scrollable: Bool = false,
+        @ViewBuilder _ content: @escaping () -> Content
     ) {
         self.leadingItem = leadingItem
         self.trailingItem = trailingItem
         self.headerTitle = headerTitle
         self.pageTitle = pageTitle
+        self.scrollable = scrollable
+        self.content = content
     }
 
-    func body(content: Content) -> some View {
-        VStack(spacing: 0) {
-            if let pageTitle {
-                HStack {
-                    Text(pageTitle)
-                        .oriFont(.heading(.heading1), color: .GrayScale.gray700)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 24)
-
-                    Spacer()
+    public var body: some View {
+        Group {
+            if scrollable {
+                ScrollView {
+                    contentView()
                 }
-            }
+            } else { contentView() }
 
-            Spacer()
-
-            content
         }
         .oriBackground()
         .toolbar {
@@ -43,8 +41,8 @@ struct ORINavigationBarModifier: ViewModifier {
             }
         }
         .navigationBarItems(
-            leading: leadingView(),
-            trailing: trailingView()
+            leading: toolbarView(type: .leading),
+            trailing: toolbarView(type: .trailing)
         )
         .navigationBarBackButtonHidden(
             leadingItem != nil
@@ -52,44 +50,54 @@ struct ORINavigationBarModifier: ViewModifier {
         .navigationBarTitleDisplayMode(.inline)
     }
 
-    @ViewBuilder func leadingView() -> some View {
-        if let leadingItem {
-            Button {
-                leadingItem.action()
-            } label: {
-                leadingItem.image
-                    .frame(width: 28, height: 28)
-            }
-        } else { EmptyView() }
+    private enum ToolbarType {
+        case leading
+        case trailing
     }
 
-    @ViewBuilder func trailingView() -> some View {
-        if let trailingItem {
-            Button {
-                trailingItem.action()
-            } label: {
-                trailingItem.image
-                    .frame(width: 28, height: 28)
-            }
-        } else { EmptyView() }
-    }
-}
+    @ViewBuilder
+    private func toolbarView(type: ToolbarType) -> some View {
+        switch type {
+        case .leading:
+            if let leadingItem {
+                Button {
+                    leadingItem.action()
+                } label: {
+                    leadingItem.image
+                        .frame(width: 28, height: 28)
+                }
+            } else { EmptyView() }
 
-public extension View {
-    @ViewBuilder func oriNavigationBar(
-        leadingItem: NavigationItem? = nil,
-        trailingItem: NavigationItem? = nil,
-        headerTitle: String = "",
-        pageTitle: String? = nil
-    ) -> some View {
-        modifier(
-            ORINavigationBarModifier(
-                leadingItem: leadingItem,
-                trailingItem: trailingItem,
-                headerTitle: headerTitle,
-                pageTitle: pageTitle
-            )
-        )
+        case .trailing:
+            if let trailingItem {
+                Button {
+                    trailingItem.action()
+                } label: {
+                    trailingItem.image
+                        .frame(width: 28, height: 28)
+                }
+            } else { EmptyView() }
+        }
+    }
+
+    @ViewBuilder
+    func contentView() -> some View {
+        VStack(spacing: 0) {
+            if let pageTitle {
+                HStack {
+                    Text(pageTitle)
+                        .oriFont(.heading(.heading1), color: .GrayScale.gray700)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 24)
+                    
+                    Spacer()
+                }
+            }
+
+            Spacer()
+
+            content()
+        }
     }
 }
 

@@ -21,47 +21,48 @@ struct HomeView: View {
     }
 
     var body: some View {
-        let views: [any View] = [
-            AllRoutedListView(list: viewModel.allRouteList)
-                .addRouteButton {
-                    viewModel.isNavigatedToRoute.toggle()
-                },
-            StarRouteListView(list: viewModel.starRouteList)
-                .addRouteButton {
-                    viewModel.isNavigatedToRoute.toggle()
-                }
-        ]
-
-        VStack(spacing: 0) {
-            SegmentPageView(
-                items: ["전체", "즐겨찾기"],
-                selection: $viewModel.segmentSelection
-            )
-
-            TabView(selection: $viewModel.segmentSelection) {
-                ForEach(0..<views.count, id: \.self) { index in
-                    views[index].eraseToAnyView()
-                        .tag(index)
-                }
-            }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-
-            Spacer()
-        }
-        .ignoresSafeArea(edges: .bottom)
-        .navigate(
-            to: myPageFactory.makeView().eraseToAnyView(),
-            when: $viewModel.isNavigatedToMyPage
-        )
-        .navigate(
-            to: routeFactory.makeView().eraseToAnyView(),
-            when: $viewModel.isNavigatedToRoute
-        )
-        .oriNavigationBar(
+        ORINavigationBar(
             trailingItem: NavigationItem(image: ORIIcon(.accountCircle)) {
                 self.viewModel.isNavigatedToMyPage.toggle()
             }
-        )
+        ) {
+            let views: [any View] = [
+                AllRoutedListView(list: viewModel.allRouteList)
+                    .addRouteButton {
+                        viewModel.isNavigatedToRoute.toggle()
+                    },
+                StarRouteListView(list: viewModel.starRouteList)
+                    .addRouteButton {
+                        viewModel.isNavigatedToRoute.toggle()
+                    }
+            ]
+            
+            VStack(spacing: 0) {
+                SegmentPageView(
+                    items: ["전체", "즐겨찾기"],
+                    selection: $viewModel.segmentSelection
+                )
+                
+                TabView(selection: $viewModel.segmentSelection) {
+                    ForEach(0..<views.count, id: \.self) { index in
+                        views[index].eraseToAnyView()
+                            .tag(index)
+                    }
+                }
+                .tabViewStyle(.page(indexDisplayMode: .never))
+                
+                Spacer()
+            }
+            .ignoresSafeArea(edges: .bottom)
+            .navigate(
+                to: myPageFactory.makeView().eraseToAnyView(),
+                when: $viewModel.isNavigatedToMyPage
+            )
+            .navigate(
+                to: routeFactory.makeView().eraseToAnyView(),
+                when: $viewModel.isNavigatedToRoute
+            )
+        }
     }
 }
 

@@ -23,62 +23,63 @@ struct AuthSignupView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            if viewModel.signupStep.rawValue >= 2 {
-                ORITextField(
-                    text: $viewModel.password,
-                    placehoder: "사용할 비밀번호를 입력해주세요",
-                    title: "비밀번호",
-                    type: .secure
-                ) {
-                    viewModel.nextButtonDidTapped()
-                }
-                .textContentType(.password)
-                .focused($focusField, equals: .password)
-            }
-
-            if viewModel.signupStep.rawValue >= 1 {
-                ORITextField(
-                    text: $viewModel.authCode,
-                    placehoder: "XXXXXX",
-                    title: "인증 코드"
-                ) {
-                    focusField = .password
-                    viewModel.nextButtonDidTapped()
-                }
-                .keyboardType(.numberPad)
-                .focused($focusField, equals: .authCode)
-            }
-
-            ORITextField(
-                text: $viewModel.email,
-                placehoder: "example@ex.com",
-                title: "이메일",
-                type: viewModel.emailTextFieldType,
-                description: viewModel.emailDescription
-            ) {
-                focusField = .authCode
-                viewModel.nextButtonDidTapped()
-            }
-            .keyboardType(.emailAddress)
-            .focused($focusField, equals: .email)
-
-            Spacer()
-
-            ORIButton(text: viewModel.signupButtonText, isFocused: focusField != .none) {
-                viewModel.nextButtonDidTapped()
-            }
-        }
-        .transition(.slide)
-        .animation(.easeInOut(duration: 0.3), value: viewModel.signupStep)
-        .onAppear {
-            focusField = .email
-        }
-        .navigate(to: nextSignupFactory.makeView().eraseToAnyView(), when: $viewModel.isNavigatedToUserInfoSignup)
-        .hideKeyboardWhenTap()
-        .oriNavigationBar(
+        ORINavigationBar(
             leadingItem: NavigationItem(image: ORIIcon(.arrowBack)) { dismiss() },
             pageTitle: viewModel.signupPageText
-        )
+        ) {
+            VStack(alignment: .leading, spacing: 0) {
+                if viewModel.signupStep.rawValue >= 2 {
+                    ORITextField(
+                        text: $viewModel.password,
+                        placehoder: "사용할 비밀번호를 입력해주세요",
+                        title: "비밀번호",
+                        type: .secure
+                    ) {
+                        viewModel.nextButtonDidTapped()
+                    }
+                    .textContentType(.password)
+                    .focused($focusField, equals: .password)
+                }
+                
+                if viewModel.signupStep.rawValue >= 1 {
+                    ORITextField(
+                        text: $viewModel.authCode,
+                        placehoder: "XXXXXX",
+                        title: "인증 코드"
+                    ) {
+                        focusField = .password
+                        viewModel.nextButtonDidTapped()
+                    }
+                    .keyboardType(.numberPad)
+                    .focused($focusField, equals: .authCode)
+                }
+                
+                ORITextField(
+                    text: $viewModel.email,
+                    placehoder: "example@ex.com",
+                    title: "이메일",
+                    type: viewModel.emailTextFieldType,
+                    description: viewModel.emailDescription
+                ) {
+                    focusField = .authCode
+                    viewModel.nextButtonDidTapped()
+                }
+                .keyboardType(.emailAddress)
+                .focused($focusField, equals: .email)
+                
+                Spacer()
+                
+                ORIButton(text: viewModel.signupButtonText, isFocused: focusField != .none) {
+                    viewModel.nextButtonDidTapped()
+                }
+            }
+            .transition(.slide)
+            .animation(.easeInOut(duration: 0.3), value: viewModel.signupStep)
+            .onAppear {
+                focusField = .email
+            }
+            .navigate(to: nextSignupFactory.makeView().eraseToAnyView(), when: $viewModel.isNavigatedToUserInfoSignup)
+            .hideKeyboardWhenTap()
+        }
     }
 }
