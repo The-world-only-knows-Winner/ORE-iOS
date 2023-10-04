@@ -16,6 +16,20 @@ public struct ORIIcon: View {
         case receiptLong
         case lock
         case logout
+        case star
+        case starOff
+        case distance
+        case directionsBus
+        case add
+        case arrowForward
+        case myLocation
+        case startPositionOff
+        case startPosition
+        case endPositionOff
+        case endPosition
+        case startPin
+        case endPin
+        case myPin
     }
 
     private var image: Image
@@ -93,8 +107,68 @@ public struct ORIIcon: View {
         case .logout:
             DesignSystemAsset.Icons.logout.swiftUIImage
                 .imageColorSet(color: .GrayScale.gray700)
+
+        case .star:
+            DesignSystemAsset.Icons.star.swiftUIImage
+                .imageColorSet(color: .Primary.primary300)
+
+        case .starOff:
+            DesignSystemAsset.Icons.starOff.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray400)
+
+        case .distance:
+            DesignSystemAsset.Icons.distance.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray700)
+
+        case .directionsBus:
+            DesignSystemAsset.Icons.directionsBus.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray600)
+
+        case .add:
+            DesignSystemAsset.Icons.add.swiftUIImage
+                .imageColorSet(color: .white)
+
+        case .arrowForward:
+            DesignSystemAsset.Icons.arrowForward.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray500)
+
+        case .myLocation:
+            DesignSystemAsset.Icons.myLocation.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray700)
+
+        case .startPositionOff:
+            DesignSystemAsset.Icons.startPositionOff.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray400)
+
+        case .startPosition:
+            DesignSystemAsset.Icons.startPosition.swiftUIImage
+                .imageColorSet(color: .Primary.primary300)
+
+        case .endPositionOff:
+            DesignSystemAsset.Icons.endPositionOff.swiftUIImage
+                .imageColorSet(color: .GrayScale.gray400)
+
+        case .endPosition:
+            DesignSystemAsset.Icons.endPosition.swiftUIImage
+                .imageColorSet(color: .Primary.primary300)
+
+        case .startPin:
+            DesignSystemAsset.Icons.startPin.swiftUIImage
+                .resizable()
+                .renderingMode(renderingMode)
+
+        case .endPin:
+            DesignSystemAsset.Icons.endPin.swiftUIImage
+                .resizable()
+                .renderingMode(renderingMode)
+
+        case .myPin:
+            DesignSystemAsset.Icons.myPin.swiftUIImage
+                .resizable()
+                .renderingMode(renderingMode)
         }
     }
+    // swiftlint: enable all
 }
 
 private extension SwiftUI.Image {

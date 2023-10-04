@@ -18,49 +18,50 @@ struct RenewalPasswordView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            ORITextField(
-                text: $viewModel.oldPassword,
-                placehoder: "********",
-                title: "현재 비밀번호",
-                type: .secure
-            ) {
-                focusField = .newPassword
-            }
-            .textContentType(.password)
-            .focused($focusField, equals: .oldPassword)
-
-            ORITextField(
-                text: $viewModel.newPassword,
-                placehoder: "********",
-                title: "새 비밀번호",
-                type: .secure
-            ) {
-                viewModel.isPresentedAlert.toggle()
-            }
-            .textContentType(.password)
-            .focused($focusField, equals: .newPassword)
-
-            Spacer()
-
-            ORIButton(text: "확인", isFocused: focusField != .none) {
-                viewModel.isPresentedAlert.toggle()
-                dismiss()
-            }
-        }
-        .onAppear {
-            focusField = .oldPassword
-        }
-        .hideKeyboardWhenTap()
-        .oriAlert(
-            isPresented: $viewModel.isPresentedAlert,
-            type: .renewalPassword
-        ) {
-            viewModel.changePasswordButtonDidTapped()
-        }
-        .oriNavigationBar(
+        ORINavigationBar(
             leadingItem: NavigationItem(image: ORIIcon(.arrowBack)) { dismiss() },
             pageTitle: "비밀번호 재설정"
-        )
+        ) {
+            VStack(alignment: .leading, spacing: 0) {
+                ORITextField(
+                    text: $viewModel.oldPassword,
+                    placehoder: "********",
+                    title: "현재 비밀번호",
+                    type: .secure
+                ) {
+                    focusField = .newPassword
+                }
+                .textContentType(.password)
+                .focused($focusField, equals: .oldPassword)
+
+                ORITextField(
+                    text: $viewModel.newPassword,
+                    placehoder: "********",
+                    title: "새 비밀번호",
+                    type: .secure
+                ) {
+                    viewModel.isPresentedAlert.toggle()
+                }
+                .textContentType(.password)
+                .focused($focusField, equals: .newPassword)
+
+                Spacer()
+
+                ORIButton(text: "확인", isFocused: focusField != .none) {
+                    viewModel.isPresentedAlert.toggle()
+                    dismiss()
+                }
+            }
+            .onAppear {
+                focusField = .oldPassword
+            }
+            .hideKeyboardWhenTap()
+            .oriAlert(
+                isPresented: $viewModel.isPresentedAlert,
+                type: .renewalPassword
+            ) {
+                viewModel.changePasswordButtonDidTapped()
+            }
+        }
     }
 }

@@ -6,12 +6,17 @@ import MyPageFeatureInterface
 
 public protocol HomeDependency: Dependency {
     var myPageFactory: any MyPageFactory { get }
+    var routeFactory: any RouteFactory { get }
 }
 
 public final class HomeComponent: Component<HomeDependency>, HomeFactory {
     public func makeView() -> some View {
-        HomeView(
-            viewModel: .init(), myPageFactory: dependency.myPageFactory
-        )
+        NavigationView {
+            HomeView(
+                viewModel: .init(),
+                myPageFactory: dependency.myPageFactory,
+                routeFactory: dependency.routeFactory
+            )
+        }
     }
 }

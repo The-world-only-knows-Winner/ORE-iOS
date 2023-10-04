@@ -143,6 +143,9 @@ private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
     var myPageFactory: any MyPageFactory {
         return appComponent.myPageFactory
     }
+    var routeFactory: any RouteFactory {
+        return appComponent.routeFactory
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -151,6 +154,44 @@ private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
 /// ^->AppComponent->HomeComponent
 private func factory67229cdf0f755562b2b1f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
     return HomeDependency443c4e1871277bd8432aProvider(appComponent: parent1(component) as! AppComponent)
+}
+private class RouteDependency8090bd3edd72c0941287Provider: RouteDependency {
+    var confirmFactory: any ConfirmFactory {
+        return appComponent.confirmFactory
+    }
+    var searchRouteFactory: any SearchRouteFactory {
+        return appComponent.searchRouteFactory
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
+    }
+}
+/// ^->AppComponent->RouteComponent
+private func factoryb38e7a5fde2fe65187ebf47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return RouteDependency8090bd3edd72c0941287Provider(appComponent: parent1(component) as! AppComponent)
+}
+private class ConfirmDependency5f00edb9e904397d5fabProvider: ConfirmDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->ConfirmComponent
+private func factory00ab5addbed09be3f3f4e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return ConfirmDependency5f00edb9e904397d5fabProvider()
+}
+private class SearchRouteDependencyd7df8f19dbadba3211baProvider: SearchRouteDependency {
+
+
+    init() {
+
+    }
+}
+/// ^->AppComponent->SearchRouteComponent
+private func factory1a988a858e24766a7c25e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return SearchRouteDependencyd7df8f19dbadba3211baProvider()
 }
 private class ChangeProfileDependency18055275199967076a28Provider: ChangeProfileDependency {
 
@@ -196,6 +237,9 @@ extension AppComponent: Registration {
         localTable["myPageFactory-any MyPageFactory"] = { [unowned self] in self.myPageFactory as Any }
         localTable["renewalPasswordFactory-any RenewalPasswordFactory"] = { [unowned self] in self.renewalPasswordFactory as Any }
         localTable["changeProfileFactory-any ChangeProfileFactory"] = { [unowned self] in self.changeProfileFactory as Any }
+        localTable["routeFactory-any RouteFactory"] = { [unowned self] in self.routeFactory as Any }
+        localTable["confirmFactory-any ConfirmFactory"] = { [unowned self] in self.confirmFactory as Any }
+        localTable["searchRouteFactory-any SearchRouteFactory"] = { [unowned self] in self.searchRouteFactory as Any }
         localTable["remoteUsersDataSource-any RemoteUsersDataSource"] = { [unowned self] in self.remoteUsersDataSource as Any }
         localTable["usersRepository-any UsersRepository"] = { [unowned self] in self.usersRepository as Any }
         localTable["signinUseCase-any SigninUseCase"] = { [unowned self] in self.signinUseCase as Any }
@@ -243,6 +287,23 @@ extension SigninComponent: Registration {
 extension HomeComponent: Registration {
     public func registerItems() {
         keyPathToName[\HomeDependency.myPageFactory] = "myPageFactory-any MyPageFactory"
+        keyPathToName[\HomeDependency.routeFactory] = "routeFactory-any RouteFactory"
+    }
+}
+extension RouteComponent: Registration {
+    public func registerItems() {
+        keyPathToName[\RouteDependency.confirmFactory] = "confirmFactory-any ConfirmFactory"
+        keyPathToName[\RouteDependency.searchRouteFactory] = "searchRouteFactory-any SearchRouteFactory"
+    }
+}
+extension ConfirmComponent: Registration {
+    public func registerItems() {
+
+    }
+}
+extension SearchRouteComponent: Registration {
+    public func registerItems() {
+
     }
 }
 extension ChangeProfileComponent: Registration {
@@ -280,6 +341,9 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->RootComponent", factory264bfc4d4cb6b0629b40f47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->SigninComponent", factory2882a056d84a613debcce3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->HomeComponent", factory67229cdf0f755562b2b1f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->RouteComponent", factoryb38e7a5fde2fe65187ebf47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->ConfirmComponent", factory00ab5addbed09be3f3f4e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->SearchRouteComponent", factory1a988a858e24766a7c25e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->ChangeProfileComponent", factory239204ef0c47c0c68c97e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->RenewalPasswordComponent", factory236a429a80d834e1f370e3b0c44298fc1c149afb)
 }

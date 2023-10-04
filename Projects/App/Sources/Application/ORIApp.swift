@@ -1,4 +1,5 @@
 import SwiftUI
+import MapKit
 import BaseFeature
 import JwtStoreInterface
 import JwtStore

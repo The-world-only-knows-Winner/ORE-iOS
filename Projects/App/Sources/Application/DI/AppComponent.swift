@@ -70,4 +70,13 @@ public extension AppComponent {
     var changeProfileFactory: any ChangeProfileFactory {
         ChangeProfileComponent(parent: self)
     }
+    var routeFactory: any RouteFactory {
+        RouteComponent(parent: self)
+    }
+    var confirmFactory: any ConfirmFactory {
+        ConfirmComponent(parent: self)
+    }
+    var searchRouteFactory: any SearchRouteFactory {
+        SearchRouteComponent(parent: self)
+    }
 }
