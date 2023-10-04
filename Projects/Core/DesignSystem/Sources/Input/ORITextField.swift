@@ -13,7 +13,7 @@ public struct ORITextField: View {
     public init(
         text: Binding<String>,
         placehoder: String,
-        title: String,
+        title: String = "",
         type: InputBoxType? = nil,
         description: DescriptionType? = nil,
         onCommit: @escaping () -> Void = {}
@@ -28,8 +28,10 @@ public struct ORITextField: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(title)
-                .oriFont(.body(.body4), color: .GrayScale.gray500)
+            if !title.isEmpty {
+                Text(title)
+                    .oriFont(.body(.body4), color: .GrayScale.gray500)
+            }
 
             HStack(spacing: 12) {
                 ZStack(alignment: .leading) {
@@ -65,6 +67,9 @@ public struct ORITextField: View {
                     case let .icon(image):
                         ORIIcon(image)
                             .frame(width: 24, height: 24)
+                            .onTapGesture {
+                                onCommit()
+                            }
 
                     case let .button(type):
                         InputButton(
