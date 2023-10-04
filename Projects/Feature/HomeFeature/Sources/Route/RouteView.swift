@@ -15,7 +15,7 @@ struct RouteView: View {
 
     var body: some View {
         ORINavigationBar(
-            leadingItem: NavigationItem(image: ORIIcon(.arrowBack)) { viewModel.isSuccessRenewalPassword.toggle() },
+            leadingItem: NavigationItem(image: ORIIcon(.arrowBack)) { viewModel.isSuccessSelectedRoute.toggle() },
             trailingItem: NavigationItem(image: ORIIcon(.search)) { print("검색으로 이동") },
             headerTitle: "장소지정"
         ) {
@@ -71,16 +71,14 @@ struct RouteView: View {
                     case .start:
                         ORIButton(text: "출발지로 지정", style: .default, isPadding: false) {
                             withAnimation {
-                                viewModel.startPoint = manager.title
-                                viewModel.nextButtonDidTap()
+                                viewModel.selectPosition(point: manager.title, type: .start)
                                 manager.addPin(type: .start)
                             }
                         }
                     case .end:
                         ORIButton(text: "도착지로 지정", style: .default, isPadding: false) {
                             withAnimation {
-                                viewModel.endPoint = manager.title
-                                viewModel.nextButtonDidTap()
+                                viewModel.selectPosition(point: manager.title, type: .end)
                                 manager.addPin(type: .end)
                             }
                         }
@@ -88,19 +86,21 @@ struct RouteView: View {
                         HStack(spacing: 10) {
                             ORIButton(text: "설정 완료", style: .default, isPadding: false) {
                                 withAnimation {
-                                    viewModel.nextButtonDidTap()
+                                    viewModel.selectPosition()
                                 }
                             }
 
                             smallButton(type: .start) {
                                 withAnimation {
-                                    viewModel.buttonType = .start
+                                    viewModel.selectPosition(point: manager.title, type: .start)
+                                    manager.addPin(type: .start)
                                 }
                             }
 
                             smallButton(type: .end) {
                                 withAnimation {
-                                    viewModel.buttonType = .end
+                                    viewModel.selectPosition(point: manager.title, type: .end)
+                                    manager.addPin(type: .end)
                                 }
                             }
                         }
@@ -110,7 +110,7 @@ struct RouteView: View {
                 .oriBackground()
             }
             .onAppear { manager.configureLocationManager() }
-            .onChange(of: viewModel.isSuccessRenewalPassword) { newValue in
+            .onChange(of: viewModel.isSuccessSelectedRoute) { newValue in
                 if newValue {
                     rootPresentationMode.wrappedValue.dismiss()
                 }

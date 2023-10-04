@@ -5,22 +5,31 @@ import CoreLocation
 final class RouteViewModel: BaseViewModel {
     @Published var startPoint: String?
     @Published var endPoint: String?
-    @Published var isSuccessRenewalPassword: Bool = false
+    @Published var isSuccessSelectedRoute: Bool = false
 
     @Published var buttonType: LocationType? = .start
 
-    func nextButtonDidTap() {
+    func selectPosition(point: String = "", type: LocationType? = .none) {
         switch buttonType {
         case .start:
-            if endPoint == nil {
-                buttonType = .end
-            } else {
-                buttonType = .none
-            }
+            buttonType = .end
         case .end:
             buttonType = .none
-        case nil:
-            print("let's go!!")
+        case .none:
+            break
+        }
+
+        patchPoint()
+
+        func patchPoint() {
+            switch type {
+            case .start:
+                startPoint = point
+            case .end:
+                endPoint = point
+            case nil:
+                print("next page")
+            }
         }
     }
 }
