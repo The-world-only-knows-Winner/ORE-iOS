@@ -1,12 +1,30 @@
 import SwiftUI
 
 public struct ORINavigationBar<Content>: View where Content: View {
+    @State private var isScrolling: Bool = false
+    @State private var headerTitleHolder = ""
+    @State private var pageTitleHeight: CGFloat = 0
     let leadingItem: NavigationItem?
     let trailingItem: NavigationItem?
-    var headerTitle: String
-    var pageTitle: String?
+    @State var headerTitle: String
+    @State var pageTitle: String?
     var scrollable: Bool
     let content: () -> Content
+
+    private func toggleIsShowPageTitle() {
+        guard let pageTitle else { return }
+
+        withAnimation(.easeIn(duration: 0.2)) {
+            if isScrolling {
+                self.headerTitle = pageTitle
+                self.pageTitle = ""
+            } else {
+                self.pageTitle = headerTitle
+                self.headerTitle = headerTitleHolder
+                self.headerTitleHolder = headerTitle
+            }
+        }
+    }
 
     public init(
         leadingItem: NavigationItem? = nil,
@@ -18,8 +36,8 @@ public struct ORINavigationBar<Content>: View where Content: View {
     ) {
         self.leadingItem = leadingItem
         self.trailingItem = trailingItem
-        self.headerTitle = headerTitle
-        self.pageTitle = pageTitle
+        _headerTitle = State(wrappedValue: headerTitle)
+        _pageTitle = State(wrappedValue: pageTitle)
         self.scrollable = scrollable
         self.content = content
     }
@@ -28,16 +46,30 @@ public struct ORINavigationBar<Content>: View where Content: View {
         Group {
             if scrollable {
                 ScrollView {
+                    GeometryReader { proxy in
+                        Color.clear.onChange(of: proxy.frame(in: .named("scroll")).minY) { newValue in
+                            if newValue < -pageTitleHeight {
+                                isScrolling = true
+                            } else {
+                                isScrolling = false
+                            }
+                        }
+                    }
                     contentView()
                 }
+                .coordinateSpace(name: "scroll")
             } else { contentView() }
 
         }
         .oriBackground()
+        .onChange(of: isScrolling) { _ in
+            self.toggleIsShowPageTitle()
+        }
         .toolbar {
             ToolbarItem(placement: .principal) {
                 Text(headerTitle)
-                    .oriFont(.heading(.heading1), color: .GrayScale.gray700)
+                    .oriFont(.body(.body1), color: .GrayScale.gray700)
+                    .frame(maxWidth: .infinity, alignment: .center)
             }
         }
         .navigationBarItems(
@@ -57,6 +89,7 @@ public struct ORINavigationBar<Content>: View where Content: View {
 
     @ViewBuilder
     private func toolbarView(type: ToolbarType) -> some View {
+        let emptyView = Color.clear.frame(width: 28, height: 28)
         switch type {
         case .leading:
             if let leadingItem {
@@ -66,7 +99,7 @@ public struct ORINavigationBar<Content>: View where Content: View {
                     leadingItem.image
                         .frame(width: 28, height: 28)
                 }
-            } else { EmptyView() }
+            } else { emptyView }
 
         case .trailing:
             if let trailingItem {
@@ -76,7 +109,7 @@ public struct ORINavigationBar<Content>: View where Content: View {
                     trailingItem.image
                         .frame(width: 28, height: 28)
                 }
-            } else { EmptyView() }
+            } else { emptyView }
         }
     }
 
@@ -89,6 +122,13 @@ public struct ORINavigationBar<Content>: View where Content: View {
                         .oriFont(.heading(.heading1), color: .GrayScale.gray700)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 24)
+                        .overlay {
+                            GeometryReader { proxy in
+                                Color.clear.onAppear {
+                                    pageTitleHeight = proxy.size.height
+                                }
+                            }
+                        }
 
                     Spacer()
                 }
