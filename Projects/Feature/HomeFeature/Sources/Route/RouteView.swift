@@ -6,18 +6,22 @@ struct RouteView: View {
     @StateObject var manager = LocationManager()
     @StateObject var viewModel: RouteViewModel
     @Environment(\.rootPresentationMode) var rootPresentationMode
+    @Environment(\.dismiss) private var dismiss
+
+    private let confirmFactory: any ConfirmFactory
 
     init(
-        viewModel: RouteViewModel
+        viewModel: RouteViewModel,
+        confirmFactory: any ConfirmFactory
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
+        self.confirmFactory = confirmFactory
     }
 
     var body: some View {
         ORINavigationBar(
-            leadingItem: NavigationItem(image: ORIIcon(.arrowBack)) { viewModel.isSuccessSelectedRoute.toggle() },
-            trailingItem: NavigationItem(image: ORIIcon(.search)) { print("검색으로 이동") },
-            headerTitle: "장소지정"
+            leadingItem: NavigationItem(image: ORIIcon(.arrowBack)) { dismiss() },
+            trailingItem: NavigationItem(image: ORIIcon(.search)) { print("검색으로 이동") }
         ) {
             VStack(alignment: .trailing, spacing: 0) {
                 HStack(spacing: 16) {
@@ -110,11 +114,11 @@ struct RouteView: View {
                 .oriBackground()
             }
             .onAppear { manager.configureLocationManager() }
-            .onChange(of: viewModel.isSuccessSelectedRoute) { newValue in
-                if newValue {
-                    rootPresentationMode.wrappedValue.dismiss()
-                }
-            }
+            .navigate(
+                to: confirmFactory.makeView().eraseToAnyView()
+                    .environment(\.rootPresentationMode, rootPresentationMode),
+                when: $viewModel.isNavigatedToConfirmRoute
+            )
         }
     }
 
