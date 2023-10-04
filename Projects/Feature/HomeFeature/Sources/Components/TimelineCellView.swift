@@ -2,7 +2,7 @@ import SwiftUI
 import DesignSystem
 import HomeFeatureInterface
 
-struct RouteTimelineCellView: View {
+struct TimelineCellView: View {
     let type: TimelineType
 
     init(type: TimelineType) { self.type = type }
@@ -47,6 +47,5 @@ struct RouteTimelineCellView: View {
 
             Spacer()
         }
-        .padding(.horizontal, 20)
     }
 }
