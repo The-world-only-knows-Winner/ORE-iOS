@@ -73,4 +73,7 @@ public extension AppComponent {
     var routeFactory: any RouteFactory {
         RouteComponent(parent: self)
     }
+    var confirmFactory: any ConfirmFactory {
+        ConfirmComponent(parent: self)
+    }
 }
