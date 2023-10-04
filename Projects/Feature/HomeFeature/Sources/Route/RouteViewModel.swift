@@ -5,7 +5,7 @@ import CoreLocation
 final class RouteViewModel: BaseViewModel {
     @Published var startPoint: String?
     @Published var endPoint: String?
-    @Published var isSuccessSelectedRoute: Bool = false
+    @Published var isNavigatedToConfirmRoute: Bool = false
 
     @Published var buttonType: LocationType? = .start
 
@@ -28,7 +28,7 @@ final class RouteViewModel: BaseViewModel {
             case .end:
                 endPoint = point
             case nil:
-                print("next page")
+                self.isNavigatedToConfirmRoute.toggle()
             }
         }
     }
