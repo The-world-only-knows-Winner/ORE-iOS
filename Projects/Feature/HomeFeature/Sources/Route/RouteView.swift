@@ -9,19 +9,24 @@ struct RouteView: View {
     @Environment(\.dismiss) private var dismiss
 
     private let confirmFactory: any ConfirmFactory
+    private let searchRouteFactory: any SearchRouteFactory
 
     init(
         viewModel: RouteViewModel,
-        confirmFactory: any ConfirmFactory
+        confirmFactory: any ConfirmFactory,
+        searchRouteFactory: any SearchRouteFactory
     ) {
         _viewModel = StateObject(wrappedValue: viewModel)
         self.confirmFactory = confirmFactory
+        self.searchRouteFactory = searchRouteFactory
     }
 
     var body: some View {
         ORINavigationBar(
             leadingItem: NavigationItem(image: ORIIcon(.arrowBack)) { dismiss() },
-            trailingItem: NavigationItem(image: ORIIcon(.search)) { print("검색으로 이동") }
+            trailingItem: NavigationItem(image: ORIIcon(.search)) {
+                viewModel.isNavigatedToSearchRoute.toggle()
+            }
         ) {
             VStack(alignment: .trailing, spacing: 0) {
                 HStack(spacing: 16) {
@@ -118,6 +123,10 @@ struct RouteView: View {
                 to: confirmFactory.makeView().eraseToAnyView()
                     .environment(\.rootPresentationMode, rootPresentationMode),
                 when: $viewModel.isNavigatedToConfirmRoute
+            )
+            .navigate(
+                to: searchRouteFactory.makeView().eraseToAnyView(),
+                when: $viewModel.isNavigatedToSearchRoute
             )
         }
     }

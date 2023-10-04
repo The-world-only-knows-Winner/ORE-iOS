@@ -6,6 +6,7 @@ final class RouteViewModel: BaseViewModel {
     @Published var startPoint: String?
     @Published var endPoint: String?
     @Published var isNavigatedToConfirmRoute: Bool = false
+    @Published var isNavigatedToSearchRoute: Bool = false
 
     @Published var buttonType: LocationType? = .start
 
