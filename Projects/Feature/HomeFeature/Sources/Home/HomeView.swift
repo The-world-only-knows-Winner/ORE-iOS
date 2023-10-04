@@ -59,7 +59,8 @@ struct HomeView: View {
                 when: $viewModel.isNavigatedToMyPage
             )
             .navigate(
-                to: routeFactory.makeView().eraseToAnyView(),
+                to: routeFactory.makeView().eraseToAnyView()
+                    .environment(\.rootPresentationMode, $viewModel.isNavigatedToRoute),
                 when: $viewModel.isNavigatedToRoute
             )
         }
