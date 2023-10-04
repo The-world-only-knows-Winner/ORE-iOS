@@ -1,6 +1,6 @@
 import SwiftUI
 
-public protocol RouteConfirmFactory {
+public protocol ConfirmFactory {
     associatedtype SomeView: View
     func makeView() -> SomeView
 }
