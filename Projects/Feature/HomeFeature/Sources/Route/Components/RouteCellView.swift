@@ -61,7 +61,9 @@ struct RouteCellView: View {
                             return .body
                         }
                     }
-                    RouteTimelineCellView(type: type)
+
+                    TimelineCellView(type: type)
+                        .padding(.horizontal, 20)
                 }
             }
         }
