@@ -76,4 +76,7 @@ public extension AppComponent {
     var confirmFactory: any ConfirmFactory {
         ConfirmComponent(parent: self)
     }
+    var searchRouteFactory: any SearchRouteFactory {
+        SearchRouteComponent(parent: self)
+    }
 }
