@@ -2,9 +2,9 @@ import SwiftUI
 import NeedleFoundation
 import HomeFeatureInterface
 
-public protocol RouteConfirmDependency: Dependency {}
+public protocol ConfirmDependency: Dependency {}
 
-public final class RouteConfirmComponent: Component<RouteConfirmDependency>, RouteConfirmFactory {
+public final class ConfirmComponent: Component<ConfirmDependency>, ConfirmFactory {
     public func makeView() -> some View {
         SelectRouteView(viewModel: .init())
     }
