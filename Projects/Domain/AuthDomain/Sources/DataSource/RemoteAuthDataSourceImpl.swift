@@ -1,19 +1,30 @@
 import AuthDomainInterface
 import BaseDomain
 import Combine
+import JwtStoreInterface
 
 public final class RemoteAuthDataSourceImpl: BaseRemoteDataSource<AuthAPI>, RemoteAuthDataSource {
+    public func signin(req: SigninRequestDTO) -> AnyPublisher<Void, Error> {
+        request(.signin(req))
+    }
+
+    public func changePassword(req: ChangePasswordRequestDTO) -> AnyPublisher<Void, Error> {
+        request(.changePassword(req))
+    }
+
     public func sendAuthCode(req: SendAuthCodeRequestDTO) -> AnyPublisher<Void, Error> {
         request(.sendAuthCode(req))
     }
 
-    public func reissueToken() -> AnyPublisher<Bool, Error> {
-        request(.reissueToken, dto: ReissueTokenResponseDTO.self)
-            .map { $0.toDomain() }
-            .eraseToAnyPublisher()
+    public func verifyAuthCode(req: VerifyAuthCodeRequestDTO) -> AnyPublisher<Void, Error> {
+        request(.verifyAuthCode(req))
     }
 
-    public func verifyAuthCode(email: String, authCode: String) -> AnyPublisher<Void, Error> {
-        request(.verifyAuthCode(email: email, authCode: authCode))
+    public func logout() -> AnyPublisher<Void, Error> {
+        keychain.delete(type: .accessToken)
+        keychain.delete(type: .accessExpiresAt)
+        keychain.delete(type: .refreshToken)
+        keychain.delete(type: .refreshExpiresAt)
+        return request(.logout)
     }
 }
