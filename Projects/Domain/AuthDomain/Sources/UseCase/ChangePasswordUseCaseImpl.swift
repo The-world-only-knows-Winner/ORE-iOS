@@ -1,15 +1,14 @@
 import AuthDomainInterface
-import UsersDomainInterface
 import Combine
 
-public struct ReissueTokenUseCaseImpl: ReissueTokenUseCase {
+public struct ChangePasswordUseCaseImpl: ChangePasswordUseCase {
     private let authRepository: any AuthRepository
 
     public init(authRepository: any AuthRepository) {
         self.authRepository = authRepository
     }
 
-    public func execute() -> AnyPublisher<Bool, Error> {
-        authRepository.reissueToken()
+    public func execute(req: ChangePasswordRequestDTO) -> AnyPublisher<Void, Error> {
+        authRepository.changePassword(req: req)
     }
 }

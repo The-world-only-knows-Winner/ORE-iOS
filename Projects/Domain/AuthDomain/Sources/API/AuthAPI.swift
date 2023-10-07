@@ -3,9 +3,11 @@ import AuthDomainInterface
 import BaseDomain
 
 public enum AuthAPI {
-    case verifyAuthCode(email: String, authCode: String)
+    case signin(SigninRequestDTO)
+    case changePassword(ChangePasswordRequestDTO)
     case sendAuthCode(SendAuthCodeRequestDTO)
-    case reissueToken
+    case verifyAuthCode(VerifyAuthCodeRequestDTO)
+    case logout
 }
 
 extension AuthAPI: JobisAPI {
@@ -17,50 +19,51 @@ extension AuthAPI: JobisAPI {
 
     public var urlPath: String {
         switch self {
-        case .sendAuthCode, .verifyAuthCode:
+        case .signin:
+            return "/token"
+
+        case .changePassword:
+            return "/password"
+
+        case .verifyAuthCode, .sendAuthCode:
             return "/code"
 
-        case .reissueToken:
-            return "/reissue"
+        case .logout:
+            return "/logout"
         }
     }
 
     public var method: Method {
         switch self {
-        case .sendAuthCode:
+        case .changePassword:
+            return .put
+
+        case .signin, .sendAuthCode:
             return .post
 
         case .verifyAuthCode:
             return .patch
 
-        case .reissueToken:
-            return .put
+        case .logout:
+            return .delete
         }
     }
 
     public var task: Task {
         switch self {
-        case let .sendAuthCode(req):
+        case let .signin(req),
+            let .changePassword(req),
+            let .sendAuthCode(req),
+            let .verifyAuthCode(req):
             return .requestJSONEncodable(req)
 
-        case let .verifyAuthCode(email, authCode):
-            return .requestParameters(
-                parameters: [
-                    "email": email,
-                    "auth_code": authCode
-                ], encoding: URLEncoding.queryString
-            )
-
-        case .reissueToken:
+        case .logout:
             return .requestPlain
         }
     }
 
     public var jwtTokenType: JwtTokenType {
         switch self {
-        case .reissueToken:
-            return .refreshToken
-
         default:
             return .none
         }
@@ -68,24 +71,28 @@ extension AuthAPI: JobisAPI {
 
     public var errorMap: [Int: ErrorType] {
         switch self {
-        case .verifyAuthCode:
+        case .signin:
             return [
-                401: .wrongAuthCode,
-                404: .notFoundAuthCode
+                401: .passwordMisMatches,
+                404: .emailNotFound
+            ]
+
+        case .changePassword:
+            return [
+                401: .passwordMisMatches,
+                404: .userNotFound
             ]
 
         case .sendAuthCode:
+            return [:]
+
+        case .verifyAuthCode:
             return [
-                400: .wrongEmailForm,
-                404: .userNotFound,
-                409: .existUser
+                404: .authCodeNotFound
             ]
 
-        case .reissueToken:
-            return [
-                404: .notFoundToken,
-                500: .internalServerError
-            ]
+        case .logout:
+            return [:]
         }
     }
 }

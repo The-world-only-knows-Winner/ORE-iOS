@@ -1,5 +1,5 @@
-import Foundation
+import Combine
 
 public protocol LogoutUseCase {
-    func execute()
+    func execute() -> AnyPublisher<Void, Error>
 }

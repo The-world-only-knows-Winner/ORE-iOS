@@ -1,4 +1,5 @@
 import AuthDomainInterface
+import Combine
 
 public struct LogoutUseCaseImpl: LogoutUseCase {
     private let authRepository: any AuthRepository
@@ -7,7 +8,7 @@ public struct LogoutUseCaseImpl: LogoutUseCase {
         self.authRepository = authRepository
     }
 
-    public func execute() {
+    public func execute() -> AnyPublisher<Void, Error> {
         authRepository.logout()
     }
 }
