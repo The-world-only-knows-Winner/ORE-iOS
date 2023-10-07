@@ -1,5 +1,5 @@
 import Combine
 
 public protocol VerifyAuthCodeUseCase {
-    func execute(email: String, authCode: String) -> AnyPublisher<Void, Error>
+    func execute(req: VerifyAuthCodeRequestDTO) -> AnyPublisher<Void, Error>
 }

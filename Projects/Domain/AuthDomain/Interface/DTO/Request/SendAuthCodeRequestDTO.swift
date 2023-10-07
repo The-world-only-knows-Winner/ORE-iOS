@@ -2,15 +2,8 @@ import Foundation
 
 public struct SendAuthCodeRequestDTO: Encodable {
     public let email: String
-    public let authCodeType: AuthCodeType
 
-    public init(email: String, authCodeType: AuthCodeType) {
+    public init(email: String) {
         self.email = email
-        self.authCodeType = authCodeType
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case email
-        case authCodeType = "auth_code_type"
     }
 }

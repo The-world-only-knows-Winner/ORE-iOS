@@ -1,44 +1,30 @@
 import Foundation
 
 public enum AuthDomainError: Error {
-    // verify
-    case wrongAuthCode
-    case notFoundAuthCode
-
-    // send
-    case wrongEmailForm
+    // Signin
+    case emailNotFound
+    // Signin || ChangePassword
+    case passwordMisMatches
+    // ChangePassword
     case userNotFound
-    case existUser
-
-    // reissue
-    case notFoundToken
-
-    case internalServerError
+    // VerifyAuthCode
+    case authCodeNotFound
 }
 
 extension AuthDomainError: LocalizedError {
     public var errorDescription: String? {
         switch self {
-        case .wrongAuthCode:
-            return "인증코드를 다시 확인해주세요."
+        case .emailNotFound:
+            return "이메일을 찾을 수 없습니다."
 
-        case .notFoundAuthCode:
-            return "해당 메일로 발송된 인증코드가 존재하지 않습니다."
+        case .passwordMisMatches:
+            return "비밀번호가 올바르지 않습니다."
 
         case .userNotFound:
-            return "해당 유저가 존재하지 않습니다."
+            return "사용자를 찾을 수 없습니다."
 
-        case .existUser:
-            return "이미 존재하는 계정입니다."
-
-        case .notFoundToken:
-            return "토큰을 찾을 수 없습니다."
-
-        case .internalServerError:
-            return "인터넷 환경을 확인해주세요."
-
-        case .wrongEmailForm:
-            return "@dsm.hs.kr 이 포함되야 합니다."
+        case .authCodeNotFound:
+            return "인증번호가 일치하지 않습니다."
         }
     }
 }
