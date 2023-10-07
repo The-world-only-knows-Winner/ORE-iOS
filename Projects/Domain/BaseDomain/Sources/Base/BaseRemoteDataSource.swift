@@ -6,7 +6,7 @@ import Moya
 import UtilityModule
 
 open class BaseRemoteDataSource<API: JobisAPI> {
-    private let keychain: any Keychain
+    public let keychain: any Keychain
     private let provider: MoyaProvider<API>
     private let decoder = JSONDecoder()
     private let maxRetryCount = 2

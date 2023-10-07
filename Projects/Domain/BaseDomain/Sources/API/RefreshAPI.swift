@@ -5,7 +5,7 @@ public enum RefreshAPI {
 }
 
 extension RefreshAPI: JobisAPI {
-    public typealias ErrorType = RefreshError
+    public typealias ErrorType = Error
 
     public var domain: JobisDomain {
         .auth
@@ -14,7 +14,7 @@ extension RefreshAPI: JobisAPI {
     public var urlPath: String {
         switch self {
         case .reissueToken:
-            return "/reissue"
+            return "/token"
         }
     }
 
@@ -41,11 +41,8 @@ extension RefreshAPI: JobisAPI {
 
     public var errorMap: [Int: ErrorType] {
         switch self {
-        case .reissueToken:
-            return [
-                401: .unauthorized,
-                404: .unauthorized
-            ]
+        default:
+            return [:]
         }
     }
 }
