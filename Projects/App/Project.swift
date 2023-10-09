@@ -45,6 +45,7 @@ let targets: [Target] = [
             .Feature.OnboardingFeature,
             .Domain.UserDomain,
             .Domain.AuthDomain,
+            .Domain.RouteDomain,
             .SPM.Needle
         ],
         settings: .settings(base: env.baseSetting)
