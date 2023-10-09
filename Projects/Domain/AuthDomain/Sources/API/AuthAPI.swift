@@ -8,6 +8,7 @@ public enum AuthAPI {
     case sendAuthCode(SendAuthCodeRequestDTO)
     case verifyAuthCode(VerifyAuthCodeRequestDTO)
     case logout
+    case tokenRefresh
 }
 
 extension AuthAPI: JobisAPI {
@@ -19,7 +20,7 @@ extension AuthAPI: JobisAPI {
 
     public var urlPath: String {
         switch self {
-        case .signin:
+        case .signin, .tokenRefresh:
             return "/token"
 
         case .changePassword:
@@ -35,7 +36,7 @@ extension AuthAPI: JobisAPI {
 
     public var method: Method {
         switch self {
-        case .changePassword:
+        case .changePassword, .tokenRefresh:
             return .put
 
         case .signin, .sendAuthCode:
@@ -51,19 +52,27 @@ extension AuthAPI: JobisAPI {
 
     public var task: Task {
         switch self {
-        case let .signin(req),
-            let .changePassword(req),
-            let .sendAuthCode(req),
-            let .verifyAuthCode(req):
+        case let .signin(req):
             return .requestJSONEncodable(req)
 
-        case .logout:
+        case let .changePassword(req):
+            return .requestJSONEncodable(req)
+
+        case let .sendAuthCode(req):
+            return .requestJSONEncodable(req)
+
+        case let .verifyAuthCode(req):
+            return .requestJSONEncodable(req)
+
+        case .logout, .tokenRefresh:
             return .requestPlain
         }
     }
 
     public var jwtTokenType: JwtTokenType {
         switch self {
+        case .tokenRefresh:
+            return .refreshToken
         default:
             return .none
         }
@@ -93,6 +102,11 @@ extension AuthAPI: JobisAPI {
 
         case .logout:
             return [:]
+
+        case .tokenRefresh:
+            return [
+                404: .refreshTokenNotFound
+            ]
         }
     }
 }

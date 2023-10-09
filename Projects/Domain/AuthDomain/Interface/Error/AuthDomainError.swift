@@ -9,6 +9,8 @@ public enum AuthDomainError: Error {
     case userNotFound
     // VerifyAuthCode
     case authCodeNotFound
+    // TokenRefresh
+    case refreshTokenNotFound
 }
 
 extension AuthDomainError: LocalizedError {
@@ -25,6 +27,9 @@ extension AuthDomainError: LocalizedError {
 
         case .authCodeNotFound:
             return "인증번호가 일치하지 않습니다."
+
+        case .refreshTokenNotFound:
+            return "확인되지 않는 토큰입니다."
         }
     }
 }
