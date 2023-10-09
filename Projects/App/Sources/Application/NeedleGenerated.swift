@@ -24,8 +24,8 @@ import SignupFeatureInterface
 import SplashFeature
 import SplashFeatureInterface
 import SwiftUI
-import UsersDomain
-import UsersDomainInterface
+import UserDomain
+import UserDomainInterface
 
 // swiftlint:disable unused_declaration
 private let needleDependenciesHash : String? = nil
@@ -41,8 +41,8 @@ private func parent1(_ component: NeedleFoundation.Scope) -> NeedleFoundation.Sc
 #if !NEEDLE_DYNAMIC
 
 private class SplashDependencye0cb7136f2ec3edfd60aProvider: SplashDependency {
-    var reissueTokenUseCase: any ReissueTokenUseCase {
-        return appComponent.reissueTokenUseCase
+    var tokenRefreshUseCase: any TokenRefreshUseCase {
+        return appComponent.tokenRefreshUseCase
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -222,12 +222,13 @@ extension AppComponent: Registration {
 
         localTable["keychain-any Keychain"] = { [unowned self] in self.keychain as Any }
         localTable["remoteAuthDataSource-any RemoteAuthDataSource"] = { [unowned self] in self.remoteAuthDataSource as Any }
-        localTable["localAuthDataSource-any LocalAuthDataSource"] = { [unowned self] in self.localAuthDataSource as Any }
         localTable["authRepository-any AuthRepository"] = { [unowned self] in self.authRepository as Any }
+        localTable["signinUseCase-any SigninUseCase"] = { [unowned self] in self.signinUseCase as Any }
+        localTable["changePassword-any ChangePasswordUseCase"] = { [unowned self] in self.changePassword as Any }
         localTable["sendAuthCodeUseCase-any SendAuthCodeUseCase"] = { [unowned self] in self.sendAuthCodeUseCase as Any }
         localTable["verifyAuthCodeUseCase-any VerifyAuthCodeUseCase"] = { [unowned self] in self.verifyAuthCodeUseCase as Any }
-        localTable["reissueTokenUseCase-any ReissueTokenUseCase"] = { [unowned self] in self.reissueTokenUseCase as Any }
         localTable["logoutUseCase-any LogoutUseCase"] = { [unowned self] in self.logoutUseCase as Any }
+        localTable["tokenRefreshUseCase-any TokenRefreshUseCase"] = { [unowned self] in self.tokenRefreshUseCase as Any }
         localTable["signinFactory-any SigninFactory"] = { [unowned self] in self.signinFactory as Any }
         localTable["authSignupFactory-any AuthSignupFactory"] = { [unowned self] in self.authSignupFactory as Any }
         localTable["userInfoSignupFactory-any UserInfoSignupFactory"] = { [unowned self] in self.userInfoSignupFactory as Any }
@@ -240,14 +241,16 @@ extension AppComponent: Registration {
         localTable["routeFactory-any RouteFactory"] = { [unowned self] in self.routeFactory as Any }
         localTable["confirmFactory-any ConfirmFactory"] = { [unowned self] in self.confirmFactory as Any }
         localTable["searchRouteFactory-any SearchRouteFactory"] = { [unowned self] in self.searchRouteFactory as Any }
-        localTable["remoteUsersDataSource-any RemoteUsersDataSource"] = { [unowned self] in self.remoteUsersDataSource as Any }
-        localTable["usersRepository-any UsersRepository"] = { [unowned self] in self.usersRepository as Any }
-        localTable["signinUseCase-any SigninUseCase"] = { [unowned self] in self.signinUseCase as Any }
+        localTable["remoteUserDataSource-any RemoteUserDataSource"] = { [unowned self] in self.remoteUserDataSource as Any }
+        localTable["userRepository-any UserRepository"] = { [unowned self] in self.userRepository as Any }
+        localTable["signupUseCase-any SignupUseCase"] = { [unowned self] in self.signupUseCase as Any }
+        localTable["fetchMyInfoUseCase-any FetchMyInfoUseCase"] = { [unowned self] in self.fetchMyInfoUseCase as Any }
+        localTable["updateMyInfoUseCase-any UpdateMyInfoUseCase"] = { [unowned self] in self.updateMyInfoUseCase as Any }
     }
 }
 extension SplashComponent: Registration {
     public func registerItems() {
-        keyPathToName[\SplashDependency.reissueTokenUseCase] = "reissueTokenUseCase-any ReissueTokenUseCase"
+        keyPathToName[\SplashDependency.tokenRefreshUseCase] = "tokenRefreshUseCase-any TokenRefreshUseCase"
     }
 }
 extension OnboardingComponent: Registration {

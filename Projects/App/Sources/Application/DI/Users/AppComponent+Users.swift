@@ -1,24 +1,36 @@
 import NeedleFoundation
-import UsersDomain
-import UsersDomainInterface
+import UserDomain
+import UserDomainInterface
 import JwtStoreInterface
 
 public extension AppComponent {
-    var remoteUsersDataSource: any RemoteUsersDataSource {
+    var remoteUserDataSource: any RemoteUserDataSource {
         shared {
-            RemoteUsersDataSourceImpl(keychain: keychain)
+            RemoteUserDataSourceImpl(keychain: keychain)
         }
     }
 
-    var usersRepository: any UsersRepository {
+    var userRepository: any UserRepository {
         shared {
-            UsersRepositoryImpl(remoteUsersDataSource: remoteUsersDataSource)
+            UserRepositoryImpl(remoteUserDataSource: remoteUserDataSource)
         }
     }
 
-    var signinUseCase: any SigninUseCase {
+    var signupUseCase: any SignupUseCase {
         shared {
-            SigninUseCaseImpl(usersRepository: usersRepository)
+            SignupUseCaseImpl(userRepository: userRepository)
+        }
+    }
+
+    var fetchMyInfoUseCase: any FetchMyInfoUseCase {
+        shared {
+            FetchMyInfoUseCaseImpl(userRepository: userRepository)
+        }
+    }
+
+    var updateMyInfoUseCase: any UpdateMyInfoUseCase {
+        shared {
+            UpdateMyInfoUseCaseImpl(userRepository: userRepository)
         }
     }
 }

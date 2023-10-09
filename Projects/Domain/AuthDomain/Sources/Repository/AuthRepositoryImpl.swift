@@ -29,4 +29,8 @@ public struct AuthRepositoryImpl: AuthRepository {
     public func logout() -> AnyPublisher<Void, Error> {
         remoteAuthDataSource.logout()
     }
+
+    public func tokenRefresh() -> AnyPublisher<Void, Error> {
+        remoteAuthDataSource.tokenRefresh()
+    }
 }

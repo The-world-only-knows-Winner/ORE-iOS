@@ -43,7 +43,7 @@ let targets: [Target] = [
             .Feature.ChangeProfileFeature,
             .Feature.SplashFeature,
             .Feature.OnboardingFeature,
-            .Domain.UsersDomain,
+            .Domain.UserDomain,
             .Domain.AuthDomain,
             .SPM.Needle
         ],
