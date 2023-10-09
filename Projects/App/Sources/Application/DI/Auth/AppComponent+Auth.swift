@@ -9,18 +9,23 @@ public extension AppComponent {
         }
     }
 
-    var localAuthDataSource: any LocalAuthDataSource {
-        shared {
-            LocalAuthDataSourceImpl(keychain: keychain)
-        }
-    }
-
     var authRepository: any AuthRepository {
         shared {
             AuthRepositoryImpl(
-                remoteAuthDataSource: remoteAuthDataSource,
-                localAuthDataSource: localAuthDataSource
+                remoteAuthDataSource: remoteAuthDataSource
             )
+        }
+    }
+
+    var signinUseCase: any SigninUseCase {
+        shared {
+            SigninUseCaseImpl(authRepository: authRepository)
+        }
+    }
+
+    var changePassword: any ChangePasswordUseCase {
+        shared {
+            ChangePasswordUseCaseImpl(authRepository: authRepository)
         }
     }
 
@@ -36,15 +41,15 @@ public extension AppComponent {
         }
     }
 
-    var reissueTokenUseCase: any ReissueTokenUseCase {
-        shared {
-            ReissueTokenUseCaseImpl(authRepository: authRepository)
-        }
-    }
-
     var logoutUseCase: any LogoutUseCase {
         shared {
             LogoutUseCaseImpl(authRepository: authRepository)
+        }
+    }
+
+    var tokenRefreshUseCase: any TokenRefreshUseCase {
+        shared {
+            TokenRefreshUseCaseImpl(authRepository: authRepository)
         }
     }
 }
