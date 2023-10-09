@@ -89,6 +89,18 @@ public extension TargetDependency.Feature {
 }
 
 public extension TargetDependency.Domain {
+    static let RouteDomainTesting = TargetDependency.project(
+        target: ModulePaths.Domain.RouteDomain.targetName(type: .testing),
+        path: .relativeToDomain(ModulePaths.Domain.RouteDomain.rawValue)
+    )
+    static let RouteDomainInterface = TargetDependency.project(
+        target: ModulePaths.Domain.RouteDomain.targetName(type: .interface),
+        path: .relativeToDomain(ModulePaths.Domain.RouteDomain.rawValue)
+    )
+    static let RouteDomain = TargetDependency.project(
+        target: ModulePaths.Domain.RouteDomain.targetName(type: .sources),
+        path: .relativeToDomain(ModulePaths.Domain.RouteDomain.rawValue)
+    )
     static let UserDomainTesting = TargetDependency.project(
         target: ModulePaths.Domain.UserDomain.targetName(type: .testing),
         path: .relativeToDomain(ModulePaths.Domain.UserDomain.rawValue)
