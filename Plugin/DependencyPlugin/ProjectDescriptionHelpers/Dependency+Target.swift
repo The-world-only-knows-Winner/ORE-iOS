@@ -89,17 +89,17 @@ public extension TargetDependency.Feature {
 }
 
 public extension TargetDependency.Domain {
-    static let UsersDomainTesting = TargetDependency.project(
-        target: ModulePaths.Domain.UsersDomain.targetName(type: .testing),
-        path: .relativeToDomain(ModulePaths.Domain.UsersDomain.rawValue)
+    static let UserDomainTesting = TargetDependency.project(
+        target: ModulePaths.Domain.UserDomain.targetName(type: .testing),
+        path: .relativeToDomain(ModulePaths.Domain.UserDomain.rawValue)
     )
-    static let UsersDomainInterface = TargetDependency.project(
-        target: ModulePaths.Domain.UsersDomain.targetName(type: .interface),
-        path: .relativeToDomain(ModulePaths.Domain.UsersDomain.rawValue)
+    static let UserDomainInterface = TargetDependency.project(
+        target: ModulePaths.Domain.UserDomain.targetName(type: .interface),
+        path: .relativeToDomain(ModulePaths.Domain.UserDomain.rawValue)
     )
-    static let UsersDomain = TargetDependency.project(
-        target: ModulePaths.Domain.UsersDomain.targetName(type: .sources),
-        path: .relativeToDomain(ModulePaths.Domain.UsersDomain.rawValue)
+    static let UserDomain = TargetDependency.project(
+        target: ModulePaths.Domain.UserDomain.targetName(type: .sources),
+        path: .relativeToDomain(ModulePaths.Domain.UserDomain.rawValue)
     )
     static let BaseDomain = TargetDependency.project(
         target: ModulePaths.Domain.BaseDomain.targetName(type: .sources),
