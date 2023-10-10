@@ -10,18 +10,18 @@ public struct RouteRepositoryImpl: RouteRepository {
         self.remoteRouteDataSource = remoteRouteDataSource
     }
 
-    public func fetchRoute(
+    public func fetchRouteList(
         startPoint: CLLocationCoordinate2D,
         endPoint: CLLocationCoordinate2D
     ) -> AnyPublisher<RouteEntity, Error> {
-        remoteRouteDataSource.fetchRoute(startPoint: startPoint, endPoint: endPoint)
+        remoteRouteDataSource.fetchRouteList(startPoint: startPoint, endPoint: endPoint)
     }
 
     public func addRoute(req: AddRouteRequestDTO) -> AnyPublisher<Void, Error> {
         remoteRouteDataSource.addRoute(req: req)
     }
 
-    public func fetchMyRoute() -> AnyPublisher<MyRouteEntity, Error> {
-        remoteRouteDataSource.fetchMyRoute()
+    public func fetchMyRouteList() -> AnyPublisher<MyRouteEntity, Error> {
+        remoteRouteDataSource.fetchMyRouteList()
     }
 }

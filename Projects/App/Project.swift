@@ -46,6 +46,7 @@ let targets: [Target] = [
             .Domain.UserDomain,
             .Domain.AuthDomain,
             .Domain.RouteDomain,
+            .Domain.StationDomain,
             .SPM.Needle
         ],
         settings: .settings(base: env.baseSetting)

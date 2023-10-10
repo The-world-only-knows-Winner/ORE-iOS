@@ -1,7 +1,7 @@
 import RouteDomainInterface
 import Combine
 
-public struct FetchMyRouteUseCaseImpl: FetchMyRouteUseCase {
+public struct FetchMyRouteListUseCaseImpl: FetchMyRouteListUseCase {
     private let routeRepository: any RouteRepository
 
     public init(routeRepository: any RouteRepository) {
@@ -9,6 +9,6 @@ public struct FetchMyRouteUseCaseImpl: FetchMyRouteUseCase {
     }
 
     public func execute() -> AnyPublisher<MyRouteEntity, Error> {
-        routeRepository.fetchMyRoute()
+        routeRepository.fetchMyRouteList()
     }
 }

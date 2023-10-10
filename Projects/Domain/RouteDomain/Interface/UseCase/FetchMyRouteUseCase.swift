@@ -1,5 +1,5 @@
 import Combine
 
-public protocol FetchMyRouteUseCase {
+public protocol FetchMyRouteListUseCase {
     func execute() -> AnyPublisher<MyRouteEntity, Error>
 }

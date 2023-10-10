@@ -1,15 +1,14 @@
 import BaseFeature
 import Combine
 import AuthDomainInterface
-import UsersDomainInterface
 
 final class SplashViewModel: BaseViewModel {
-    private let reissueTokenUseCase: any ReissueTokenUseCase
+    private let tokenRefreshUseCase: any TokenRefreshUseCase
 
     public init(
-        reissueTokenUseCase: any ReissueTokenUseCase
+        tokenRefreshUseCase: any TokenRefreshUseCase
     ) {
-        self.reissueTokenUseCase = reissueTokenUseCase
+        self.tokenRefreshUseCase = tokenRefreshUseCase
     }
 
     func onAppear(
@@ -17,7 +16,7 @@ final class SplashViewModel: BaseViewModel {
         onError: @escaping (Error) -> Void
     ) {
         addCancellable(
-            reissueTokenUseCase.execute()
+            tokenRefreshUseCase.execute()
         ) { _ in
             onSuccess()
         } onReceiveError: { error in

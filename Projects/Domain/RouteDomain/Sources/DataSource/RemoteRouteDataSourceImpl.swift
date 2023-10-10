@@ -4,11 +4,11 @@ import RouteDomainInterface
 import CoreLocation
 
 public final class RemoteRouteDataSourceImpl: BaseRemoteDataSource<RouteAPI>, RemoteRouteDataSource {
-    public func fetchRoute(
+    public func fetchRouteList(
         startPoint: CLLocationCoordinate2D,
         endPoint: CLLocationCoordinate2D
     ) -> AnyPublisher<RouteEntity, Error> {
-        request(.fetchRoute(startPoint: startPoint, endpoint: endPoint), dto: FetchRouteResponseDTO.self)
+        request(.fetchRouteList(startPoint: startPoint, endpoint: endPoint), dto: FetchRouteResponseDTO.self)
             .map { $0.toDomain() }
             .eraseToAnyPublisher()
     }
@@ -17,8 +17,8 @@ public final class RemoteRouteDataSourceImpl: BaseRemoteDataSource<RouteAPI>, Re
         request(.addRoute(req))
     }
 
-    public func fetchMyRoute() -> AnyPublisher<MyRouteEntity, Error> {
-        request(.fetchMyRoute, dto: FetchMyRouteResponseDTO.self)
+    public func fetchMyRouteList() -> AnyPublisher<MyRouteEntity, Error> {
+        request(.fetchMyRouteList, dto: FetchMyRouteResponseDTO.self)
             .map { $0.toDomain() }
             .eraseToAnyPublisher()
     }

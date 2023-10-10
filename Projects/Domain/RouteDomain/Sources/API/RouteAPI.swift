@@ -4,13 +4,13 @@ import BaseDomain
 import CoreLocation
 
 public enum RouteAPI {
-    case fetchRoute(startPoint: CLLocationCoordinate2D, endpoint: CLLocationCoordinate2D)
+    case fetchRouteList(startPoint: CLLocationCoordinate2D, endpoint: CLLocationCoordinate2D)
     case addRoute(AddRouteRequestDTO)
-    case fetchMyRoute
+    case fetchMyRouteList
 }
 
 extension RouteAPI: JobisAPI {
-    public typealias ErrorType = RouteDomainError
+    public typealias ErrorType = Error
 
     public var domain: JobisDomain {
         .route
@@ -18,17 +18,17 @@ extension RouteAPI: JobisAPI {
 
     public var urlPath: String {
         switch self {
-        case .fetchRoute, .addRoute:
+        case .fetchRouteList, .addRoute:
             return ""
 
-        case .fetchMyRoute:
+        case .fetchMyRouteList:
             return "/my"
         }
     }
 
     public var method: Moya.Method {
         switch self {
-        case .fetchRoute, .fetchMyRoute:
+        case .fetchRouteList, .fetchMyRouteList:
             return .get
 
         case .addRoute:
@@ -38,7 +38,7 @@ extension RouteAPI: JobisAPI {
 
     public var task: Task {
         switch self {
-        case let .fetchRoute(startPoint, endpoint):
+        case let .fetchRouteList(startPoint, endpoint):
             return .requestParameters(parameters: [
                 "start_x_point": startPoint.latitude,
                 "start_y_point": startPoint.latitude,
@@ -49,27 +49,27 @@ extension RouteAPI: JobisAPI {
         case let .addRoute(req):
             return .requestJSONEncodable(req)
 
-        case .fetchMyRoute:
+        case .fetchMyRouteList:
             return .requestPlain
         }
     }
 
     public var jwtTokenType: JwtTokenType {
         switch self {
-        case .fetchRoute, .addRoute, .fetchMyRoute:
+        case .fetchRouteList, .addRoute, .fetchMyRouteList:
             return .accessToken
         }
     }
 
     public var errorMap: [Int: ErrorType] {
         switch self {
-        case .fetchRoute:
+        case .fetchRouteList:
             return [:]
 
         case .addRoute:
             return [:]
 
-        case .fetchMyRoute:
+        case .fetchMyRouteList:
             return [:]
         }
     }
