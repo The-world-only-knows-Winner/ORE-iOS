@@ -29,6 +29,7 @@ public extension ModulePaths {
 
 public extension ModulePaths {
     enum Domain: String {
+        case StationDomain
         case RouteDomain
         case UserDomain
         case BaseDomain
