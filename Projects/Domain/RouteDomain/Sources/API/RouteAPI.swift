@@ -6,6 +6,7 @@ import CoreLocation
 public enum RouteAPI {
     case fetchRoute(startPoint: CLLocationCoordinate2D, endpoint: CLLocationCoordinate2D)
     case addRoute(AddRouteRequestDTO)
+    case fetchMyRoute
 }
 
 extension RouteAPI: JobisAPI {
@@ -19,12 +20,15 @@ extension RouteAPI: JobisAPI {
         switch self {
         case .fetchRoute, .addRoute:
             return ""
+
+        case .fetchMyRoute:
+            return "/my"
         }
     }
 
     public var method: Moya.Method {
         switch self {
-        case .fetchRoute:
+        case .fetchRoute, .fetchMyRoute:
             return .get
 
         case .addRoute:
@@ -45,6 +49,8 @@ extension RouteAPI: JobisAPI {
         case let .addRoute(req):
             return .requestJSONEncodable(req)
 
+        case .fetchMyRoute:
+            return .requestPlain
         }
     }
 
@@ -63,6 +69,8 @@ extension RouteAPI: JobisAPI {
         case .addRoute:
             return [:]
 
+        case .fetchMyRoute:
+            return [:]
         }
     }
 }

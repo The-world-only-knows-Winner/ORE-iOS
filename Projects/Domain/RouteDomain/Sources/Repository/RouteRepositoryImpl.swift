@@ -16,8 +16,12 @@ public struct RouteRepositoryImpl: RouteRepository {
     ) -> AnyPublisher<RouteEntity, Error> {
         remoteRouteDataSource.fetchRoute(startPoint: startPoint, endPoint: endPoint)
     }
+
     public func addRoute(req: AddRouteRequestDTO) -> AnyPublisher<Void, Error> {
         remoteRouteDataSource.addRoute(req: req)
     }
 
+    public func fetchMyRoute() -> AnyPublisher<MyRouteEntity, Error> {
+        remoteRouteDataSource.fetchMyRoute()
+    }
 }

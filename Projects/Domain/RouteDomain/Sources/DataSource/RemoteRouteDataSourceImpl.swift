@@ -16,4 +16,10 @@ public final class RemoteRouteDataSourceImpl: BaseRemoteDataSource<RouteAPI>, Re
     public func addRoute(req: AddRouteRequestDTO) -> AnyPublisher<Void, Error> {
         request(.addRoute(req))
     }
+
+    public func fetchMyRoute() -> AnyPublisher<MyRouteEntity, Error> {
+        request(.fetchMyRoute, dto: FetchMyRouteResponseDTO.self)
+            .map { $0.toDomain() }
+            .eraseToAnyPublisher()
+    }
 }
