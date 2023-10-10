@@ -15,9 +15,10 @@ struct EmptyRouteView: View {
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
-                VStack(spacing: 16) {
-                    ORIImage(.emptyOri)
-                        .frame(width: 128, height: 192.5)
+                VStack(spacing: 12) {
+                    ORIImage(.oriIcon)
+                        .frame(width: 128, height: 128)
+                        .cornerRadius(8)
 
                     VStack(spacing: 4) {
                         Text(title)
