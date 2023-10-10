@@ -32,12 +32,13 @@ struct MyPageView: View {
             VStack(alignment: .leading, spacing: 0) {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("홍길동")
+                        Text(viewModel.myInfo?.name ?? "홍길동")
                             .oriFont(.heading(.heading2), color: .GrayScale.gray700)
 
-                        Text("2006.03.04")
+                        Text(viewModel.myInfo?.birthday ?? "2000.01.01")
                             .oriFont(.body(.body3), color: .GrayScale.gray700)
                     }
+                    .redacted(reason: viewModel.myInfo == nil ? .placeholder: [])
 
                     Spacer()
 
@@ -115,7 +116,10 @@ struct MyPageView: View {
             }
             .navigate(to: SuccessLogoutView(), when: $viewModel.isNavigatedToLogout)
             .navigate(
-                to: changeProfileFactory.makeView().eraseToAnyView(),
+                to: changeProfileFactory.makeView(
+                    name: viewModel.myInfo?.name ?? "",
+                    birthday: viewModel.myInfo?.birthday ?? ""
+                ).eraseToAnyView(),
                 when: $viewModel.isNavigatedToChangeProfile
             )
             .navigate(
@@ -126,9 +130,10 @@ struct MyPageView: View {
                 isPresented: $viewModel.isShowingLogoutAlert,
                 type: .logout
             ) {
-                viewModel.isNavigatedToLogout.toggle()
+                viewModel.logout()
             }
         }
+        .onAppear(perform: viewModel.fetchMyInfo)
     }
 
     @ViewBuilder

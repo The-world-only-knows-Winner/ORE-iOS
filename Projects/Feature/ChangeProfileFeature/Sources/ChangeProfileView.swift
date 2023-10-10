@@ -18,29 +18,47 @@ struct ChangeProfileView: View {
     }
 
     var body: some View {
-        ORINavigationBar(
-            leadingItem: NavigationItem(image: ORIIcon(.arrowBack)) { dismiss() },
-            pageTitle: "정보수정"
-        ) {
-            VStack(alignment: .leading, spacing: 0) {
-                ORITextField(
-                    text: $viewModel.name,
-                    placehoder: "홍길동",
-                    title: "이름"
-                ) {
-                    focusField = .dateBirth
-                    viewModel.nextButtonDidTapped()
+        VStack {
+            ORINavigationBar(
+                leadingItem: NavigationItem(image: ORIIcon(.arrowBack)) { dismiss() },
+                pageTitle: "정보수정"
+            ) {
+                VStack(alignment: .leading, spacing: 0) {
+                    ORITextField(
+                        text: $viewModel.name,
+                        placehoder: "홍길동",
+                        title: "이름",
+                        description: $viewModel.nameDescription
+                    )
+                    .keyboardType(.namePhonePad)
+                    .focused($focusField, equals: .name)
+
+                    ORIDateField(
+                        date: $viewModel.dateBirth,
+                        isShowDatePicker: $viewModel.isShowDatePicker,
+                        title: "생년월일"
+                    )
+                    .focused($focusField, equals: .dateBirth)
+
+                    Spacer()
                 }
-                .keyboardType(.namePhonePad)
-                .focused($focusField, equals: .name)
+                .onAppear {
+                    focusField = .name
+                }
+                .onChange(of: viewModel.isSuccessToUpdateMyInfo) { _ in
+                    dismiss()
+                }
+                .onChange(of: focusField) {
+                    if $0 == .name {
+                        withAnimation {
+                            viewModel.isShowDatePicker = false
+                        }
+                    }
+                }
+                .hideKeyboardWhenTap()
+            }
 
-                ORIDateField(
-                    date: $viewModel.dateBirth,
-                    isShowDatePicker: $viewModel.isShowDatePicker,
-                    title: "생년월일"
-                )
-                .focused($focusField, equals: .dateBirth)
-
+            VStack {
                 Spacer()
 
                 ORIButton(text: "확인", isFocused: focusField != .none) {
@@ -49,17 +67,6 @@ struct ChangeProfileView: View {
                     }
                 }
             }
-            .onAppear {
-                focusField = .name
-            }
-            .onChange(of: focusField) {
-                if $0 == .name {
-                    withAnimation {
-                        viewModel.isShowDatePicker = false
-                    }
-                }
-            }
-            .hideKeyboardWhenTap()
         }
     }
 }

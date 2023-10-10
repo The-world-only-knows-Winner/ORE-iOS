@@ -2,5 +2,5 @@ import SwiftUI
 
 public protocol ChangeProfileFactory {
     associatedtype SomeView: View
-    func makeView() -> SomeView
+    func makeView(name: String, birthday: String) -> SomeView
 }

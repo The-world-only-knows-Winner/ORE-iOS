@@ -21,11 +21,7 @@ public final class RemoteAuthDataSourceImpl: BaseRemoteDataSource<AuthAPI>, Remo
     }
 
     public func logout() -> AnyPublisher<Void, Error> {
-        keychain.delete(type: .accessToken)
-        keychain.delete(type: .accessExpiresAt)
-        keychain.delete(type: .refreshToken)
-        keychain.delete(type: .refreshExpiresAt)
-        return request(.logout)
+        request(.logout)
     }
 
     public func tokenRefresh() -> AnyPublisher<Void, Error> {

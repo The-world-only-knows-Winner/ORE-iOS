@@ -2,10 +2,10 @@ import Foundation
 
 public struct FetchMyInfoResponseDTO: Decodable {
     public let name: String
-    public let birth: String
+    public let birthday: String
 
-    public init(name: String, birth: String) {
+    public init(name: String, birthday: String) {
         self.name = name
-        self.birth = birth
+        self.birthday = birthday
     }
 }

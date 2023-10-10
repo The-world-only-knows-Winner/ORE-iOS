@@ -27,7 +27,8 @@ struct RenewalPasswordView: View {
                     text: $viewModel.oldPassword,
                     placehoder: "********",
                     title: "현재 비밀번호",
-                    type: .secure
+                    type: .secure,
+                    description: $viewModel.oldPasswordDescription
                 ) {
                     focusField = .newPassword
                 }
@@ -38,9 +39,10 @@ struct RenewalPasswordView: View {
                     text: $viewModel.newPassword,
                     placehoder: "********",
                     title: "새 비밀번호",
-                    type: .secure
+                    type: .secure,
+                    description: $viewModel.newPasswordDescription
                 ) {
-                    viewModel.isPresentedAlert.toggle()
+                    viewModel.changePasswordButtonDidTapped()
                 }
                 .textContentType(.password)
                 .focused($focusField, equals: .newPassword)
@@ -48,19 +50,21 @@ struct RenewalPasswordView: View {
                 Spacer()
 
                 ORIButton(text: "확인", isFocused: focusField != .none) {
-                    viewModel.isPresentedAlert.toggle()
-                    dismiss()
+                    viewModel.changePasswordButtonDidTapped()
                 }
             }
             .onAppear {
                 focusField = .oldPassword
             }
             .hideKeyboardWhenTap()
+            .onChange(of: viewModel.isSuccessToChangePassword) { _ in
+                dismiss()
+            }
             .oriAlert(
                 isPresented: $viewModel.isPresentedAlert,
                 type: .renewalPassword
             ) {
-                viewModel.changePasswordButtonDidTapped()
+                viewModel.changePassword()
             }
         }
     }

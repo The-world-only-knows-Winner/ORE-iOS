@@ -112,6 +112,12 @@ private class MyPageDependency48d84b530313b3ee40feProvider: MyPageDependency {
     var changeProfileFactory: any ChangeProfileFactory {
         return appComponent.changeProfileFactory
     }
+    var fetchMyInfoUseCase: any FetchMyInfoUseCase {
+        return appComponent.fetchMyInfoUseCase
+    }
+    var logoutUseCase: any LogoutUseCase {
+        return appComponent.logoutUseCase
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -208,26 +214,30 @@ private func factory1a988a858e24766a7c25e3b0c44298fc1c149afb(_ component: Needle
     return SearchRouteDependencyd7df8f19dbadba3211baProvider()
 }
 private class ChangeProfileDependency18055275199967076a28Provider: ChangeProfileDependency {
-
-
-    init() {
-
+    var updateMyInfoUseCase: any UpdateMyInfoUseCase {
+        return appComponent.updateMyInfoUseCase
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->ChangeProfileComponent
-private func factory239204ef0c47c0c68c97e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return ChangeProfileDependency18055275199967076a28Provider()
+private func factory239204ef0c47c0c68c97f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return ChangeProfileDependency18055275199967076a28Provider(appComponent: parent1(component) as! AppComponent)
 }
 private class RenewalPasswordDependencya722dc02d5f3ad3403cfProvider: RenewalPasswordDependency {
-
-
-    init() {
-
+    var changePasswordUseCase: any ChangePasswordUseCase {
+        return appComponent.changePasswordUseCase
+    }
+    private let appComponent: AppComponent
+    init(appComponent: AppComponent) {
+        self.appComponent = appComponent
     }
 }
 /// ^->AppComponent->RenewalPasswordComponent
-private func factory236a429a80d834e1f370e3b0c44298fc1c149afb(_ component: NeedleFoundation.Scope) -> AnyObject {
-    return RenewalPasswordDependencya722dc02d5f3ad3403cfProvider()
+private func factory236a429a80d834e1f370f47b58f8f304c97af4d5(_ component: NeedleFoundation.Scope) -> AnyObject {
+    return RenewalPasswordDependencya722dc02d5f3ad3403cfProvider(appComponent: parent1(component) as! AppComponent)
 }
 
 #else
@@ -243,7 +253,7 @@ extension AppComponent: Registration {
         localTable["remoteAuthDataSource-any RemoteAuthDataSource"] = { [unowned self] in self.remoteAuthDataSource as Any }
         localTable["authRepository-any AuthRepository"] = { [unowned self] in self.authRepository as Any }
         localTable["signinUseCase-any SigninUseCase"] = { [unowned self] in self.signinUseCase as Any }
-        localTable["changePassword-any ChangePasswordUseCase"] = { [unowned self] in self.changePassword as Any }
+        localTable["changePasswordUseCase-any ChangePasswordUseCase"] = { [unowned self] in self.changePasswordUseCase as Any }
         localTable["sendAuthCodeUseCase-any SendAuthCodeUseCase"] = { [unowned self] in self.sendAuthCodeUseCase as Any }
         localTable["verifyAuthCodeUseCase-any VerifyAuthCodeUseCase"] = { [unowned self] in self.verifyAuthCodeUseCase as Any }
         localTable["logoutUseCase-any LogoutUseCase"] = { [unowned self] in self.logoutUseCase as Any }
@@ -298,6 +308,8 @@ extension MyPageComponent: Registration {
     public func registerItems() {
         keyPathToName[\MyPageDependency.renewalPasswordFactory] = "renewalPasswordFactory-any RenewalPasswordFactory"
         keyPathToName[\MyPageDependency.changeProfileFactory] = "changeProfileFactory-any ChangeProfileFactory"
+        keyPathToName[\MyPageDependency.fetchMyInfoUseCase] = "fetchMyInfoUseCase-any FetchMyInfoUseCase"
+        keyPathToName[\MyPageDependency.logoutUseCase] = "logoutUseCase-any LogoutUseCase"
     }
 }
 extension RootComponent: Registration {
@@ -336,12 +348,12 @@ extension SearchRouteComponent: Registration {
 }
 extension ChangeProfileComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\ChangeProfileDependency.updateMyInfoUseCase] = "updateMyInfoUseCase-any UpdateMyInfoUseCase"
     }
 }
 extension RenewalPasswordComponent: Registration {
     public func registerItems() {
-
+        keyPathToName[\RenewalPasswordDependency.changePasswordUseCase] = "changePasswordUseCase-any ChangePasswordUseCase"
     }
 }
 
@@ -372,8 +384,8 @@ private func registerProviderFactory(_ componentPath: String, _ factory: @escapi
     registerProviderFactory("^->AppComponent->RouteComponent", factoryb38e7a5fde2fe65187ebf47b58f8f304c97af4d5)
     registerProviderFactory("^->AppComponent->ConfirmComponent", factory00ab5addbed09be3f3f4e3b0c44298fc1c149afb)
     registerProviderFactory("^->AppComponent->SearchRouteComponent", factory1a988a858e24766a7c25e3b0c44298fc1c149afb)
-    registerProviderFactory("^->AppComponent->ChangeProfileComponent", factory239204ef0c47c0c68c97e3b0c44298fc1c149afb)
-    registerProviderFactory("^->AppComponent->RenewalPasswordComponent", factory236a429a80d834e1f370e3b0c44298fc1c149afb)
+    registerProviderFactory("^->AppComponent->ChangeProfileComponent", factory239204ef0c47c0c68c97f47b58f8f304c97af4d5)
+    registerProviderFactory("^->AppComponent->RenewalPasswordComponent", factory236a429a80d834e1f370f47b58f8f304c97af4d5)
 }
 #endif
 

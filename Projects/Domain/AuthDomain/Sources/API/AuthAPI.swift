@@ -73,6 +73,10 @@ extension AuthAPI: JobisAPI {
         switch self {
         case .tokenRefresh:
             return .refreshToken
+
+        case .changePassword, .logout:
+            return .accessToken
+
         default:
             return .none
         }
