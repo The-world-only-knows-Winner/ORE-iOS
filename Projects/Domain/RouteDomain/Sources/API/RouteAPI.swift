@@ -5,6 +5,7 @@ import CoreLocation
 
 public enum RouteAPI {
     case fetchRoute(startPoint: CLLocationCoordinate2D, endpoint: CLLocationCoordinate2D)
+    case addRoute(AddRouteRequestDTO)
 }
 
 extension RouteAPI: JobisAPI {
@@ -16,7 +17,7 @@ extension RouteAPI: JobisAPI {
 
     public var urlPath: String {
         switch self {
-        case .fetchRoute:
+        case .fetchRoute, .addRoute:
             return ""
         }
     }
@@ -25,6 +26,9 @@ extension RouteAPI: JobisAPI {
         switch self {
         case .fetchRoute:
             return .get
+
+        case .addRoute:
+            return .post
         }
     }
 
@@ -37,12 +41,16 @@ extension RouteAPI: JobisAPI {
                 "end_x_point": endpoint.latitude,
                 "end_y_point": endpoint.latitude
             ], encoding: URLEncoding.queryString)
+
+        case let .addRoute(req):
+            return .requestJSONEncodable(req)
+
         }
     }
 
     public var jwtTokenType: JwtTokenType {
         switch self {
-        case .fetchRoute:
+        case .fetchRoute, .addRoute, .fetchMyRoute:
             return .accessToken
         }
     }
@@ -51,6 +59,10 @@ extension RouteAPI: JobisAPI {
         switch self {
         case .fetchRoute:
             return [:]
+
+        case .addRoute:
+            return [:]
+
         }
     }
 }

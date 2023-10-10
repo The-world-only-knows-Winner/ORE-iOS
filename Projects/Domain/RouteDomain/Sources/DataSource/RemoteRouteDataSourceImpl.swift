@@ -12,4 +12,8 @@ public final class RemoteRouteDataSourceImpl: BaseRemoteDataSource<RouteAPI>, Re
             .map { $0.toDomain() }
             .eraseToAnyPublisher()
     }
+
+    public func addRoute(req: AddRouteRequestDTO) -> AnyPublisher<Void, Error> {
+        request(.addRoute(req))
+    }
 }
