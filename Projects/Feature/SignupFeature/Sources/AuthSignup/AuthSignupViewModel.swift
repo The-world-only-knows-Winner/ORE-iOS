@@ -2,6 +2,7 @@ import BaseFeature
 import Combine
 import AuthDomainInterface
 import DesignSystem
+import UtilityModule
 
 final class AuthSignupViewModel: BaseViewModel {
     enum SignupStep: Int {
@@ -26,7 +27,9 @@ final class AuthSignupViewModel: BaseViewModel {
     @Published var emailTextFieldType: InputBoxType?
     @Published var emailDescription: DescriptionType?
     @Published var authCode: String = ""
+    @Published var authCodeDescription: DescriptionType?
     @Published var password: String = ""
+    @Published var passwordDescription: DescriptionType?
 
     @Published var isNavigatedToUserInfoSignup: Bool = false
 
@@ -39,6 +42,7 @@ final class AuthSignupViewModel: BaseViewModel {
             return "비밀번호를 입력해주세요"
         }
     }
+
     var signupButtonText: String {
         switch signupStep {
         case .inputEmail:
@@ -49,23 +53,82 @@ final class AuthSignupViewModel: BaseViewModel {
         }
     }
 
+    private let sendAuthCodeUseCase: any SendAuthCodeUseCase
+    private let verifyAuthCodeUseCase: any VerifyAuthCodeUseCase
+
+    init(
+        sendAuthCodeUseCase: any SendAuthCodeUseCase,
+        verifyAuthCodeUseCase: any VerifyAuthCodeUseCase
+    ) {
+        self.sendAuthCodeUseCase = sendAuthCodeUseCase
+        self.verifyAuthCodeUseCase = verifyAuthCodeUseCase
+    }
+
     func nextButtonDidTapped() {
         switch signupStep {
         case .inputEmail:
-            self.emailDescription = .successToSendEmail
-            self.emailTextFieldType = .button(.sub)
-            // 대충 이메일 보내는 함수
-            signupStep.goToNextStep()
+            guard !email.isEmpty else {
+                emailDescription = .isEmpty
+                return
+            }
+            sendAuthCode()
 
         case .inputAuthCode:
-            // 대충 코드 일치하는지 판별하는 함수
-            self.emailDescription = nil
-            self.emailTextFieldType = nil
-            signupStep.goToNextStep()
+            guard !email.isEmpty else {
+                emailDescription = .isEmpty
+                return
+            }
+            guard !authCode.isEmpty else {
+                authCodeDescription = .isEmpty
+                return
+            }
+            verifyAuthCode()
 
         case .inputPassword:
-            // 대충 정규식 대비
-            self.isNavigatedToUserInfoSignup.toggle()
+            if email.isEmpty {
+                emailDescription = .isEmpty
+            } else if authCode.isEmpty {
+                authCodeDescription = .isEmpty
+            } else if password.isEmpty {
+                passwordDescription = .isEmpty
+            } else {
+                self.navigatedToUserInfoSignup()
+            }
         }
+    }
+
+    func sendAuthCode() {
+        addCancellable(
+            sendAuthCodeUseCase.execute(req: .init(email: email))
+        ) { [weak self] _ in
+            self?.emailDescription = .successToSendEmail
+            self?.emailTextFieldType = .button(.sub)
+            self?.signupStep.goToNextStep()
+        } onReceiveError: { [weak self] _ in
+            self?.emailDescription = .isNotEmail
+        }
+    }
+
+    private func verifyAuthCode() {
+        addCancellable(
+            verifyAuthCodeUseCase.execute(req: .init(email: email, code: authCode))
+        ) { [weak self] _ in
+            self?.emailDescription = nil
+            self?.emailTextFieldType = nil
+            self?.signupStep.goToNextStep()
+        } onReceiveError: { [weak self] _ in
+            self?.authCodeDescription = .wrongAuthCode
+        }
+    }
+
+    private func navigatedToUserInfoSignup() {
+        let passwordExpression = "^(?=.*[a-z])(?=.*\\d)(?=.*[!@#$%^&*]).{8,20}$"
+
+        guard password ~= passwordExpression else {
+            self.passwordDescription = .wrongPassword
+            return
+        }
+
+        self.isNavigatedToUserInfoSignup.toggle()
     }
 }

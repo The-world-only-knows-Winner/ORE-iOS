@@ -24,7 +24,7 @@ final class OnboardingViewModel: BaseViewModel {
         .init(
             title: "더 이상 그럴 일은 없을 거예요!",
             content: "이젠 그럴 일 없게 오리가 알려드릴게요!",
-            image: .oriIcon
+            image: .onboarding2
         ),
         .init(
             title: "타는 대중교통을 설정만 해두세요",
