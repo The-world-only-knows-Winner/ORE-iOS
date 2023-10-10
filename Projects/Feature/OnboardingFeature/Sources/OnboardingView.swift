@@ -46,6 +46,7 @@ struct OnboardingView: View {
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 .indexViewStyle(.page(backgroundDisplayMode: .never))
                 .frame(maxHeight: viewModel.imageHeight)
+                .background(Color.GrayScale.gray200)
 
                 HStack(spacing: 8) {
                     ForEach(0..<viewModel.onboardings.count, id: \.self) { index in
@@ -68,7 +69,7 @@ struct OnboardingView: View {
                     }
                 }
 
-                VStack(spacing: 8) {
+                VStack(spacing: 4) {
                     let onboardingText = viewModel.onboardings[viewModel.pageIndex]
 
                     Text(onboardingText.title)
