@@ -2,10 +2,10 @@ import Foundation
 
 public struct VerifyAuthCodeRequestDTO: Encodable {
     public let email: String
-    public let authCode: String
+    public let code: String
 
-    public init(email: String, authCode: String) {
+    public init(email: String, code: String) {
         self.email = email
-        self.authCode = authCode
+        self.code = code
     }
 }
