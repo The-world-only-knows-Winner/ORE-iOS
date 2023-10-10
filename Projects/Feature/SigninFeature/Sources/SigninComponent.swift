@@ -1,5 +1,4 @@
 import SwiftUI
-import UsersDomainInterface
 import NeedleFoundation
 import SigninFeatureInterface
 import SignupFeatureInterface

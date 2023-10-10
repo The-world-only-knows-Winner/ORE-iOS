@@ -16,7 +16,7 @@ public struct MyRouteListResponseDTO: Decodable {
     public let endXPoint: Float
     public let endYPoint: Float
     public let time: Int
-    
+
     public init(
         startName: String,
         startXPoint: Float,

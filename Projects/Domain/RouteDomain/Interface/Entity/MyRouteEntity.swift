@@ -18,7 +18,7 @@ public struct MyRouteListEntity: Equatable {
     public let time: Int
 
     public init(
-        startName: String, 
+        startName: String,
         startXPoint: Float,
         startYPoint: Float,
         endName: String,
