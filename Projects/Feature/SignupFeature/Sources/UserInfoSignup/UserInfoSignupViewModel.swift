@@ -1,6 +1,8 @@
 import BaseFeature
+import DesignSystem
 import Foundation
 import Combine
+import UserDomainInterface
 
 final class UserInfoSignupViewModel: BaseViewModel {
     enum SignupStep: Int {
@@ -18,7 +20,10 @@ final class UserInfoSignupViewModel: BaseViewModel {
     }
     @Published var signupStep: SignupStep = .inputName
 
+    private let email: String
+    private let password: String
     @Published var name: String = ""
+    @Published var nameDescription: DescriptionType?
     @Published var dateBirth: Date = Calendar
         .current
         .date(from: DateComponents(year: 2000, month: 1, day: 1)) ?? .now
@@ -46,16 +51,41 @@ final class UserInfoSignupViewModel: BaseViewModel {
         }
     }
 
+    private let signupUseCase: any SignupUseCase
+
+    init(signupUseCase: any SignupUseCase, email: String, password: String) {
+        self.signupUseCase = signupUseCase
+        self.email = email
+        self.password = password
+    }
+
     func nextButtonDidTapped() {
         switch signupStep {
         case .inputName:
-            // 대충 생년월일 입력으로 감
-            self.isShowDatePicker = false
+            guard !name.isEmpty else {
+                nameDescription = .isEmpty
+                return
+            }
+            self.isShowDatePicker = true
             signupStep.goToNextStep()
 
         case .inputDateBirth:
-            // 대충 회원가입 후 뷰 이동
-            self.isSuccessSignup.toggle()
+            self.signup(
+                req: .init(
+                    email: email,
+                    password: password,
+                    name: name,
+                    birthday: dateBirth.toHyphenStrng()
+                )
+            )
+        }
+    }
+
+    private func signup(req: SignupRequestDTO) {
+        addCancellable(
+            signupUseCase.execute(req: req)
+        ) { [weak self] _ in
+            self?.isSuccessSignup.toggle()
         }
     }
 }
