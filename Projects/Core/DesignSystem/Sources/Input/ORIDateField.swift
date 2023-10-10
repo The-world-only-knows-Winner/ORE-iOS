@@ -20,28 +20,30 @@ public struct ORIDateField: View {
 
     public var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(title)
-                .oriFont(.body(.body4), color: .GrayScale.gray500)
+            VStack(alignment: .leading, spacing: 12) {
+                Text(title)
+                    .oriFont(.body(.body4), color: .GrayScale.gray500)
 
-            HStack {
-                Button {
-                    withAnimation {
-                        hideKeyboard()
-                        self.isShowDatePicker.toggle()
-                    }
-                } label: {
-                    Text(date.toHyphenStrng())
+                HStack {
+                    Text(date.toHyphenSpacingStrng())
                         .oriFont(.body(.body1), color: .GrayScale.gray700)
-                }
 
-                Spacer()
+                    Spacer()
+                }
+                .padding(.bottom, 12)
+                .overlay(alignment: .bottom) {
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke()
+                        .fill(Color.GrayScale.gray400)
+                        .frame(maxWidth: .infinity, maxHeight: 0.5)
+                }
             }
-            .padding(.bottom, 12)
-            .overlay(alignment: .bottom) {
-                RoundedRectangle(cornerRadius: 5)
-                    .stroke()
-                    .fill(Color.GrayScale.gray400)
-                    .frame(maxWidth: .infinity, maxHeight: 0.5)
+            .oriBackground()
+            .onTapGesture {
+                withAnimation {
+                     hideKeyboard()
+                    self.isShowDatePicker.toggle()
+                }
             }
 
             if isShowDatePicker {
@@ -53,5 +55,6 @@ public struct ORIDateField: View {
         }
         .padding(.vertical, 16)
         .padding(.horizontal, 20)
+        .animation(.easeIn(duration: 0.2), value: isShowDatePicker)
     }
 }

@@ -7,7 +7,7 @@ public struct ORITextField: View {
     let placehoder: String
     let title: String
     let type: InputBoxType?
-    let description: DescriptionType?
+    @Binding var description: DescriptionType?
     let onCommit: () -> Void
 
     public init(
@@ -15,14 +15,14 @@ public struct ORITextField: View {
         placehoder: String,
         title: String = "",
         type: InputBoxType? = nil,
-        description: DescriptionType? = nil,
+        description: Binding<DescriptionType?> = .constant(nil),
         onCommit: @escaping () -> Void = {}
     ) {
         _text = text
         self.placehoder = placehoder
         self.title = title
         self.type = type
-        self.description = description
+        _description = description
         self.onCommit = onCommit
     }
 
@@ -35,6 +35,10 @@ public struct ORITextField: View {
 
             HStack(spacing: 12) {
                 ZStack(alignment: .leading) {
+                    Text(placehoder)
+                        .oriFont(.body(.body1), color: .GrayScale.gray400)
+                        .opacity(text.isEmpty ? 1 : 0)
+
                     Group {
                         if isSecure && type == .secure {
                             SecureField("", text: $text)
@@ -46,13 +50,6 @@ public struct ORITextField: View {
                     .oriFont(.body(.body1), color: .GrayScale.gray700)
                     .focused($isFocused)
                     .onSubmit(onCommit)
-
-                    Text(placehoder)
-                        .oriFont(.body(.body1), color: .GrayScale.gray400)
-                        .opacity(text.isEmpty ? 1 : 0)
-                        .onTapGesture {
-                            isFocused = true
-                        }
                 }
                 .padding(.bottom, 12)
                 .overlay(alignment: .bottom) {
@@ -73,7 +70,7 @@ public struct ORITextField: View {
 
                     case let .button(type):
                         InputButton(
-                            text: "인증하기",
+                            text: "재전송",
                             style: type,
                             action: onCommit)
 
@@ -99,6 +96,10 @@ public struct ORITextField: View {
         }
         .padding(.vertical, 16)
         .padding(.horizontal, 20)
+        .onChange(of: self.text) { _ in
+            self.description = .none
+        }
+        .animation(.easeIn(duration: 0.2), value: description)
     }
 }
 

@@ -7,6 +7,7 @@ public struct ORIImage: View {
         case onboarding2
         case onboarding3
         case onboarding4
+        case emptyOri
     }
 
     private var image: Image
@@ -42,6 +43,9 @@ public struct ORIImage: View {
 
         case .onboarding4:
             return DesignSystemAsset.Image.onboarding4.swiftUIImage
+
+        case .emptyOri:
+            return DesignSystemAsset.Image.emptyORI.swiftUIImage
         }
     }
 }
