@@ -19,46 +19,59 @@ struct SigninView: View {
     }
 
     var body: some View {
-        ORINavigationBar(
-            leadingItem: NavigationItem(image: ORIIcon(.arrowBack)) { dismiss() },
-            pageTitle: "다시 오신걸 환영해요!"
-        ) {
-            VStack(alignment: .leading, spacing: 0) {
-                ORITextField(
-                    text: $viewModel.email,
-                    placehoder: "example@ex.com",
-                    title: "이메일",
-                    description: viewModel.emailDescription
-                ) {
-                    focusField = .password
-                }
-                .keyboardType(.emailAddress)
-                .focused($focusField, equals: .email)
+        ZStack {
+            ORINavigationBar(
+                leadingItem: NavigationItem(image: ORIIcon(.arrowBack)) { dismiss() },
+                pageTitle: "다시 오신걸 환영해요!"
+            ) {
+                VStack(alignment: .leading, spacing: 0) {
+                    ORITextField(
+                        text: $viewModel.email,
+                        placehoder: "example@ex.com",
+                        title: "이메일",
+                        description: $viewModel.emailDescription
+                    ) {
+                        focusField = .password
+                    }
+                    .keyboardType(.emailAddress)
+                    .focused($focusField, equals: .email)
 
-                ORITextField(
-                    text: $viewModel.password,
-                    placehoder: "비밀번호을 입력해주세요",
-                    title: "비밀번호",
-                    type: .secure
-                ) {
-                    viewModel.isSuccessSignin.toggle()
-                }
-                .textContentType(.password)
-                .focused($focusField, equals: .password)
+                    ORITextField(
+                        text: $viewModel.password,
+                        placehoder: "비밀번호을 입력해주세요",
+                        title: "비밀번호",
+                        type: .secure,
+                        description: $viewModel.passwordDescription
+                    ) {
+                        withAnimation(.easeIn(duration: 0.2)) {
+                            viewModel.signinButtonDidTap()
+                        }
+                    }
+                    .textContentType(.password)
+                    .focused($focusField, equals: .password)
 
+                    Spacer()
+                }
+                .onChange(of: viewModel.isSuccessSignin) { _ in
+                    self.appState.sceneFlow = .home
+                }
+                .onAppear {
+                    focusField = .email
+                }
+                .hideKeyboardWhenTap()
+                .animation(.easeIn(duration: 0.2), value: viewModel.emailDescription)
+                .animation(.easeIn(duration: 0.2), value: viewModel.passwordDescription)
+            }
+
+            VStack {
                 Spacer()
 
                 ORIButton(text: "시작하기", isFocused: focusField != .none) {
-                    viewModel.isSuccessSignin.toggle()
+                    withAnimation(.easeIn(duration: 0.2)) {
+                        viewModel.signinButtonDidTap()
+                    }
                 }
             }
-            .onChange(of: viewModel.isSuccessSignin) { _ in
-                self.appState.sceneFlow = .home
-            }
-            .onAppear {
-                focusField = .email
-            }
-            .hideKeyboardWhenTap()
         }
     }
 }
