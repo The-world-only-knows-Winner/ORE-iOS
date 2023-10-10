@@ -18,8 +18,8 @@ public extension View {
 public struct ORIAlert: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var animate = false
-    var type: ORIAlertType
-    var action: () -> Void
+    let type: ORIAlertType
+    let action: () -> Void
 
     public init(
         type: ORIAlertType,
@@ -74,7 +74,7 @@ public struct ORIAlert: View {
             .padding(20)
         }
         .onAppear {
-            withAnimation(.default.speed(0.3)) {
+            withAnimation(.easeIn(duration: 0.4)) {
                 animate = true
             }
         }
@@ -82,7 +82,7 @@ public struct ORIAlert: View {
     }
 
     private func dismissAlert() {
-        withAnimation(.default.speed(0.3)) {
+        withAnimation(.easeIn(duration: 0.4)) {
             animate = false
             self.presentationMode.wrappedValue.dismiss()
         }
