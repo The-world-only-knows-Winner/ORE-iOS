@@ -23,7 +23,7 @@ public extension AppComponent {
         }
     }
 
-    var changePassword: any ChangePasswordUseCase {
+    var changePasswordUseCase: any ChangePasswordUseCase {
         shared {
             ChangePasswordUseCaseImpl(authRepository: authRepository)
         }
