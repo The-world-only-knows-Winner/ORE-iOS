@@ -9,6 +9,7 @@ public struct FetchMyRouteResponseDTO: Decodable {
 }
 
 public struct MyRouteListResponseDTO: Decodable {
+    public let routeId: String
     public let startName: String
     public let startXPoint: Float
     public let startYPoint: Float
@@ -18,6 +19,7 @@ public struct MyRouteListResponseDTO: Decodable {
     public let time: Int
 
     public init(
+        routeId: String,
         startName: String,
         startXPoint: Float,
         startYPoint: Float,
@@ -26,6 +28,7 @@ public struct MyRouteListResponseDTO: Decodable {
         endYPoint: Float,
         time: Int
     ) {
+        self.routeId = routeId
         self.startName = startName
         self.startXPoint = startXPoint
         self.startYPoint = startYPoint

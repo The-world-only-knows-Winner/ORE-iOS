@@ -9,6 +9,7 @@ public extension FetchMyRouteResponseDTO {
 public extension MyRouteListResponseDTO {
     func toDomain() -> MyRouteListEntity {
         MyRouteListEntity(
+            routeId: routeId,
             startName: startName,
             startXPoint: startXPoint,
             startYPoint: startYPoint,
