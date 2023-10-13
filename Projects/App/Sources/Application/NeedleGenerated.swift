@@ -166,6 +166,15 @@ private class HomeDependency443c4e1871277bd8432aProvider: HomeDependency {
     var routeFactory: any RouteFactory {
         return appComponent.routeFactory
     }
+    var fetchBusStationUseCase: any FetchBusStationUseCase {
+        return appComponent.fetchBusStationUseCase
+    }
+    var fetchStationByStationNameUseCase: any FetchStationByStationNameUseCase {
+        return appComponent.fetchStationByStationNameUseCase
+    }
+    var fetchMyRouteListUseCase: any FetchMyRouteListUseCase {
+        return appComponent.fetchMyRouteListUseCase
+    }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
         self.appComponent = appComponent
@@ -181,6 +190,9 @@ private class RouteDependency8090bd3edd72c0941287Provider: RouteDependency {
     }
     var searchRouteFactory: any SearchRouteFactory {
         return appComponent.searchRouteFactory
+    }
+    var fetchRouteListUseCase: any FetchRouteListUseCase {
+        return appComponent.fetchRouteListUseCase
     }
     private let appComponent: AppComponent
     init(appComponent: AppComponent) {
@@ -328,12 +340,16 @@ extension HomeComponent: Registration {
     public func registerItems() {
         keyPathToName[\HomeDependency.myPageFactory] = "myPageFactory-any MyPageFactory"
         keyPathToName[\HomeDependency.routeFactory] = "routeFactory-any RouteFactory"
+        keyPathToName[\HomeDependency.fetchBusStationUseCase] = "fetchBusStationUseCase-any FetchBusStationUseCase"
+        keyPathToName[\HomeDependency.fetchStationByStationNameUseCase] = "fetchStationByStationNameUseCase-any FetchStationByStationNameUseCase"
+        keyPathToName[\HomeDependency.fetchMyRouteListUseCase] = "fetchMyRouteListUseCase-any FetchMyRouteListUseCase"
     }
 }
 extension RouteComponent: Registration {
     public func registerItems() {
         keyPathToName[\RouteDependency.confirmFactory] = "confirmFactory-any ConfirmFactory"
         keyPathToName[\RouteDependency.searchRouteFactory] = "searchRouteFactory-any SearchRouteFactory"
+        keyPathToName[\RouteDependency.fetchRouteListUseCase] = "fetchRouteListUseCase-any FetchRouteListUseCase"
     }
 }
 extension ConfirmComponent: Registration {
