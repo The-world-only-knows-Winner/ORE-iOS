@@ -33,7 +33,7 @@ struct AuthSignupView: View {
                     if viewModel.signupStep.rawValue >= 2 {
                         ORITextField(
                             text: $viewModel.password,
-                            placehoder: "사용할 비밀번호를 입력해주세요",
+                            placehoder: "소문자, 숫자, 특수문자을 포함한 8글자 이상",
                             title: "비밀번호",
                             type: .secure,
                             description: $viewModel.passwordDescription
