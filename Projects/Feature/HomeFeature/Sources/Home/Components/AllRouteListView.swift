@@ -16,7 +16,7 @@ struct AllRoutedListView: View {
             ScrollView {
                 VStack(spacing: 1) {
                     ForEach(list, id: \.self) { _ in
-                        RouteCellView()
+                        RouteCellView(startName: "몰라", endName: "몰라")
                     }
                 }
             }
