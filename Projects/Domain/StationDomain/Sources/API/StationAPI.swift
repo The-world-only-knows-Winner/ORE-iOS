@@ -3,8 +3,8 @@ import StationDomainInterface
 import BaseDomain
 
 public enum StationAPI {
-    case fetchRouteStationList(stationName: String)
-    case fetchStationByStationName(routeID: String)
+    case fetchStationListByStationName(stationName: String)
+    case fetchBusStationList(routeID: String)
 }
 
 extension StationAPI: JobisAPI {
@@ -16,46 +16,46 @@ extension StationAPI: JobisAPI {
 
     public var urlPath: String {
         switch self {
-        case .fetchRouteStationList:
+        case .fetchStationListByStationName:
             return ""
 
-        case let .fetchStationByStationName(routeID):
+        case let .fetchBusStationList(routeID):
             return "/\(routeID)"
         }
     }
 
     public var method: Moya.Method {
         switch self {
-        case .fetchRouteStationList, .fetchStationByStationName:
+        case .fetchStationListByStationName, .fetchBusStationList:
             return .get
         }
     }
 
     public var task: Task {
         switch self {
-        case let .fetchRouteStationList(stationName):
+        case let .fetchStationListByStationName(stationName):
             return .requestParameters(parameters: [
                 "station_name": stationName
             ], encoding: URLEncoding.queryString)
 
-        case .fetchStationByStationName:
+        case .fetchBusStationList:
             return .requestPlain
         }
     }
 
     public var jwtTokenType: JwtTokenType {
         switch self {
-        case .fetchRouteStationList, .fetchStationByStationName:
+        case .fetchStationListByStationName, .fetchBusStationList:
             return .accessToken
         }
     }
 
     public var errorMap: [Int: ErrorType] {
         switch self {
-        case .fetchRouteStationList:
+        case .fetchStationListByStationName:
             return [:]
 
-        case .fetchStationByStationName:
+        case .fetchBusStationList:
             return [:]
         }
     }

@@ -1,28 +1,20 @@
 import Foundation
 
 public struct RouteEntity: Equatable {
-    public let routeList: RouteListEntity
-
-    public init(routeList: RouteListEntity) {
-        self.routeList = routeList
-    }
-}
-
-public struct RouteListEntity: Equatable {
     public let busCount: Int
-    public let pathList: [PathListEntity]
+    public let pathList: [PathEntity]
 
-    public init(busCount: Int, pathList: [PathListEntity]) {
+    public init(busCount: Int, pathList: [PathEntity]) {
         self.busCount = busCount
         self.pathList = pathList
     }
 }
 
-public struct PathListEntity: Equatable {
+public struct PathEntity: Equatable {
     public let pathInfo: PathInfoEntity
-    public let subPathList: [SubPathListEntity]
+    public let subPathList: [SubPathEntity]
 
-    public init(pathInfo: PathInfoEntity, subPathList: [SubPathListEntity]) {
+    public init(pathInfo: PathInfoEntity, subPathList: [SubPathEntity]) {
         self.pathInfo = pathInfo
         self.subPathList = subPathList
     }
@@ -45,7 +37,7 @@ public struct PathInfoEntity: Equatable {
     }
 }
 
-public struct SubPathListEntity: Equatable {
+public struct SubPathEntity: Equatable {
     public let trafficType: TrafficType
     public let sectionTime: Int
     public let busNo, startName: String

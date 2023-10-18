@@ -1,14 +1,14 @@
 import Foundation
 
-public struct FetchMyRouteResponseDTO: Decodable {
-    public let routeList: [MyRouteListResponseDTO]
+public struct FetchMyRouteListResponseDTO: Decodable {
+    public let routeList: [MyRouteResponseDTO]
 
-    public init(routeList: [MyRouteListResponseDTO]) {
+    public init(routeList: [MyRouteResponseDTO]) {
         self.routeList = routeList
     }
 }
 
-public struct MyRouteListResponseDTO: Decodable {
+public struct MyRouteResponseDTO: Decodable {
     public let routeId: String
     public let startName: String
     public let startXPoint: Float

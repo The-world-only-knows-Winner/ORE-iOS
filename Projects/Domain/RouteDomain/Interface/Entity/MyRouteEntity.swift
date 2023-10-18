@@ -1,14 +1,6 @@
 import Foundation
 
-public struct MyRouteEntity: Equatable {
-    public let routeList: [MyRouteListEntity]
-
-    public init(routeList: [MyRouteListEntity]) {
-        self.routeList = routeList
-    }
-}
-
-public struct MyRouteListEntity: Equatable, Hashable {
+public struct MyRouteEntity: Equatable, Hashable {
     public let routeId: UUID
     public let startName: String
     public let startXPoint: Float

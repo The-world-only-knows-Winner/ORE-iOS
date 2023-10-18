@@ -1,21 +1,49 @@
 import Foundation
 
-public struct FetchStationByStationNameResponseDTO: Decodable {
-    public let stationList: [StationListByStationNameResponseDTO]
+public struct FetchStationListByStationNameResponseDTO: Decodable {
+    public let stationList: [StationResponseDTO]
 
-    public init(stationList: [StationListByStationNameResponseDTO]) {
+    public init(stationList: [StationResponseDTO]) {
         self.stationList = stationList
     }
 }
 
-public struct StationListByStationNameResponseDTO: Decodable {
-    public let busNumber, stationName: String
-    public let index, time: Int
+public struct StationResponseDTO: Decodable {
+    public let stationName: String
+    public let stationID, pointX, pointY: Int
+    public let busInfo: [BusInfoResponseDTO]
 
-    public init(busNumber: String, stationName: String, index: Int, time: Int) {
-        self.busNumber = busNumber
+    public init(
+        stationName: String,
+        stationID: Int,
+        pointX: Int,
+        pointY: Int,
+        busInfo: [BusInfoResponseDTO]
+    ) {
         self.stationName = stationName
-        self.index = index
-        self.time = time
+        self.stationID = stationID
+        self.pointX = pointX
+        self.pointY = pointY
+        self.busInfo = busInfo
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case stationName
+        case stationID = "stationId"
+        case pointX, pointY, busInfo
+    }
+}
+
+public struct BusInfoResponseDTO: Decodable {
+    public let busLocalID, busNo: String
+
+    public init(busLocalID: String, busNo: String) {
+        self.busLocalID = busLocalID
+        self.busNo = busNo
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case busLocalID = "busLocalId"
+        case busNo
     }
 }

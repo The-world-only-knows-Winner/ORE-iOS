@@ -8,7 +8,7 @@ public struct FetchMyRouteListUseCaseImpl: FetchMyRouteListUseCase {
         self.routeRepository = routeRepository
     }
 
-    public func execute() -> AnyPublisher<MyRouteEntity, Error> {
+    public func execute() -> AnyPublisher<[MyRouteEntity], Error> {
         routeRepository.fetchMyRouteList()
     }
 }

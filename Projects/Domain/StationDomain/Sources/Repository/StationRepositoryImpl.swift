@@ -9,11 +9,13 @@ public struct StationRepositoryImpl: StationRepository {
         self.remoteStationDataSource = remoteStationDataSource
     }
 
-    public func fetchRouteStationList(stationName: String) -> AnyPublisher<BusStationEntity, Error> {
-        remoteStationDataSource.fetchRouteStationList(stationName: stationName)
+    public func fetchBusStationList(routeID: String) -> AnyPublisher<[BusStationEntity], Error> {
+        remoteStationDataSource.fetchBusStationList(routeID: routeID)
     }
 
-    public func fetchStationByStationName(routeID: String) -> AnyPublisher<StationByStationNameEntity, Error> {
-        remoteStationDataSource.fetchStationByStationName(routeID: routeID)
+    public func fetchStationListByStationName(
+        stationName: String
+    ) -> AnyPublisher<[StationByStationNameEntity], Error> {
+        remoteStationDataSource.fetchStationListByStationName(stationName: stationName)
     }
 }

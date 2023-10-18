@@ -1,28 +1,28 @@
 import Foundation
 
 public struct FetchRouteResponseDTO: Decodable {
-    public let routeList: RouteListResponseDTO
+    public let routeList: RouteResponseDTO
 
-    public init(routeList: RouteListResponseDTO) {
+    public init(routeList: RouteResponseDTO) {
         self.routeList = routeList
     }
 }
 
-public struct RouteListResponseDTO: Decodable {
+public struct RouteResponseDTO: Decodable {
     public let busCount: Int
-    public let pathList: [PathListResponseDTO]
+    public let pathList: [PathResponseDTO]
 
-    public init(busCount: Int, pathList: [PathListResponseDTO]) {
+    public init(busCount: Int, pathList: [PathResponseDTO]) {
         self.busCount = busCount
         self.pathList = pathList
     }
 }
 
-public struct PathListResponseDTO: Decodable {
+public struct PathResponseDTO: Decodable {
     public let pathInfo: PathInfoResponseDTO
-    public let subPathList: [SubPathListResponseDTO]
+    public let subPathList: [SubPathResponseDTO]
 
-    public init(pathInfo: PathInfoResponseDTO, subPathList: [SubPathListResponseDTO]) {
+    public init(pathInfo: PathInfoResponseDTO, subPathList: [SubPathResponseDTO]) {
         self.pathInfo = pathInfo
         self.subPathList = subPathList
     }
@@ -45,7 +45,7 @@ public struct PathInfoResponseDTO: Decodable {
     }
 }
 
-public struct SubPathListResponseDTO: Decodable {
+public struct SubPathResponseDTO: Decodable {
     public let trafficType: TrafficType
     public let sectionTime: Int
     public let busNo, startName: String

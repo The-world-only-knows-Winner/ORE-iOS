@@ -3,19 +3,21 @@ import BaseDomain
 import StationDomainInterface
 
 public final class RemoteStationDataSourceImpl: BaseRemoteDataSource<StationAPI>, RemoteStationDataSource {
-    public func fetchRouteStationList(stationName: String) -> AnyPublisher<BusStationEntity, Error> {
+    public func fetchBusStationList(routeID: String) -> AnyPublisher<[BusStationEntity], Error> {
         request(
-            .fetchRouteStationList(stationName: stationName),
-            dto: FetchBusStationResponseDTO.self
+            .fetchBusStationList(routeID: routeID),
+            dto: FetchBusStationListResponseDTO.self
         )
         .map { $0.toDomain() }
         .eraseToAnyPublisher()
     }
 
-    public func fetchStationByStationName(routeID: String) -> AnyPublisher<StationByStationNameEntity, Error> {
+    public func fetchStationListByStationName(
+        stationName: String
+    ) -> AnyPublisher<[StationByStationNameEntity], Error> {
         request(
-            .fetchStationByStationName(routeID: routeID),
-            dto: FetchStationByStationNameResponseDTO.self
+            .fetchStationListByStationName(stationName: stationName),
+            dto: FetchStationListByStationNameResponseDTO.self
         )
         .map { $0.toDomain() }
         .eraseToAnyPublisher()

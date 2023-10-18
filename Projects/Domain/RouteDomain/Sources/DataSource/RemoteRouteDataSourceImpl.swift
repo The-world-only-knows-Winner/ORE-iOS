@@ -17,8 +17,8 @@ public final class RemoteRouteDataSourceImpl: BaseRemoteDataSource<RouteAPI>, Re
         request(.addRoute(req))
     }
 
-    public func fetchMyRouteList() -> AnyPublisher<MyRouteEntity, Error> {
-        request(.fetchMyRouteList, dto: FetchMyRouteResponseDTO.self)
+    public func fetchMyRouteList() -> AnyPublisher<[MyRouteEntity], Error> {
+        request(.fetchMyRouteList, dto: FetchMyRouteListResponseDTO.self)
             .map { $0.toDomain() }
             .eraseToAnyPublisher()
     }

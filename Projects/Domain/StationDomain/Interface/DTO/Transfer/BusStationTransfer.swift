@@ -1,25 +1,14 @@
 import Foundation
 
-public extension FetchBusStationResponseDTO {
-    func toDomain() -> BusStationEntity {
-        BusStationEntity(stationList: stationList.map { $0.toDomain() })
-    }
-}
-
-public extension StationListResponseDTO {
-    func toDomain() -> StationListEntity {
-        StationListEntity(
-            stationName: stationName,
-            stationID: stationID,
-            pointX: pointX,
-            pointY: pointY,
-            busInfo: busInfo.map { $0.toDomain() }
-        )
-    }
-}
-
-public extension BusInfoResponseDTO {
-    func toDomain() -> BusInfoEntity {
-        BusInfoEntity(busLocalID: busLocalID, busNo: busNo)
+public extension FetchBusStationListResponseDTO {
+    func toDomain() -> [BusStationEntity] {
+        stationList.map {
+            BusStationEntity(
+                busNumber: $0.busNumber,
+                stationName: $0.stationName,
+                index: $0.index,
+                time: $0.time
+            )
+        }
     }
 }

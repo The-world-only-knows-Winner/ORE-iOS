@@ -2,19 +2,16 @@ import Foundation
 
 public extension FetchRouteResponseDTO {
     func toDomain() -> RouteEntity {
-        RouteEntity(routeList: routeList.toDomain())
+        RouteEntity(
+            busCount: routeList.busCount,
+            pathList: routeList.pathList.map { $0.toDomain() }
+        )
     }
 }
 
-public extension RouteListResponseDTO {
-    func toDomain() -> RouteListEntity {
-        RouteListEntity(busCount: busCount, pathList: pathList.map { $0.toDomain() })
-    }
-}
-
-public extension PathListResponseDTO {
-    func toDomain() -> PathListEntity {
-        PathListEntity(
+public extension PathResponseDTO {
+    func toDomain() -> PathEntity {
+        PathEntity(
             pathInfo: pathInfo.toDomain(),
             subPathList: subPathList.map { $0.toDomain() }
         )
@@ -32,9 +29,9 @@ public extension PathInfoResponseDTO {
     }
 }
 
-public extension SubPathListResponseDTO {
-    func toDomain() -> SubPathListEntity {
-        SubPathListEntity(
+public extension SubPathResponseDTO {
+    func toDomain() -> SubPathEntity {
+        SubPathEntity(
             trafficType: trafficType,
             sectionTime: sectionTime,
             busNo: busNo,

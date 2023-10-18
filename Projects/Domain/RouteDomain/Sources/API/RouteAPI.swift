@@ -40,10 +40,10 @@ extension RouteAPI: JobisAPI {
         switch self {
         case let .fetchRouteList(startPoint, endpoint):
             return .requestParameters(parameters: [
-                "start_x_point": startPoint.latitude,
-                "start_y_point": startPoint.longitude,
-                "end_x_point": endpoint.latitude,
-                "end_y_point": endpoint.longitude
+                "start_x_point": startPoint.longitude,
+                "start_y_point": startPoint.latitude,
+                "end_x_point": endpoint.longitude,
+                "end_y_point": endpoint.latitude
             ], encoding: URLEncoding.queryString)
 
         case let .addRoute(req):

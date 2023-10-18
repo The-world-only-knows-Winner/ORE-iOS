@@ -2,6 +2,6 @@ import Combine
 import Foundation
 
 public protocol RemoteStationDataSource {
-    func fetchRouteStationList(stationName: String) -> AnyPublisher<BusStationEntity, Error>
-    func fetchStationByStationName(routeID: String) -> AnyPublisher<StationByStationNameEntity, Error>
+    func fetchBusStationList(routeID: String) -> AnyPublisher<[BusStationEntity], Error>
+    func fetchStationListByStationName(stationName: String) -> AnyPublisher<[StationByStationNameEntity], Error>
 }
