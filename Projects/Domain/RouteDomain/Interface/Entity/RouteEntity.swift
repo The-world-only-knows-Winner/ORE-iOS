@@ -10,7 +10,7 @@ public struct RouteEntity: Equatable {
     }
 }
 
-public struct PathEntity: Equatable {
+public struct PathEntity: Equatable, Hashable {
     public let pathInfo: PathInfoEntity
     public let subPathList: [SubPathEntity]
 
@@ -20,7 +20,7 @@ public struct PathEntity: Equatable {
     }
 }
 
-public struct PathInfoEntity: Equatable {
+public struct PathInfoEntity: Equatable, Hashable {
     public let totalTime, busTransitCount: Int
     public let firstStartStation, lastEndStation: String
 
@@ -37,7 +37,8 @@ public struct PathInfoEntity: Equatable {
     }
 }
 
-public struct SubPathEntity: Equatable {
+public struct SubPathEntity: Equatable, Hashable {
+    public var id: UUID = UUID()
     public let trafficType: TrafficType
     public let sectionTime: Int
     public let busNo, startName: String
